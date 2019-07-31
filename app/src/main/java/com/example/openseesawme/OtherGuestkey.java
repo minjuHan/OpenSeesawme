@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,6 +93,15 @@ public class OtherGuestkey extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        menu.add(0,1,0,"삭제");
+        return true;
+    }
+
 
     //myadapter
     public class MyAdapter1 extends BaseAdapter {
