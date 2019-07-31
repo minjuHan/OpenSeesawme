@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -34,13 +35,14 @@ import java.util.Calendar;
 
 public class SendGuestKey extends AppCompatActivity {
     Toolbar myToolbar; //툴바
-    Button btnRepeat,btnOnce,sendend,btnContact;
-    Button btnSelectMon,btnSelectTue,btnSelectWed,btnSelectThu,btnSelectFri,btnSelectSat,btnSelectSun;
+    Button btnRepeat,btnOnce,btnSend,btnContact;
+    CheckBox ckbSelectMon,ckbSelectTue,ckbSelectWed,ckbSelectThu,ckbSelectFri,ckbSelectSat,ckbSelectSun;
     ImageButton ibtnCalendar;
     LinearLayout select_date,select_day;
     EditText edtUserName,edtUserTel,edtDate;
     Integer cnt=0;
     private Activity activity;
+    String sendData="repeat";
 
     //사용자에게 권한 허용받기
     private boolean checkPermissions() {
@@ -81,24 +83,26 @@ public class SendGuestKey extends AppCompatActivity {
         btnRepeat=findViewById(R.id.btnRepeat);
         btnOnce=findViewById(R.id.btnOnce);
         btnContact=findViewById(R.id.btnContact);
+        btnSend = findViewById(R.id.btnSend);
         ibtnCalendar=findViewById(R.id.ibtnCalendar);
         edtUserName=findViewById(R.id.edtUserName);
         edtUserTel=findViewById(R.id.edtUserTel);
         select_date=findViewById(R.id.select_date);
         select_day=findViewById(R.id.select_day);
         edtDate=findViewById(R.id.edtDate);
-        btnSelectMon=findViewById(R.id.btnSelectMon);
-        btnSelectTue=findViewById(R.id.btnSelectTue);
-        btnSelectWed=findViewById(R.id.btnSelectWed);
-        btnSelectThu=findViewById(R.id.btnSelectThu);
-        btnSelectFri=findViewById(R.id.btnSelectFri);
-        btnSelectSat=findViewById(R.id.btnSelectSat);
-        btnSelectSun=findViewById(R.id.btnSelectSun);
+        ckbSelectMon=findViewById(R.id.ckbSelectMon);
+        ckbSelectTue=findViewById(R.id.ckbSelectTue);
+        ckbSelectWed=findViewById(R.id.ckbSelectWed);
+        ckbSelectThu=findViewById(R.id.ckbSelectThu);
+        ckbSelectFri=findViewById(R.id.ckbSelectFri);
+        ckbSelectSat=findViewById(R.id.ckbSelectSat);
+        ckbSelectSun=findViewById(R.id.ckbSelectSun);
         activity = this;
 
         btnRepeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sendData="repeat";
                 select_date.setVisibility(View.VISIBLE);
                 select_day.setVisibility(View.GONE);
                 GradientDrawable btnRepeatBg = (GradientDrawable)btnRepeat.getBackground();
@@ -107,11 +111,13 @@ public class SendGuestKey extends AppCompatActivity {
                 GradientDrawable btnOnceBg = (GradientDrawable)btnOnce.getBackground();
                 btnOnceBg.setColor(Color.rgb(209,209,209));
                 btnOnce.setTextColor(Color.BLACK);
+
             }
         });
         btnOnce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                sendData="once";
                 select_date.setVisibility(View.GONE);
                 select_day.setVisibility(View.VISIBLE);
                 GradientDrawable btnRepeatBg = (GradientDrawable)btnRepeat.getBackground();
@@ -123,189 +129,46 @@ public class SendGuestKey extends AppCompatActivity {
             }
         });
 
-/*        //월요일 클릭
-        btnSelectMon.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch(motionEvent.getAction()){
-                    case MotionEvent.ACTION_DOWN:
-                        btnSelectMon.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.guest_repeat_select));btnSelectMon.setTextColor(Color.WHITE);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        break;
-            }
-        });*/
-
-        btnSelectMon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(cnt==2){
-
-                }
-                else if(cnt==0) {
-                    btnSelectMon.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.guest_repeat_select));
-                    btnSelectMon.setTextColor(Color.WHITE);
-                    cnt=cnt+1;
-                    String cntS=cnt.toString();
-                    Toast.makeText(getApplicationContext(),cntS,Toast.LENGTH_LONG).show();
-                }
-                else if(cnt==1) {
-                    btnSelectMon.setBackgroundDrawable(null);
-                    btnSelectMon.setTextColor(Color.BLACK);
-                    cnt=cnt-1;
-                    String cntS=cnt.toString();
-                    Toast.makeText(getApplicationContext(),cntS,Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-        //화요일 클릭
-        btnSelectTue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btnSelectTue.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.guest_repeat_select));btnSelectTue.setTextColor(Color.WHITE);
-            }
-        });
-        //수요일 클릭
-        btnSelectWed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btnSelectWed.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.guest_repeat_select));btnSelectWed.setTextColor(Color.WHITE);
-            }
-        });
-        //목요일 클릭
-        btnSelectThu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btnSelectThu.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.guest_repeat_select));btnSelectThu.setTextColor(Color.WHITE);
-            }
-        });
-        //금요일 클릭
-        btnSelectFri.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btnSelectFri.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.guest_repeat_select));btnSelectFri.setTextColor(Color.WHITE);
-            }
-        });
-        //토요일 클릭
-        btnSelectSat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btnSelectSat.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.guest_repeat_select));btnSelectSat.setTextColor(Color.WHITE);
-            }
-        });
-        //일요일 클릭
-        btnSelectSun.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btnSelectSun.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.guest_repeat_select));btnSelectSun.setTextColor(Color.WHITE);
-            }
-        });
-
-        sendend = findViewById(R.id.sendend);
-        sendend.setOnClickListener(new View.OnClickListener() {
+        btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try{
                     String user_tel,user_select="";
                     user_tel=edtUserTel.getText().toString();
-                    if(btnRepeat.isClickable()){//repeat 버튼이 눌렸으면
-                        if(btnSelectMon.isClickable()){
-                            user_select+="월"+",";
+                    if(sendData.equals("repeat")) {
+                        if (ckbSelectMon.isChecked()) {
+                            user_select += "월" + ",";
                         }
-                        if(btnSelectTue.isClickable()){
-                            user_select+="화"+",";
+                        if (ckbSelectTue.isChecked()) {
+                            user_select += "화" + ",";
                         }
-                        if(btnSelectWed.isClickable()){
-                            user_select+="수"+",";
+                        if (ckbSelectWed.isChecked()) {
+                            user_select += "수" + ",";
                         }
-                        if(btnSelectThu.isClickable()){
-                            user_select+="목"+",";
+                        if (ckbSelectThu.isChecked()) {
+                            user_select += "목" + ",";
                         }
-                        if(btnSelectFri.isClickable()) {
-                            user_select+= "금"+",";
+                        if (ckbSelectFri.isChecked()) {
+                            user_select += "금" + ",";
                         }
-                        if(btnSelectThu.isClickable()){
-                            user_select+="토"+",";
+                        if (ckbSelectSat.isChecked()) {
+                            user_select += "토" + ",";
                         }
-                        if(btnSelectSun.isClickable()){
-                            user_select+="일"+",";
+                        if (ckbSelectSun.isChecked()) {
+                            user_select += "일" + ",";
                         }
-                        String result  = new GuestRepeatActivity().execute(user_tel,user_select).get();
-                        if(result.equals("가입된 사용자")){
-                            //팝업 띄우기===== 여기부터
-                            //다이얼로그 바디
-                            AlertDialog.Builder alertdialog = new AlertDialog.Builder(activity);
-                            //다이얼로그 메세지
-                            String guest_name = "---EditText에서 가져오기";
-                            alertdialog.setMessage(guest_name + " 님께 게스트키를 보내시겠습니까?");
-                            //확인 버튼
-                            alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
-                                    startActivity(intent);
-                                }
-                            });
-                            //취소버튼
-                            alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Toast.makeText(activity, "취소하였습니다", Toast.LENGTH_SHORT).show();
-
-                                }
-                            });
-
-                            //메인 다이얼로그 생성
-                            AlertDialog alert = alertdialog.create();
-                            //아이콘 설정
-                            //제목
-                            alert.setTitle("게스트키 보내기");
-                            alert.show();
-                            //=========== 여기까지
-                            Toast.makeText(getApplicationContext(),"보내기 완료",Toast.LENGTH_LONG).show();
-//                            Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
-//                            startActivity(intent);
-                        }
-                        else if(result.equals("미가입된 사용자")){
-                            //팝업 띄우기===== 여기부터
-                            //다이얼로그 바디
-                            AlertDialog.Builder alertdialog = new AlertDialog.Builder(activity);
-                            //다이얼로그 메세지
-                            String guest_name = "---EditText에서 가져오기";
-                            alertdialog.setMessage(guest_name + " 님께 게스트키를 보내시겠습니까?");
-                            //확인 버튼
-                            alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
-                                    startActivity(intent);
-                                }
-                            });
-                            //취소버튼
-                            alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Toast.makeText(activity, "취소하였습니다", Toast.LENGTH_SHORT).show();
-
-                                }
-                            });
-
-                            //메인 다이얼로그 생성
-                            AlertDialog alert = alertdialog.create();
-                            //아이콘 설정
-                            //제목
-                            alert.setTitle("게스트키 보내기");
-                            alert.show();
-                            //=========== 여기까지
-                            Toast.makeText(getApplicationContext(),"가입 유도 문자를 보냅니다.",Toast.LENGTH_LONG).show();
-                        }
+                        String result = new GuestRepeatActivity().execute(user_tel, user_select).get();
+                        Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
+                        //showDialog(result);
                     }
-                    else if(btnOnce.isClickable()){
+                    else if(sendData.equals("once")){
                         user_select=edtDate.getText().toString();
                         String result  = new GuestOnceActivity().execute(user_tel,user_select).get();
+                        Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
+                        //showDialog(result);
                     }
                 }catch (Exception e){
-                    Log.i("DBtest", "ERROR!");
+                    Log.i("DBTest", "안드로이드랑 통신 안됨-----------");
                 }
             }
         });
@@ -340,6 +203,70 @@ public class SendGuestKey extends AppCompatActivity {
 
             }
         });
+    }
+    protected void showDialog(String result){
+        if(result.equals("가입된 사용자")){
+            //팝업 띄우기===== 여기부터
+            //다이얼로그 바디
+            AlertDialog.Builder alertdialog = new AlertDialog.Builder(activity);
+            //다이얼로그 메세지
+            String guest_name = "---EditText에서 가져오기";
+            alertdialog.setMessage(guest_name + " 님께 게스트키를 보내시겠습니까?");
+            //확인 버튼
+            alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
+                    startActivity(intent); }
+            });
+            //취소버튼
+            alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(activity, "취소하였습니다", Toast.LENGTH_SHORT).show(); }
+            });
+            //메인 다이얼로그 생성
+            AlertDialog alert = alertdialog.create();
+            //아이콘 설정
+            //제목
+            alert.setTitle("게스트키 보내기");
+            alert.show();
+            //=========== 여기까지
+            Toast.makeText(getApplicationContext(),"보내기 완료",Toast.LENGTH_LONG).show();
+            //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
+            //startActivity(intent);
+        }
+        else if(result.equals("미가입된 사용자")) {
+            //팝업 띄우기===== 여기부터
+            //다이얼로그 바디
+            AlertDialog.Builder alertdialog = new AlertDialog.Builder(activity);
+            //다이얼로그 메세지
+            String guest_name = "---EditText에서 가져오기";
+            alertdialog.setMessage(guest_name + " 님께 게스트키를 보내시겠습니까?");
+            //확인 버튼
+            alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(getApplicationContext(), OtherGuestkeyEnd.class);
+                    startActivity(intent);
+                }
+            });
+            //취소버튼
+            alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(activity, "취소하였습니다", Toast.LENGTH_SHORT).show();
+                }
+            });
+            //메인 다이얼로그 생성
+            AlertDialog alert = alertdialog.create();
+            //아이콘 설정
+            //제목
+            alert.setTitle("게스트키 보내기");
+            alert.show();
+            //=========== 여기까지
+            Toast.makeText(getApplicationContext(), "가입 유도 문자를 보냅니다.", Toast.LENGTH_LONG).show();
+        }
     }
     protected Dialog onCreateDialog(int id) {
         switch(id){
