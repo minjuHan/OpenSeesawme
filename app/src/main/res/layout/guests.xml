@@ -50,7 +50,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/txt_state"
+        android:id="@+id/txt_dday"
         android:text="3일 남음"
         android:textSize="16dp"
         android:textColor="#fff"
@@ -59,12 +59,20 @@
         android:layout_height="24dp"
         android:gravity="center_horizontal"/>
     <LinearLayout
-
         android:id="@+id/linear_black"
         android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="210dp"
         android:background="#45000000"
         android:orientation="vertical"/>
+
+    <CheckBox
+        android:id="@+id/chk_del"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:button="@drawable/selector_checkbox" />
 
 </RelativeLayout>
