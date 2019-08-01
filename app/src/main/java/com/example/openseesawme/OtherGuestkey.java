@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,9 +15,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class OtherGuestkey extends AppCompatActivity {
 
@@ -24,11 +29,39 @@ public class OtherGuestkey extends AppCompatActivity {
     Button memobutton;
     LinearLayout sentgkey ; //추가
     Toolbar myToolbar;
+    String[] receiveData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otherguestkey);
+
+        //GetOthergusetActivity 불러서 데이터 얻어오기
+        try {
+            String result  = new GetOtherguestActivity().execute().get();
+            receiveData = result.split("_spl_");
+            Log.i("OtherGUestkey", receiveData[0]);
+            String OtherG = receiveData[0];
+            String OtherJun = receiveData[1];
+
+
+
+
+//            List<String> otherGuest = Arrays.asList(receiveData);
+//            for (int i = 0; i < receiveData.length; i++) {
+//                // 각 List의 값들을 data 객체에 set 해줍니다.
+//                //UserAdapter.Data data = new UserAdapter.Data();
+//
+//                //data.setUsername(otherGuest.get(i));
+//
+//                // 각 값이 들어간 data를 adapter에 추가합니다.
+//                //adapter.addItem(data);
+//            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         int img[] = {
                 R.drawable.person1, R.drawable.person1, R.drawable.person1
@@ -36,13 +69,14 @@ public class OtherGuestkey extends AppCompatActivity {
 
         gridView = findViewById(R.id.guest_grid);
 
-        MyAdapter1 adapter1 = new MyAdapter1(
+        //어댑터!!
+        MyAdapter adapter1 = new MyAdapter(
                 getApplicationContext(), R.layout.guests, img
         );
         gridView.setAdapter(adapter1);
 
 
-        //버튼 클릭시
+        //게스트키 보내기 버튼 클릭
         memobutton = findViewById(R.id.memobutton);
         memobutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +90,7 @@ public class OtherGuestkey extends AppCompatActivity {
         sentgkey = findViewById(R.id.sentgkey);//추가
         //final int pos = position;
 
+        //각 그리드뷰 아이템 선택시 페이지 넘기는
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -94,13 +129,17 @@ public class OtherGuestkey extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        menu.add(0,1,0,"삭제");
-        return true;
-    }
+
+
+
+
+
+
+
+
+
+
+
 
 
     //myadapter
