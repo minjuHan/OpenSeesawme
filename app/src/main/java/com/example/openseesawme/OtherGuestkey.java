@@ -31,12 +31,12 @@ public class OtherGuestkey extends AppCompatActivity {
     Toolbar myToolbar;
     String[] receiveData;
     String[] otherG;
-    String[] otherJun;
-    String[] gData1;
-    String[] gData2;
-    String[] gData3;
-    String[] gData4;
-    String[] gData5;
+    String[] gData1;    //출입가능 날짜
+    String[] gData2;    //게스트 이름
+    String[] gData3;    //게스트키 준 날짜
+    String[] gData4;    //게스트키 사용 여부
+    String[] gData5;    //게스트키 수락 여부
+    String[] otherJun;  //게스트키 준 사람 이름
 
 
     @Override
@@ -46,6 +46,7 @@ public class OtherGuestkey extends AppCompatActivity {
 
         //GetOthergusetActivity 불러서 데이터 얻어오기
         try {
+            //서버에서 온 값
             String result  = new GetOtherguestActivity().execute().get();
             receiveData = result.split("_spl_");
             otherG = receiveData[0].split("\t");
@@ -59,23 +60,9 @@ public class OtherGuestkey extends AppCompatActivity {
 
             otherJun = receiveData[1].split(" ");
 
-
-//            List<String> otherGuest = Arrays.asList(receiveData);
-//            for (int i = 0; i < receiveData.length; i++) {
-//                // 각 List의 값들을 data 객체에 set 해줍니다.
-//                //UserAdapter.Data data = new UserAdapter.Data();
-//
-//                //data.setUsername(otherGuest.get(i));
-//
-//                // 각 값이 들어간 data를 adapter에 추가합니다.
-//                //adapter.addItem(data);
-//            }
-
         }catch (Exception e) {
             e.printStackTrace();
         }
-
-
         int img[] = {
                 R.drawable.person1, R.drawable.person1
         };
@@ -148,14 +135,7 @@ public class OtherGuestkey extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-    //myadapter
+    //myadapter  지우기====================
     public class MyAdapter1 extends BaseAdapter {
         Context context;
         int layout;
@@ -185,5 +165,5 @@ public class OtherGuestkey extends AppCompatActivity {
 
             return convertView;
         }
-    }
+    }//=================지우기
 }//class end}//class end
