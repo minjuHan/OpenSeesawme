@@ -125,10 +125,19 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/backkey1"
+        android:id="@+id/btn_gdel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
+        android:text="삭제하기"
+        android:background="#F35C5C"
+        android:textColor="#F1F0F0"
+        android:textSize="18dp" />
+    <Button
+        android:id="@+id/backkey1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="목록으로"
         android:textColor="#808080"
         android:textSize="18dp" />

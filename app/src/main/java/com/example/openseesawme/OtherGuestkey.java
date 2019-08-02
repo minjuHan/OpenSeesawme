@@ -30,6 +30,14 @@ public class OtherGuestkey extends AppCompatActivity {
     LinearLayout sentgkey ; //추가
     Toolbar myToolbar;
     String[] receiveData;
+    String[] otherG;
+    String[] otherJun;
+    String[] gData1;
+    String[] gData2;
+    String[] gData3;
+    String[] gData4;
+    String[] gData5;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +48,16 @@ public class OtherGuestkey extends AppCompatActivity {
         try {
             String result  = new GetOtherguestActivity().execute().get();
             receiveData = result.split("_spl_");
-            Log.i("OtherGUestkey", receiveData[0]);
-            String OtherG = receiveData[0];
-            String OtherJun = receiveData[1];
+            otherG = receiveData[0].split("\t");
 
+            gData1 = otherG[0].split(" ");
+            gData2 = otherG[1].split(" ");
+            gData3 = otherG[2].split(" ");
+            gData4 = otherG[3].split(" ");
+            gData5 = otherG[4].split(" ");
+            Log.i("gData test ", gData1[0] + gData1[1]);
 
+            otherJun = receiveData[1].split(" ");
 
 
 //            List<String> otherGuest = Arrays.asList(receiveData);
@@ -64,14 +77,14 @@ public class OtherGuestkey extends AppCompatActivity {
 
 
         int img[] = {
-                R.drawable.person1, R.drawable.person1, R.drawable.person1
+                R.drawable.person1, R.drawable.person1
         };
 
         gridView = findViewById(R.id.guest_grid);
 
         //어댑터!!
         MyAdapter adapter1 = new MyAdapter(
-                getApplicationContext(), R.layout.guests, img
+                getApplicationContext(), R.layout.guests, img, gData1, gData2, gData3, gData4, gData5, otherJun
         );
         gridView.setAdapter(adapter1);
 

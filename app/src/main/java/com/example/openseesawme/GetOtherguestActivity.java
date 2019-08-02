@@ -19,7 +19,7 @@ public class GetOtherguestActivity extends AsyncTask<String, Void, String> {
             String str;
 
             // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
-            URL url = new URL("http://172.18.72.131:8040/doorlock/androidTestDB.jsp");
+            URL url = new URL("http://192.168.0.159:8040/doorlock/androidTestDB.jsp");
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
