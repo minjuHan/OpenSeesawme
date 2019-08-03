@@ -1,8 +1,11 @@
 package com.example.openseesawme;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
@@ -16,7 +19,8 @@ import android.widget.TextView;
 public class OtherMemo1 extends AppCompatActivity {
     TextView tvday, tvto, tvfrom, txt_guest_date, txt_guest_allow;
     Toolbar myToolbar;
-    Button backkey1;
+    Button backkey1 , btn_gdel;
+    private Activity activity;
 
     String[] gData0;    //인덱스
     String[] gData1;    //출입가능 날짜
@@ -33,10 +37,11 @@ public class OtherMemo1 extends AppCompatActivity {
         setTitle("게스트키 상세 정보");
         txt_guest_allow = findViewById(R.id.txt_guest_allow);
         txt_guest_date = findViewById(R.id.txt_guest_date);
+        activity = this;
 
         //인텐트 받기(OtherGuestkey.java 로 부터 받은 값)
         Intent intent = getIntent();
-        int position = (Integer)intent.getExtras().get("position");
+        final int position = (Integer)intent.getExtras().get("position");
         String result = intent.getStringExtra("result");
 
         String[] receiveData;
@@ -86,6 +91,49 @@ public class OtherMemo1 extends AppCompatActivity {
             txt_guest_allow.setText("값을 잘못 넣었다.!");
         }
 
+        btn_gdel = findViewById(R.id.btn_gdel);
+        //삭제버튼 누르면 확인 후 삭제
+        btn_gdel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //팝업 띄우기===== 여기부터
+                //다이얼로그 바디
+                AlertDialog.Builder alertdialog = new AlertDialog.Builder(activity);
+                //다이얼로그 메세지
+                alertdialog.setMessage("정말로 삭제하시겠습니까?");
+                //확인 버튼
+                alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //DB에서 삭제할 Activity 호출하는 코드
+                        try{
+//                            String result;
+                            String g_index = gData0[position];
+//                            result  = new GetOtherguestDeleteActivity().execute(g_index).get();
+
+                        }catch (Exception e){
+
+                        }
+                        //
+                    }
+                });
+                //취소버튼
+                alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                //메인 다이얼로그 생성
+                AlertDialog alert = alertdialog.create();
+                //아이콘 설정
+                //제목
+                alert.setTitle("");
+                alert.show();
+                //=========== 여기까지
+
+            }
+        });
 
 
 

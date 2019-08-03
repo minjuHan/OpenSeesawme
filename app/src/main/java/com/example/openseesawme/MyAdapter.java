@@ -15,6 +15,7 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class MyAdapter extends BaseAdapter {
@@ -79,24 +80,41 @@ public class MyAdapter extends BaseAdapter {
         Log.i("gData4[position]", gData4[position]);
         if(gData4[position].equals("a")){
             linear_black.setVisibility(View.INVISIBLE);
-        }else{
+        }else if(gData4[position].equals("b")){
             linear_black.setVisibility(View.VISIBLE);
         }
+
+
         //d-day 구하기  (parse 쓸때는 try문에)///이게 안된다.......try문 다시 쓰기
         try {
-            SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date ddayIn = transFormat.parse(otherJun[position]);
-            Date today = new Date();
+            java.util.Calendar cal = java.util.Calendar.getInstance(); //일단 Calendar 객체
+            String[] mdday;
+            mdday =  gData1[position].split("-");
+            int year = Integer.parseInt(mdday[0]);
+            int month = Integer.parseInt(mdday[1]);
+            int date = Integer.parseInt(mdday[2]);
 
-            long calDate = ddayIn.getTime() - today.getTime();
 
-            // Date.getTime() 은 해당날짜를 기준으로1970년 00:00:00 부터 몇 초가 흘렀는지를 반환해준다.
-            // 이제 24*60*60*1000(각 시간값에 따른 차이점) 을 나눠주면 일수가 나온다.
-            long calDateDays = calDate / ( 24*60*60*1000);
+            long now_day = cal.getTimeInMillis(); //현재 시간
 
-            calDateDays = Math.abs(calDateDays);
-            String sss = Long.toString(calDateDays);
-            txt_dday.setText(sss + "일 남음");
+            cal.set(year, month-1, date); //목표일을 cal에 set
+
+            long event_day = cal.getTimeInMillis(); //목표일에 대한 시간
+            long d_day = (event_day - now_day) / (60*60*24*1000);
+
+            Log.i("dday는????", Long.toString(d_day));
+
+            txt_dday.setText(d_day + "일 남음");
+            if(d_day == 0){
+                txt_dday.setText("사용 가능");
+            }
+            else if( d_day > 0){
+                txt_dday.setText(d_day + "일 남음");
+            }else if( d_day > 0 && gData4[position].equals("b")){
+                txt_dday.setText("출입 완료");
+            }else{
+                txt_dday.setText("기한지남..?");
+            }
 
         }catch (Exception e){
             e.printStackTrace();
