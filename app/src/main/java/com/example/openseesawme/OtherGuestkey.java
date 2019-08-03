@@ -68,7 +68,7 @@ public class OtherGuestkey extends AppCompatActivity {
         }
         //이미지...
         int img[] = {
-                R.drawable.person1, R.drawable.person1
+                R.drawable.person1, R.drawable.person1, R.drawable.person1
         };
 
         gridView = findViewById(R.id.guest_grid);

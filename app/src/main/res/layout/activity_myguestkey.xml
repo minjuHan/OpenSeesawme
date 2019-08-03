@@ -34,12 +34,6 @@
     tools:context=".myguestkey">
 
     <TextView
-        android:text="받은 게스트키"
-        android:textColor="#333333"
-        android:textSize="24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
         android:text="*출입완료는 30일 이후에 자동 삭제됩니다."
         android:textColor="#333333"
         android:textSize="14dp"
