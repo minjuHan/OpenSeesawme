@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,13 +13,12 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,7 +26,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -135,7 +132,7 @@ public class SendGuestKey extends AppCompatActivity {
                 try{
                     String user_tel,user_select="";
                     user_tel=edtUserTel.getText().toString();
-                    if(sendData.equals("repeat")) {
+                    if(sendData.equals("repeat")) { //반복 방문자
                         if (ckbSelectMon.isChecked()) {
                             user_select += "월" + ",";
                         }
@@ -160,18 +157,18 @@ public class SendGuestKey extends AppCompatActivity {
                         String result = new GuestRepeatActivity().execute(user_tel, user_select).get();
                         Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
                         //showDialog(result);
-                    }
-                    else if(sendData.equals("once")){
+                    }//반복 방문자 end
+                    else if(sendData.equals("once")){      //일회 방문자
                         user_select=edtDate.getText().toString();
                         String result  = new GuestOnceActivity().execute(user_tel,user_select).get();
                         Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
                         //showDialog(result);
-                    }
+                    }//일회 방문자 end
                 }catch (Exception e){
                     Log.i("DBTest", "안드로이드랑 통신 안됨-----------");
                 }
             }
-        });
+        });//btnSend.OnClickListener() end
 
         // 추가된 소스, Toolbar를 생성한다.
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -217,7 +214,8 @@ public class SendGuestKey extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
-                    startActivity(intent); }
+                    startActivity(intent);
+                }
             });
             //취소버튼
             alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -241,7 +239,7 @@ public class SendGuestKey extends AppCompatActivity {
             //다이얼로그 바디
             AlertDialog.Builder alertdialog = new AlertDialog.Builder(activity);
             //다이얼로그 메세지
-            String guest_name = "---EditText에서 가져오기";
+            String guest_name = edtUserName.getText().toString();
             alertdialog.setMessage(guest_name + " 님께 게스트키를 보내시겠습니까?");
             //확인 버튼
             alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
