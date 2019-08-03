@@ -32,6 +32,7 @@ public class OtherGuestkey extends AppCompatActivity {
     String[] receiveData;
     String[] otherG;
 
+    String result;
     String[] gData0;    //인덱스
     String[] gData1;    //출입가능 날짜
     String[] gData2;    //게스트 이름
@@ -49,7 +50,7 @@ public class OtherGuestkey extends AppCompatActivity {
         //GetOthergusetActivity 불러서 데이터 얻어오기
         try {
             //서버에서 온 값
-            String result  = new GetOtherguestActivity().execute().get();
+            result  = new GetOtherguestActivity().execute().get();
             receiveData = result.split("_spl_");
             otherG = receiveData[0].split("\t");
 
@@ -75,7 +76,7 @@ public class OtherGuestkey extends AppCompatActivity {
 
         //어댑터!!
         MyAdapter adapter1 = new MyAdapter(
-                getApplicationContext(), R.layout.guests, img, gData0, gData1, gData2, gData3, gData4, gData5, otherJun
+                getApplicationContext(), R.layout.guests, img, result, gData0, gData1, gData2, gData3, gData4, gData5, otherJun
         );
         gridView.setAdapter(adapter1);
 
@@ -94,14 +95,14 @@ public class OtherGuestkey extends AppCompatActivity {
         sentgkey = findViewById(R.id.sentgkey);//추가
         //final int pos = position;
 
-        //각 그리드뷰 아이템 선택시 페이지 넘기는
+        //각 그리드뷰 아이템 선택시 페이지 넘기는//======================지우기=========
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(),OtherMemo1.class);
                 startActivity(intent);
             }
-        });
+        });//==========지우기============
 
 
 

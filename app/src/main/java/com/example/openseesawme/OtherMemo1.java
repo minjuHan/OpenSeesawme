@@ -59,8 +59,9 @@ public class OtherMemo1 extends AppCompatActivity {
         backkey1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),OtherGuestkey.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(),OtherGuestkey.class);
+//                startActivity(intent);
+                finish();
             }
         });
 

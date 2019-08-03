@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -22,6 +23,7 @@ public class MyAdapter extends BaseAdapter {
     LayoutInflater inf;
 
     int img[];
+    String result;
     String[] gData0;    //인덱스
     String[] gData1;    //출입가능 날짜
     String[] gData2;    //게스트 이름
@@ -31,10 +33,11 @@ public class MyAdapter extends BaseAdapter {
     String[] otherJun;  //게스트키 준 사람 이름
 
 
-    public MyAdapter(Context context, int layout, int[] img, String[]... gData) {
+    public MyAdapter(Context context, int layout, int[] img, String result, String[]... gData) {
         this.context = context;
         this.layout = layout;
         this.img = img;
+        this.result = result;
         this.gData0 = gData[0];
         this.gData1 = gData[1];
         this.gData2 = gData[2];
@@ -55,7 +58,7 @@ public class MyAdapter extends BaseAdapter {
     public long getItemId(int position) {return position;}
 
     //getView() =======================================
-    public View getView(int position, View convertView, ViewGroup vg) {
+    public View getView(final int position, View convertView, ViewGroup vg) {
         if (convertView==null)
             convertView = inf.inflate(layout, null);
 
@@ -65,6 +68,8 @@ public class MyAdapter extends BaseAdapter {
         TextView txt_keyfrom = convertView.findViewById(R.id.txt_keyfrom);
         TextView txt_dday = convertView.findViewById(R.id.txt_dday);
         LinearLayout linear_black = convertView.findViewById(R.id.linear_black);
+        LinearLayout sentgkey = convertView.findViewById(R.id.sentgkey);
+
         iv.setImageResource(img[position]);
         txt_gname.setText(gData2[position]);
         txt_valdate.setText("출입 날짜 : " + gData1[position]);
@@ -96,6 +101,18 @@ public class MyAdapter extends BaseAdapter {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        //해당 아이템? 선택시 OtherMemo1.java로 넘기는 이벤트
+        sentgkey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, OtherMemo1.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("result", result);
+                intent.putExtra("position", position);
+                context.startActivity(intent);
+            }
+        });
+
 
 
         return convertView;
