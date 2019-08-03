@@ -22,6 +22,7 @@ public class MyAdapter extends BaseAdapter {
     LayoutInflater inf;
 
     int img[];
+    String[] gData0;    //인덱스
     String[] gData1;    //출입가능 날짜
     String[] gData2;    //게스트 이름
     String[] gData3;    //게스트키 준 날짜
@@ -34,12 +35,13 @@ public class MyAdapter extends BaseAdapter {
         this.context = context;
         this.layout = layout;
         this.img = img;
-        this.gData1 = gData[0];
-        this.gData2 = gData[1];
-        this.gData3 = gData[2];
-        this.gData4 = gData[3];
-        this.gData5 = gData[4];
-        this.otherJun = gData[5];
+        this.gData0 = gData[0];
+        this.gData1 = gData[1];
+        this.gData2 = gData[2];
+        this.gData3 = gData[3];
+        this.gData4 = gData[4];
+        this.gData5 = gData[5];
+        this.otherJun = gData[6];
         inf = (LayoutInflater) context.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
     }

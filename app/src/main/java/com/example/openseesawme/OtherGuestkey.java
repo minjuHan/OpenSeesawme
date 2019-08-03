@@ -31,6 +31,8 @@ public class OtherGuestkey extends AppCompatActivity {
     Toolbar myToolbar;
     String[] receiveData;
     String[] otherG;
+
+    String[] gData0;    //인덱스
     String[] gData1;    //출입가능 날짜
     String[] gData2;    //게스트 이름
     String[] gData3;    //게스트키 준 날짜
@@ -51,11 +53,12 @@ public class OtherGuestkey extends AppCompatActivity {
             receiveData = result.split("_spl_");
             otherG = receiveData[0].split("\t");
 
-            gData1 = otherG[0].split(" ");
-            gData2 = otherG[1].split(" ");
-            gData3 = otherG[2].split(" ");
-            gData4 = otherG[3].split(" ");
-            gData5 = otherG[4].split(" ");
+            gData0 = otherG[0].split(" ");
+            gData1 = otherG[1].split(" ");
+            gData2 = otherG[2].split(" ");
+            gData3 = otherG[3].split(" ");
+            gData4 = otherG[4].split(" ");
+            gData5 = otherG[5].split(" ");
             Log.i("gData test ", gData1[0] + gData1[1]);
 
             otherJun = receiveData[1].split(" ");
@@ -63,6 +66,7 @@ public class OtherGuestkey extends AppCompatActivity {
         }catch (Exception e) {
             e.printStackTrace();
         }
+        //이미지...
         int img[] = {
                 R.drawable.person1, R.drawable.person1
         };
@@ -71,7 +75,7 @@ public class OtherGuestkey extends AppCompatActivity {
 
         //어댑터!!
         MyAdapter adapter1 = new MyAdapter(
-                getApplicationContext(), R.layout.guests, img, gData1, gData2, gData3, gData4, gData5, otherJun
+                getApplicationContext(), R.layout.guests, img, gData0, gData1, gData2, gData3, gData4, gData5, otherJun
         );
         gridView.setAdapter(adapter1);
 
