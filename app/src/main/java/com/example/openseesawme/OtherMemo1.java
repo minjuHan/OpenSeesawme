@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class OtherMemo1 extends AppCompatActivity {
     TextView tvday, tvto, tvfrom, txt_guest_date, txt_guest_allow;
@@ -96,6 +97,7 @@ public class OtherMemo1 extends AppCompatActivity {
         btn_gdel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), gData0[position],Toast.LENGTH_SHORT).show();
                 //팝업 띄우기===== 여기부터
                 //다이얼로그 바디
                 AlertDialog.Builder alertdialog = new AlertDialog.Builder(activity);
@@ -107,9 +109,12 @@ public class OtherMemo1 extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         //DB에서 삭제할 Activity 호출하는 코드
                         try{
-//                            String result;
+                            String result;
                             String g_index = gData0[position];
-//                            result  = new GetOtherguestDeleteActivity().execute(g_index).get();
+                            result  = new GetOtherguestDeleteActivity().execute(g_index).get();
+                            if(result.equals("삭제 완료")){
+                                Toast.makeText(getApplicationContext(), "삭제 완료",Toast.LENGTH_SHORT).show();
+                            }
 
                         }catch (Exception e){
 
