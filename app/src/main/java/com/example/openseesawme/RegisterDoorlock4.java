@@ -70,7 +70,7 @@ public class RegisterDoorlock4 extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 try {
                     //DB에 BLOB 타입으로 갤러리의 이미지를 저장해야 함
-                    //DB에 이미지를 저장하고 불러오는 시간이 많이 들어감
+                    //DB에 이미4지를 저장하고 불러오는 시간이 많이 들어감
                     //DB에 이미지를 직접 저장하지 말고 내부 저장소(?파일서버)에 저장하고 DB에는 경로만 저장
                     //파일의 절대 경로를 구함 -> 절대 경로를 DB에 저장해놓음 -> 필요 시 DB에서 정보를 불러 절대경로로 이미지를 띄워줌(?)
                     Uri selectedImageUri = data.getData();

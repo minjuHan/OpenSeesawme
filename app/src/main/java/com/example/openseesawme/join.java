@@ -72,6 +72,7 @@ public class join extends AppCompatActivity {
         edtTel=findViewById(R.id.edtTel);
         edtNum=findViewById(R.id.edtNum);
         tvIdCheck=findViewById(R.id.tvidcheck);
+
         btnSend.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
@@ -88,9 +89,10 @@ public class join extends AppCompatActivity {
                 if (tel.length()>0 && message.length()>0)
                     sendSMS(tel, message);
                 else
-                    Toast.makeText(getApplicationContext(),"Please enter both phone number and message.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"번호를 입력해주세요.",Toast.LENGTH_SHORT).show();
             }
         });
+
         btnJoin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 try {
@@ -161,7 +163,8 @@ public class join extends AppCompatActivity {
                 break;
         }
     }
-    // SMS를 전송하는 과정을 모니터링하고 싶다면
+
+    //sms 전송
     private void sendSMS(String phoneNumber, String message)
     {
         String SENT = "SMS_SENT";

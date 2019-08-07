@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,12 +14,13 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -26,6 +28,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -100,8 +103,8 @@ public class SendGuestKey extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sendData="repeat";
-                select_date.setVisibility(View.VISIBLE);
-                select_day.setVisibility(View.GONE);
+                select_date.setVisibility(View.GONE);
+                select_day.setVisibility(View.VISIBLE);
                 GradientDrawable btnRepeatBg = (GradientDrawable)btnRepeat.getBackground();
                 btnRepeatBg.setColor(Color.rgb(33,150,243));
                 btnRepeat.setTextColor(Color.WHITE);
@@ -115,8 +118,8 @@ public class SendGuestKey extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sendData="once";
-                select_date.setVisibility(View.GONE);
-                select_day.setVisibility(View.VISIBLE);
+                select_date.setVisibility(View.VISIBLE);
+                select_day.setVisibility(View.GONE);
                 GradientDrawable btnRepeatBg = (GradientDrawable)btnRepeat.getBackground();
                 btnRepeatBg.setColor(Color.rgb(209,209,209));
                 btnRepeat.setTextColor(Color.BLACK);
@@ -129,10 +132,11 @@ public class SendGuestKey extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String result="-";
                 try{
                     String user_tel,user_select="";
                     user_tel=edtUserTel.getText().toString();
-                    if(sendData.equals("repeat")) { //반복 방문자
+                    if(sendData.equals("repeat")) {
                         if (ckbSelectMon.isChecked()) {
                             user_select += "월" + ",";
                         }
@@ -154,21 +158,32 @@ public class SendGuestKey extends AppCompatActivity {
                         if (ckbSelectSun.isChecked()) {
                             user_select += "일" + ",";
                         }
-                        String result = new GuestRepeatActivity().execute(user_tel, user_select).get();
-                        Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
+                        result = new GuestRepeatActivity().execute(user_tel, user_select).get();
                         //showDialog(result);
-                    }//반복 방문자 end
-                    else if(sendData.equals("once")){      //일회 방문자
+                    }
+                    else if(sendData.equals("once")){
                         user_select=edtDate.getText().toString();
-                        String result  = new GuestOnceActivity().execute(user_tel,user_select).get();
-                        Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
+                        result  = new GuestOnceActivity().execute(user_tel,user_select).get();
                         //showDialog(result);
-                    }//일회 방문자 end
+                    }
                 }catch (Exception e){
                     Log.i("DBTest", "안드로이드랑 통신 안됨-----------");
                 }
+                if(result.equals("-")){
+                    Log.i("DBTest", "실패-----------");
+                }
+                else if(result.equals("가입된 사용자")){
+                    Toast.makeText(getApplicationContext(),"보내기 완료",Toast.LENGTH_LONG).show();
+                    //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
+                    //startActivity(intent);
+                }
+                else if(result.equals("미가입된 사용자")){
+                    Toast.makeText(getApplicationContext(), "가입 유도 문자를 보냅니다.", Toast.LENGTH_LONG).show();
+                    //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
+                    //startActivity(intent);
+                }
             }
-        });//btnSend.OnClickListener() end
+        });
 
         // 추가된 소스, Toolbar를 생성한다.
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -214,8 +229,7 @@ public class SendGuestKey extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
-                    startActivity(intent);
-                }
+                    startActivity(intent); }
             });
             //취소버튼
             alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -239,7 +253,7 @@ public class SendGuestKey extends AppCompatActivity {
             //다이얼로그 바디
             AlertDialog.Builder alertdialog = new AlertDialog.Builder(activity);
             //다이얼로그 메세지
-            String guest_name = edtUserName.getText().toString();
+            String guest_name = "---EditText에서 가져오기";
             alertdialog.setMessage(guest_name + " 님께 게스트키를 보내시겠습니까?");
             //확인 버튼
             alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {

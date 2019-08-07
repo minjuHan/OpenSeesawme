@@ -41,15 +41,15 @@
         <activity android:name=".join" />
         <activity android:name=".Login" />
         <activity android:name=".SendGuestKey">
-
-        </activity>
-        <activity android:name=".TrueMainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- SMS 수신부분 정의 -->
+        </activity>
+        <activity android:name=".TrueMainActivity" />
+
+        <!-- SMS 수신부분 정의 -->
         <receiver android:name=".SmsReceiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
