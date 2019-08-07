@@ -249,6 +249,7 @@ public class SendGuestKey extends AppCompatActivity {
             //startActivity(intent);
         }
         else if(result.equals("미가입된 사용자")) {
+            ///
             //팝업 띄우기===== 여기부터
             //다이얼로그 바디
             AlertDialog.Builder alertdialog = new AlertDialog.Builder(activity);
