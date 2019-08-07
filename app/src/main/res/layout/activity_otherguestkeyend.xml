@@ -74,6 +74,7 @@
             android:textSize="15dp" />
 
         <TextView
+            android:id="@+id/txt_gkname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -97,6 +98,7 @@
             android:textSize="15dp" />
 
         <TextView
+            android:id="@+id/txt_gkwhat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -113,6 +115,7 @@
         android:layout_marginHorizontal="30dp">
 
         <TextView
+            android:id="@+id/txt_gkday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -120,6 +123,7 @@
             android:textSize="15dp" />
 
         <TextView
+            android:id="@+id/txt_gkwhen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"

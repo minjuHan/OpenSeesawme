@@ -176,10 +176,12 @@ public class SendGuestKey extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 try {
                                     result = new GuestRepeatActivity().execute(user_tel, user_select).get();
+                                    Log.i("result", result);
                                     Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
                                     intent.putExtra("gk_name",g_name);
                                     intent.putExtra("gk_what", "반복 방문자");
                                     intent.putExtra("gk_when",u_select);
+                                    Log.i("result", "2343423424");
                                     startActivity(intent);
                                 }catch (Exception e){
                                     e.printStackTrace();

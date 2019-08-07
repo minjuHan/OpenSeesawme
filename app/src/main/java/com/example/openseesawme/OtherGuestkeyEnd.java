@@ -8,14 +8,21 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class OtherGuestkeyEnd extends AppCompatActivity {
 Button backguestkey;
 Toolbar myToolbar;
+TextView txt_gkday, txt_gkname, txt_gkwhat, txt_gkwhen;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otherguestkeyend);
+
+        txt_gkday = findViewById(R.id.txt_gkday);
+        txt_gkname = findViewById(R.id.txt_gkname);
+        txt_gkwhat = findViewById(R.id.txt_gkwhat);
+        txt_gkwhen = findViewById(R.id.txt_gkwhen);
 
         setTitle("게스트키 보내기 완료");
         backguestkey = findViewById(R.id.backguestkey);
@@ -43,6 +50,11 @@ Toolbar myToolbar;
         String gk_what = intent.getStringExtra("gk_what");
         String gk_when = intent.getStringExtra("gk_when");
         Log.i("gk_name",gk_name + "  " +  gk_what +  "   " + gk_when);
+
+        txt_gkname.setText(gk_name);
+        txt_gkwhat.setText(gk_what);
+        txt_gkwhen.setText(gk_when);
+
 
 
     }
