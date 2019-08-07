@@ -43,6 +43,8 @@ public class SendGuestKey extends AppCompatActivity {
     Integer cnt=0;
     private Activity activity;
     String sendData="repeat";
+    String result="-";
+    String user_tel,user_select="";
 
     //사용자에게 권한 허용받기
     private boolean checkPermissions() {
@@ -132,9 +134,10 @@ public class SendGuestKey extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String result="-";
+                result = "-";
                 try{
-                    String user_tel,user_select="";
+//                    String user_tel,user_select="";
+//                    user_tel=edtUserTel.getText().toString();
                     user_tel=edtUserTel.getText().toString();
                     if(sendData.equals("repeat")) {
                         if (ckbSelectMon.isChecked()) {
@@ -158,12 +161,86 @@ public class SendGuestKey extends AppCompatActivity {
                         if (ckbSelectSun.isChecked()) {
                             user_select += "일" + ",";
                         }
-                        result = new GuestRepeatActivity().execute(user_tel, user_select).get();
+
+                        //팝업 띄우기===== 여기부터
+                        //다이얼로그 바디
+                        AlertDialog.Builder alertdialog = new AlertDialog.Builder(activity);
+                        //다이얼로그 메세지
+                        String guest_name = String.valueOf(edtUserName.getText());
+                        alertdialog.setMessage(guest_name + " 님께 게스트키를 보내시겠습니까?");
+                        final String g_name = guest_name;
+                        final String u_select = user_select;
+                        //확인 버튼
+                        alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try {
+                                    result = new GuestRepeatActivity().execute(user_tel, user_select).get();
+                                    Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
+                                    intent.putExtra("gk_name",g_name);
+                                    intent.putExtra("gk_what", "반복 방문자");
+                                    intent.putExtra("gk_when",u_select);
+                                    startActivity(intent);
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                        //취소버튼
+                        alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(activity, "취소하였습니다", Toast.LENGTH_SHORT).show(); }
+                        });
+                        //메인 다이얼로그 생성
+                        AlertDialog alert = alertdialog.create();
+                        //아이콘 설정
+                        //제목
+                        alert.setTitle("게스트키 보내기");
+                        alert.show();
+                        //=========== 여기까지
                         //showDialog(result);
                     }
                     else if(sendData.equals("once")){
                         user_select=edtDate.getText().toString();
-                        result  = new GuestOnceActivity().execute(user_tel,user_select).get();
+                        //팝업 띄우기===== 여기부터
+                        //다이얼로그 바디
+                        AlertDialog.Builder alertdialog = new AlertDialog.Builder(activity);
+                        //다이얼로그 메세지
+                        String guest_name = String.valueOf(edtUserName.getText());
+                        alertdialog.setMessage(guest_name + " 님께 게스트키를 보내시겠습니까?");
+                        final String g_name = guest_name;
+
+                        //확인 버튼
+                        alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try{
+                                    result  = new GuestOnceActivity().execute(user_tel,user_select).get();
+                                    Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
+                                    intent.putExtra("gk_name",g_name);
+                                    intent.putExtra("gk_what", "일회 사용자");
+                                    intent.putExtra("gk_when",String.valueOf(edtDate.getText()));
+                                    startActivity(intent);
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                        //취소버튼
+                        alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(activity, "취소하였습니다", Toast.LENGTH_SHORT).show(); }
+                        });
+                        //메인 다이얼로그 생성
+                        AlertDialog alert = alertdialog.create();
+                        //아이콘 설정
+                        //제목
+                        alert.setTitle("게스트키 보내기");
+                        alert.show();
+                        //=========== 여기까지
+//                        result  = new GuestOnceActivity().execute(user_tel,user_select).get();
                         //showDialog(result);
                     }
                 }catch (Exception e){
@@ -218,66 +295,11 @@ public class SendGuestKey extends AppCompatActivity {
     }
     protected void showDialog(String result){
         if(result.equals("가입된 사용자")){
-            //팝업 띄우기===== 여기부터
-            //다이얼로그 바디
-            AlertDialog.Builder alertdialog = new AlertDialog.Builder(activity);
-            //다이얼로그 메세지
-            String guest_name = "---EditText에서 가져오기";
-            alertdialog.setMessage(guest_name + " 님께 게스트키를 보내시겠습니까?");
-            //확인 버튼
-            alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
-                    startActivity(intent); }
-            });
-            //취소버튼
-            alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(activity, "취소하였습니다", Toast.LENGTH_SHORT).show(); }
-            });
-            //메인 다이얼로그 생성
-            AlertDialog alert = alertdialog.create();
-            //아이콘 설정
-            //제목
-            alert.setTitle("게스트키 보내기");
-            alert.show();
-            //=========== 여기까지
             Toast.makeText(getApplicationContext(),"보내기 완료",Toast.LENGTH_LONG).show();
             //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
             //startActivity(intent);
         }
         else if(result.equals("미가입된 사용자")) {
-            ///
-            //팝업 띄우기===== 여기부터
-            //다이얼로그 바디
-            AlertDialog.Builder alertdialog = new AlertDialog.Builder(activity);
-            //다이얼로그 메세지
-            String guest_name = "---EditText에서 가져오기";
-            alertdialog.setMessage(guest_name + " 님께 게스트키를 보내시겠습니까?");
-            //확인 버튼
-            alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent(getApplicationContext(), OtherGuestkeyEnd.class);
-                    startActivity(intent);
-                }
-            });
-            //취소버튼
-            alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(activity, "취소하였습니다", Toast.LENGTH_SHORT).show();
-                }
-            });
-            //메인 다이얼로그 생성
-            AlertDialog alert = alertdialog.create();
-            //아이콘 설정
-            //제목
-            alert.setTitle("게스트키 보내기");
-            alert.show();
-            //=========== 여기까지
             Toast.makeText(getApplicationContext(), "가입 유도 문자를 보냅니다.", Toast.LENGTH_LONG).show();
         }
     }

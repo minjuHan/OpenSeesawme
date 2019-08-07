@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +37,14 @@ Toolbar myToolbar;
         //기본 타이틀 보여줄지 말지 설정. 안보여준다.
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         //여기까지 툴바
+
+        Intent intent = getIntent();
+        String gk_name = intent.getStringExtra("gk_name");
+        String gk_what = intent.getStringExtra("gk_what");
+        String gk_when = intent.getStringExtra("gk_when");
+        Log.i("gk_name",gk_name + "  " +  gk_what +  "   " + gk_when);
+
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
