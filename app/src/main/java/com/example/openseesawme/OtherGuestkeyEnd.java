@@ -59,8 +59,9 @@ TextView txt_gkday, txt_gkname, txt_gkwhat, txt_gkwhen;
 
         if(gk_what.equals("반복 방문자")){
             txt_gkday.setText("요일 반복");
-            String new_when = String.valueOf(txt_gkwhen).substring(0,txt_gkwhen.length()-1);
-            txt_gkwhen.setText(new_when + "요일");
+//            String new_when = String.valueOf(txt_gkwhen).substring(0,txt_gkwhen.length()-1);
+            String new_when = txt_gkwhen.getText().toString().substring(0, txt_gkwhen.length()-1);
+            txt_gkwhen.setText(new_when + "요일");//andro 요일..?
         }else if(gk_what.equals("일회 사용자")){
             txt_gkday.setText("방문 날짜");
             txt_gkwhen.setText(gk_when);
