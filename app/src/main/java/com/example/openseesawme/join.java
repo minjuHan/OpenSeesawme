@@ -158,7 +158,6 @@ public class join extends AppCompatActivity {
                     //TODO
                 }
                 break;
-
             default:
                 break;
         }
