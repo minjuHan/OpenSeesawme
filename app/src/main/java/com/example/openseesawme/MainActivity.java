@@ -67,17 +67,13 @@ public class MainActivity extends AppCompatActivity {
                     if(result2.equals("로그인 성공")){
                         //Toast.makeText(MainActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
 
-                        //SharedPreferences 값 설정
-                        SharedPreferences pref = getSharedPreferences("pref",MODE_PRIVATE);
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putBoolean("keeplog",keeplogin);
-                        editor.putString("userID",user_id);
-                        editor.commit();
-
+                        //global 변수에 user_id 저장
                         Dglobal.setLoginID(user_id);
 
                         //메인으로 넘어가는 코드
                         Intent intent = new Intent(getApplicationContext(),TrueMainActivity.class);
+                        intent.putExtra("keeplog",keeplogin);
+                        intent.putExtra("userID", user_id);
                         startActivity(intent);
 
                     }else if(result2.equals("분실 처리된 아이디 입니다")){

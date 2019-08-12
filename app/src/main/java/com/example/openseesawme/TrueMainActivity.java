@@ -1,6 +1,7 @@
 package com.example.openseesawme;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.motion.MotionLayout;
@@ -34,6 +35,18 @@ public class TrueMainActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        Boolean keeplogin = intent.getBooleanExtra("keeplog",false);
+        String user_id = intent.getStringExtra("userID");
+        Toast.makeText(getApplicationContext(),keeplogin + "   " + user_id, Toast.LENGTH_LONG).show();
+
+        //SharedPreferences 값 설정
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("keeplog",keeplogin);
+        editor.putString("userID",user_id);
+        editor.commit();
 
         Log.i("LoginTest", "success1");
 
@@ -160,6 +173,7 @@ public class TrueMainActivity extends AppCompatActivity {
         menuInflater.inflate(R.menu.menu, menu);
         return true;
     }
+
     //추가된 소스, ToolBar에 추가된 항목의 select 이벤트를 처리하는 함수
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
