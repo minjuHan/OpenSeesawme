@@ -23,14 +23,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Loading">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".Main2Activity" />
         <activity android:name=".JoinAgree" />
         <activity android:name=".RegisterDoorlock4" />
         <activity android:name=".RegisterDoorlock3_2" />
@@ -47,10 +39,16 @@
         <activity android:name=".OtherGuestkeyEnd" />
         <activity android:name=".join" />
         <activity android:name=".Login" />
-        <activity android:name=".SendGuestKey">
+        <activity android:name=".SendGuestKey" />
+        <activity android:name=".TrueMainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".TrueMainActivity" /> <!-- SMS 수신부분 정의 -->
+
+        <!-- SMS 수신부분 정의 -->
         <receiver android:name=".SmsReceiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />

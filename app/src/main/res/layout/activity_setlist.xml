@@ -40,7 +40,7 @@
         android:layout_marginBottom="40dp">
         <ImageView
             android:id="@+id/door_img_id"
-            android:src="@drawable/home"
+            android:src="@drawable/house"
             android:layout_width="80dp"
             android:layout_height="80dp" />
         <TextView
@@ -53,8 +53,6 @@
             android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
-
         <TextView
             android:id="@+id/remain_battery_txt"
             android:layout_width="wrap_content"

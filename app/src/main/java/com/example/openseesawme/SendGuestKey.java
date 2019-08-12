@@ -176,7 +176,19 @@ public class SendGuestKey extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 try {
                                     result = new GuestRepeatActivity().execute(user_tel, user_select).get();
-                                    Log.i("result", result);
+                                    if(result.equals("-")){
+                                        Log.i("DBTest", "실패-----------");
+                                    }
+                                    else if(result.equals("가입된 사용자")){
+                                        Toast.makeText(getApplicationContext(),"보내기 완료",Toast.LENGTH_LONG).show();
+                                        //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
+                                        //startActivity(intent);
+                                    }
+                                    else if(result.equals("미가입된 사용자")){
+                                        Toast.makeText(getApplicationContext(), "가입 유도 문자를 보냅니다.", Toast.LENGTH_LONG).show();
+                                        //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
+                                        //startActivity(intent);
+                                    }
                                     Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
                                     intent.putExtra("gk_name",g_name);
                                     intent.putExtra("gk_what", "반복 방문자");
@@ -219,6 +231,19 @@ public class SendGuestKey extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 try{
                                     result  = new GuestOnceActivity().execute(user_tel,user_select).get();
+                                    if(result.equals("-")){
+                                        Log.i("DBTest", "실패-----------");
+                                    }
+                                    else if(result.equals("가입된 사용자")){
+                                        Toast.makeText(getApplicationContext(),"보내기 완료",Toast.LENGTH_LONG).show();
+                                        //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
+                                        //startActivity(intent);
+                                    }
+                                    else if(result.equals("미가입된 사용자")){
+                                        Toast.makeText(getApplicationContext(), "가입 유도 문자를 보냅니다.", Toast.LENGTH_LONG).show();
+                                        //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
+                                        //startActivity(intent);
+                                    }
                                     Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
                                     intent.putExtra("gk_name",g_name);
                                     intent.putExtra("gk_what", "일회 사용자");
@@ -247,19 +272,6 @@ public class SendGuestKey extends AppCompatActivity {
                     }
                 }catch (Exception e){
                     Log.i("DBTest", "안드로이드랑 통신 안됨-----------");
-                }
-                if(result.equals("-")){
-                    Log.i("DBTest", "실패-----------");
-                }
-                else if(result.equals("가입된 사용자")){
-                    Toast.makeText(getApplicationContext(),"보내기 완료",Toast.LENGTH_LONG).show();
-                    //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
-                    //startActivity(intent);
-                }
-                else if(result.equals("미가입된 사용자")){
-                    Toast.makeText(getApplicationContext(), "가입 유도 문자를 보냅니다.", Toast.LENGTH_LONG).show();
-                    //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
-                    //startActivity(intent);
                 }
             }
         });
@@ -291,20 +303,10 @@ public class SendGuestKey extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showDialog(1);
-
             }
         });
     }
-    protected void showDialog(String result){
-        if(result.equals("가입된 사용자")){
-            Toast.makeText(getApplicationContext(),"보내기 완료",Toast.LENGTH_LONG).show();
-            //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
-            //startActivity(intent);
-        }
-        else if(result.equals("미가입된 사용자")) {
-            Toast.makeText(getApplicationContext(), "가입 유도 문자를 보냅니다.", Toast.LENGTH_LONG).show();
-        }
-    }
+
     protected Dialog onCreateDialog(int id) {
         switch(id){
             case 1 :
