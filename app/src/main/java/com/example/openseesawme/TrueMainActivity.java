@@ -36,19 +36,24 @@ public class TrueMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //인텐트 받기(MainActivity.java로부터)
         Intent intent = getIntent();
         Boolean keeplogin = intent.getBooleanExtra("keeplog",false);
         String user_id = intent.getStringExtra("userID");
         Toast.makeText(getApplicationContext(),keeplogin + "   " + user_id, Toast.LENGTH_LONG).show();
 
-        //SharedPreferences 값 설정
-        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean("keeplog",keeplogin);
-        editor.putString("userID",user_id);
-        editor.commit();
+        //user_id가 null이 아닌 경우 SharedPreferences 설정
+        if(user_id != null){
+            //SharedPreferences 값 설정
+            SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putBoolean("keeplog",keeplogin);
+            editor.putString("userID",user_id);
+            editor.commit();
+        }
 
-        Log.i("LoginTest", "success1");
+        //사용자 id 글로벌 변수 test
+        //Toast.makeText(getApplicationContext(), Dglobal.getLoginID().toString(),Toast.LENGTH_LONG).show();
 
         // 추가된 소스, Toolbar를 생성한다.
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -62,7 +67,7 @@ public class TrueMainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         //여기까지 툴바
 
-        Log.i("LoginTest", "success2");
+
         //모션레이아웃
         motion_container = findViewById(R.id.motion_container);
         v1 = findViewById(R.id.v1);
@@ -76,11 +81,10 @@ public class TrueMainActivity extends AppCompatActivity {
                     motion_container.transitionToEnd();
                 }
                 selectedIndex = 0;
-
             }
         });
 
-        Log.i("LoginTest", "success3");
+
         v2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -155,7 +159,6 @@ public class TrueMainActivity extends AppCompatActivity {
                 //startActivityForResult(intent,0);
                 intent.putExtra("done",true);
                 startActivityForResult(intent,0);
-
             }
         });
         lock = findViewById(R.id.lock);

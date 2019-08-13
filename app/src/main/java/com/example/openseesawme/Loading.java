@@ -23,11 +23,13 @@ public class Loading extends AppCompatActivity {
             Intent intent = new Intent(Loading.this, TrueMainActivity.class);
             Dglobal.setLoginID(userID);
             startActivity(intent);
+            finish();
         }
         else{
             //Toast.makeText(getApplicationContext(),"로그인하세요",Toast.LENGTH_LONG).show();
             Intent intent = new Intent(Loading.this, MainActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 }
