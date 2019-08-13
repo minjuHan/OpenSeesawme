@@ -24,7 +24,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Loading">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".JoinAgree" />
         <activity android:name=".RegisterDoorlock4" />
@@ -44,11 +48,7 @@
         <activity android:name=".Login" />
         <activity android:name=".SendGuestKey" />
         <activity android:name=".TrueMainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <!-- SMS 수신부분 정의 -->
