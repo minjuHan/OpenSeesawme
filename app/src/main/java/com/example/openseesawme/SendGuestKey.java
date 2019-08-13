@@ -254,6 +254,7 @@ public class SendGuestKey extends AppCompatActivity {
                                 }
                             }
                         });
+
                         //취소버튼
                         alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
                             @Override
