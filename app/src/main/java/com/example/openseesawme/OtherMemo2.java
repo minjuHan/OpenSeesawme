@@ -3,6 +3,7 @@ package com.example.openseesawme;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
@@ -15,11 +16,24 @@ import android.widget.TextView;
 
 public class OtherMemo2 extends AppCompatActivity {
     Toolbar myToolbar;
-    Button backkey2;
+    Button backkey2, Acceptbtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_othermemo2);
+
+        Acceptbtn = findViewById(R.id.Acceptbtn);
+        Acceptbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder dlg = new AlertDialog.Builder(OtherMemo2.this);
+                dlg.setTitle("게스트키 받기");
+                dlg.setMessage("김아아님이 보내신 매주 수요일에 출입 가능한 게스트키를 받으시겠습니까?");
+                dlg.setPositiveButton("확인",null);
+                dlg.setNegativeButton("취소",null);
+                dlg.show();
+            }
+        });
 
         setTitle("게스트키 상세 정보");
 

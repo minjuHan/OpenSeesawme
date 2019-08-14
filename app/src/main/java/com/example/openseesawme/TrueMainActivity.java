@@ -116,6 +116,14 @@ public class TrueMainActivity extends AppCompatActivity {
         setlist2 = findViewById(R.id.setlist2);
         keylist2 = findViewById(R.id.keylist2);
 
+        inout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), AccessHistory.class);
+                startActivity(intent);
+            }
+        });
+
         setlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -182,6 +190,18 @@ public class TrueMainActivity extends AppCompatActivity {
             case android.R.id.home:
                 Intent intent = new Intent(getApplicationContext(), myguestkey.class);
                 startActivity(intent);
+                return true;
+            case R.id.action_settings2 :
+                Intent intent2 = new Intent(getApplicationContext(), DoorlockList.class);
+                startActivity(intent2);
+                return true;
+            case R.id.action_settings3 :
+                Intent intent3 = new Intent(getApplicationContext(), UserMypage.class);
+                startActivity(intent3);
+                return true;
+            case R.id.action_settings4 :
+                Intent intent4 = new Intent(getApplicationContext(), Setting.class);
+                startActivity(intent4);
                 return true;
             default:
                 // If we got here, the user's action was not recognized.

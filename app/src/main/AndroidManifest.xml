@@ -23,9 +23,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Loading">
-
-        </activity>
+        <activity android:name=".UserMypage"></activity>
+        <activity android:name=".Outsetitem" />
+        <activity android:name=".OutdoorsetEnd" />
+        <activity android:name=".OutdoorsetAdd" />
+        <activity android:name=".Outdoorset" />
+        <activity android:name=".Outdooritem" />
+        <activity android:name=".DoorlockList" />
+        <activity android:name=".DoorlockItem" />
+        <activity android:name=".DoorlockInfo" />
+        <activity android:name=".Loading" />
         <activity android:name=".JoinAgree" />
         <activity android:name=".RegisterDoorlock4" />
         <activity android:name=".RegisterDoorlock3_2" />
@@ -49,9 +56,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- SMS 수신부분 정의 -->
+        </activity> <!-- SMS 수신부분 정의 -->
         <receiver android:name=".SmsReceiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
