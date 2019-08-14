@@ -104,8 +104,8 @@ public class RegisterDoorlock4 extends AppCompatActivity {
             }
         }
     }
-    //여기까지 권한설정
 
+    //여기까지 권한설정
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -218,6 +218,9 @@ public class RegisterDoorlock4 extends AppCompatActivity {
                 //저장 안하고 바로 띄우기
                 Drawable drawable = new BitmapDrawable(scaled);
                 llGallery.setBackgroundDrawable(drawable);
+
+                tvGallery.setText("");
+                ivGallery.setImageBitmap(null);
 
             } else {
                 Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_LONG).show();
