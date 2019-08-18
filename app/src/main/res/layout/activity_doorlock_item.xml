@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:gravity="center_vertical"
+    android:layout_marginBottom="8dp"
+    android:background="@android:color/white"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="#AFE3FD">
+
+            <ImageView
+                android:id="@+id/doorimg"
+                android:src="@drawable/home"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="#DFD9D9"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/doorname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="도어락 이름"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:textSize="24dp"
+                android:textColor="#7E7E7B"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/doornumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:text="도어락 번호"
+                android:textColor="#CC868686"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/doorreg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="15dp"
+                android:text="도어락 등록일"
+                android:textColor="#CC868686"
+                android:textSize="20dp"
+                android:layout_gravity="right"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

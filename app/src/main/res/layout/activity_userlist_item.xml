@@ -13,7 +13,14 @@
         android:paddingVertical="10dp"
         android:paddingHorizontal="20dp"
         android:orientation="horizontal">
-
+        <!--<CheckBox-->
+        <!--android:id="@+id/chk_udelete"-->
+        <!--android:layout_width="32dp"-->
+        <!--android:layout_height="32dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:visibility="invisible"-->
+        <!--android:layout_marginTop="4dp"-->
+        <!--android:layout_marginBottom="4dp"/>-->
         <ImageView
             android:id="@+id/user_img"
             android:layout_width="52dp"
