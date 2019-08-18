@@ -104,8 +104,8 @@ public class RegisterDoorlock4 extends AppCompatActivity {
             }
         }
     }
-
     //여기까지 권한설정
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
