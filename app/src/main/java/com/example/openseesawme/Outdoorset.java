@@ -1,6 +1,5 @@
 package com.example.openseesawme;
 
-import android.arch.persistence.room.Delete;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +27,7 @@ public class Outdoorset extends AppCompatActivity {
     String[] outtitle, date, name;
     Button outaddbtn, delete_outset;
     CheckBox item_Allcheckbox;
-    private  List <Delete> ListList = new ArrayList<>();
+    //private  List <Delete> ListList = new ArrayList<>();
     private boolean isSelecting = false;
     private List<Integer> deleteList = new ArrayList<>();
     boolean selectAll = false;

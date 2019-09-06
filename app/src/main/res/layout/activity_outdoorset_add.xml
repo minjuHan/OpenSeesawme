@@ -35,6 +35,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <!--백그라운드 설정 부분 지웠음(파일 없음)-->
             <Button
                 android:onClick="OnClickHandler"
                 tools:ignore="OnClick"
@@ -44,12 +45,12 @@
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_border"
                 android:text="시작일"
                 android:textSize="20dp"
                 android:gravity="center"
                 android:textColor="#707070" />
 
+            <!--백그라운드 설정 부분 지웠음(파일 없음)-->
             <Button
                 android:onClick="OnClickHandler2"
                 tools:ignore="OnClick"
@@ -59,7 +60,6 @@
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_border"
                 android:text="마지막일"
                 android:textSize="20dp"
                 android:textColor="#707070" />

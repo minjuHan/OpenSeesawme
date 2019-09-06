@@ -34,7 +34,7 @@ public class UserAdapter_Delete extends RecyclerView.Adapter<UserAdapter_Delete.
 
             //user_img = itemView.findViewById(R.id.user_img);
             user_name = itemView.findViewById(R.id.user_name);
-            img_delete = itemView.findViewById(R.id.img_delete);
+            //img_delete = itemView.findViewById(R.id.img_delete);
 
             img_delete.setOnClickListener(new View.OnClickListener() {
                 @Override

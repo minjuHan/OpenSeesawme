@@ -23,7 +23,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserMypage"></activity>
+        <activity android:name=".UserMypage" />
         <activity android:name=".Outsetitem" />
         <activity android:name=".OutdoorsetEnd" />
         <activity android:name=".OutdoorsetAdd" />
@@ -40,28 +40,40 @@
         <activity android:name=".RegisterDoorlock2" />
         <activity android:name=".RegisterDoorlock1" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".Main2Activity" />
         <activity android:name=".myguestkey" />
         <activity android:name=".Fingerprint" />
         <activity android:name=".SetList" />
+        <activity android:name=".SmsTest">
+            <intent-filter>
+                <data
+                    android:scheme="@string/kakao_scheme"
+                    android:host="@string/kakaolink_host" />
+            </intent-filter>
+        </activity>
         <activity android:name=".OtherGuestkey" />
         <activity android:name=".OtherMemo1" />
         <activity android:name=".OtherMemo2" />
         <activity android:name=".OtherGuestkeyEnd" />
-        <activity android:name=".join" />
-        <activity android:name=".Login" />
-        <activity android:name=".SendGuestKey" />
-        <activity android:name=".TrueMainActivity">
+        <activity android:name=".join">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- SMS 수신부분 정의 -->
+        </activity>
+        <activity android:name=".Login" />
+        <activity android:name=".SendGuestKey" />
+        <activity android:name=".TrueMainActivity" />
+
+        <!-- SMS 수신부분 정의 -->
         <receiver android:name=".SmsReceiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="2be22d73290ff53d3a9e1b69b2fa6c2a" />
     </application>
 
 </manifest>
