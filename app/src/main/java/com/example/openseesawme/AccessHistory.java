@@ -33,7 +33,6 @@ public class AccessHistory extends AppCompatActivity {
     ListView listview;
     LinearLayout history_listview; //추가
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

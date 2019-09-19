@@ -130,7 +130,6 @@ public class RegisterDoorlock2 extends AppCompatActivity {
 
         }
 
-
         //검색된 디바이스목록 클릭시 페어링 요청
         listDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

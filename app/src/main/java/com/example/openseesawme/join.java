@@ -3,6 +3,7 @@ package com.example.openseesawme;
 import android.Manifest;
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import 	android.telephony.SmsManager;
 
+import java.lang.reflect.Field;
 import java.util.Random;
 
 public class join extends AppCompatActivity {
@@ -30,13 +32,8 @@ public class join extends AppCompatActivity {
     EditText edtId,edtPw,edtPwCheck,edtName,edtTel,edtNum;
     TextView tvIdCheck; //중복확인을 위한 텍스트를 써줄 부분
     String numText="";
-/*    private String test2 = "";
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        test2 = intent.getStringExtra("test2");
-        edtNum.setText(test2);
-    }*/
+    BluetoothAdapter bluetoothAdapter;
+    String user_mac="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +90,20 @@ public class join extends AppCompatActivity {
             }
         });
 
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        if(bluetoothAdapter == null){
+            Toast.makeText(this, "블루투스를 지원하지 않는 단말기 입니다.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        //강제 활성화
+        if(!bluetoothAdapter.isEnabled()){
+            bluetoothAdapter.enable();
+        }
+        user_mac=getBluetoothMacAddress();
+
         btnJoin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 try {
@@ -126,11 +137,11 @@ public class join extends AppCompatActivity {
                     else if(input.equals(numText)==false){
                         Toast.makeText(join.this,"인증번호가 일치하지 않습니다.",Toast.LENGTH_LONG).show();
                     }
-                    else if(input.equals("")){
+                    /*else if(input.equals("")){
                         Toast.makeText(join.this,"인증번호를 입력해주세요.",Toast.LENGTH_LONG).show();
-                    }
+                    }*/
                     else{
-                        String result  = new RegisterActivity().execute(user_id,user_pw,user_name,user_tel).get();
+                        String result  = new RegisterActivity().execute(user_id,user_pw,user_name,user_tel,user_mac).get();
                         if(result.equals("회원 가입 성공")){
                             Toast.makeText(join.this, "회원가입이 완료되었습니다.\n다시 로그인해주세요.", Toast.LENGTH_LONG).show();
                             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
@@ -161,6 +172,25 @@ public class join extends AppCompatActivity {
             default:
                 break;
         }
+    }
+
+    //Mac 주소
+    private String getBluetoothMacAddress() {
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        String bluetoothMacAddress = "";
+        try {
+            Field mServiceField = bluetoothAdapter.getClass().getDeclaredField("mService");
+            mServiceField.setAccessible(true);
+
+            Object btManagerService = mServiceField.get(bluetoothAdapter);
+
+            if (btManagerService != null) {
+                bluetoothMacAddress = (String) btManagerService.getClass().getMethod("getAddress").invoke(btManagerService);
+            }
+        } catch (Exception e) {
+
+        }
+        return bluetoothMacAddress;
     }
 
     //sms 전송
