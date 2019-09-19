@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -33,6 +34,21 @@
         <activity android:name=".DoorlockItem" />
         <activity android:name=".DoorlockInfo" />
         <activity android:name=".Loading" />
+        <service android:name=".MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name=".MyFirebaseInstanceIDService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
         <activity android:name=".JoinAgree" />
         <activity android:name=".RegisterDoorlock4" />
         <activity android:name=".RegisterDoorlock3_2" />
@@ -71,9 +87,12 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="2be22d73290ff53d3a9e1b69b2fa6c2a" />
-    </application>
 
+
+
+    </application>
 </manifest>
