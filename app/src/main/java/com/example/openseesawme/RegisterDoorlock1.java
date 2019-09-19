@@ -56,13 +56,13 @@ public class RegisterDoorlock1 extends AppCompatActivity {
 
             }
         });
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),RegisterDoorlock2.class);
-                startActivity(intent);
-            }
-        });
+//        btnNext.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getApplicationContext(),RegisterDoorlock2.class);
+//                startActivity(intent);
+//            }
+//        });
 
         BluetoothAdapter m_BluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if(m_BluetoothAdapter!=null){
