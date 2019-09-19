@@ -1,7 +1,6 @@
 package com.example.openseesawme;
 
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,7 +19,7 @@ public class RegisterDoorlockActivity extends AsyncTask<String,Void,String> {
             String str;
 
             // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
-            URL url = new URL("http://192.168.0.25:9090/Doorlock/androidDRegisterDB.jsp");
+            URL url = new URL("http://128.134.114.250:8080/doorlock/androidDRegisterDB.jsp");
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");

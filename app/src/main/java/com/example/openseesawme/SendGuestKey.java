@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,13 +13,11 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,7 +25,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
@@ -45,6 +41,8 @@ public class SendGuestKey extends AppCompatActivity {
     String sendData="repeat";
     String result="-";
     String user_tel,user_select="";
+
+    String myId = Dglobal.getLoginID();
 
     //사용자에게 권한 허용받기
     private boolean checkPermissions() {
@@ -183,6 +181,10 @@ public class SendGuestKey extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(),"보내기 완료",Toast.LENGTH_LONG).show();
                                         //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
                                         //startActivity(intent);
+
+                                        //FCM 푸시 보내는 jsp 호출
+
+
                                     }
                                     else if(result.equals("미가입된 사용자")){
                                         Toast.makeText(getApplicationContext(), "가입 유도 문자를 보냅니다.", Toast.LENGTH_LONG).show();
@@ -193,6 +195,9 @@ public class SendGuestKey extends AppCompatActivity {
                                     intent.putExtra("gk_name",g_name);
                                     intent.putExtra("gk_what", "반복 방문자");
                                     intent.putExtra("gk_when",u_select);
+
+
+
                                     Log.i("result", "2343423424");
                                     startActivity(intent);
                                 }catch (Exception e){

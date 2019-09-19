@@ -18,7 +18,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 public class TrueMainActivity extends AppCompatActivity {
+    //..,,
+    public static TrueMainActivity activity;
+
+
+
     Toolbar myToolbar; //툴바
     MotionLayout motion_container; //모션레이아웃
     Integer selectedIndex = 0;
@@ -35,6 +43,31 @@ public class TrueMainActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //FCM 토픽추가
+
+//        FirebaseMessaging.getInstance().subscribeToTopic("news"); //앱이 실행되면 자동으로 news라는 토픽을 구독한다
+//        FirebaseInstanceId.getInstance().getToken();
+
+        //FCM 토큰을 저장할 수 있도록 jsp로 데이터를 보내는 코드
+
+        FirebaseMessaging.getInstance().subscribeToTopic("news");
+        String tokens = FirebaseInstanceId.getInstance().getToken();
+        try {
+            /*String tokenss = autoLogin.getString("tokens", null);
+            SharedPreferences.Editor editor = autoLogin.edit();
+            editor.putString("tokens", tokens);
+            editor.apply();*/
+            String result = new TaskMethod("http://128.134.114.250:8080/doorlock/fcmtoken.jsp",
+                    "token=" + tokens, "UTF-8").execute().get();
+            Log.d("resultssssss", result + ":");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        //=========FCM end
+
 
         //인텐트 받기(MainActivity.java로부터)
         Intent intent = getIntent();
@@ -210,9 +243,14 @@ public class TrueMainActivity extends AppCompatActivity {
 
             //버튼 숨기기
             btnfp.setVisibility(Button.INVISIBLE);
-
         }
-
-
     }
-}
+
+    ////=================fcm =============================
+
+///===========================================================fcm end
+
+
+
+
+}//class end

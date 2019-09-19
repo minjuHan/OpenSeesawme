@@ -12,6 +12,7 @@ import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -101,13 +102,18 @@ public class Fingerprint extends AppCompatActivity {
                 //outIntent.putExtra("done",done);
                 setResult(RESULT_OK, outIntent);
 
+                //jsp로 보내는 코드 -=========================
+                String d_open = "open";
+                try {
+                    String result2  = new FingerActivity().execute(d_open).get();
+                    Log.i("openopen======","1");
+                    Log.i("openopen======return",result2);
+                }catch (Exception e){}
+
+                //============================================
                 finish();
             }
         });
-
-
-
-
 
     }
     //Cipher Init()

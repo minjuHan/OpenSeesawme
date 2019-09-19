@@ -22,7 +22,7 @@ public class HistoryActivity extends AsyncTask<String, Void, String> {
             String str;
 
             // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
-            URL url = new URL("http://172.30.44.29:9090/doorlock/androidHistoryDB_name.jsp");
+            URL url = new URL("http://128.134.114.250:8080/doorlock/androidHistoryDB_name.jsp");
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");

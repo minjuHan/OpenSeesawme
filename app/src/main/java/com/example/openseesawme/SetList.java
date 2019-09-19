@@ -4,14 +4,21 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class SetList extends AppCompatActivity {
 Toolbar myToolbar;
+Button btnset_user;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setlist);
 
+        btnset_user = findViewById(R.id.btnset_user);
         // 추가된 소스, Toolbar를 생성한다.
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -23,6 +30,17 @@ Toolbar myToolbar;
         //기본 타이틀 보여줄지 말지 설정. 안보여준다.
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         //여기까지 툴바
+
+
+        btnset_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+
+                }
+                catch (Exception e){}
+            }
+        });
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -34,5 +52,7 @@ Toolbar myToolbar;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
 }
