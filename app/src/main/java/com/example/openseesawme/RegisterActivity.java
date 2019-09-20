@@ -19,7 +19,7 @@ public class RegisterActivity extends AsyncTask<String,Void,String> {
             String str;
 
             // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
-            URL url = new URL("http://192.168.0.26:9090/Doorlock/androidJoinDB.jsp");
+            URL url = new URL("http://128.134.114.250:8080/doorlock/androidJoinDB.jsp");
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");

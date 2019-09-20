@@ -2,6 +2,7 @@ package com.example.openseesawme;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,11 +26,35 @@ public class UserMypage extends AppCompatActivity {
     View dialogView;
     EditText usernamechange;
     private int REQ_CODE_PICK_PICTURE;
+    Button btnLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_mypage);
+
+        //로그아웃
+        btnLogout=findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //저장되었던 SharedPreferences 삭제
+                SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.remove("keeplog");
+                editor.remove("userID");
+                editor.commit();
+
+                Dglobal.setLoginID(null);
+
+                //로딩페이지로 이동
+                Intent intent = new Intent(getApplicationContext(), Loading.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        //여기까지 로그아웃
+
 
         // 추가된 소스, Toolbar를 생성한다.
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);

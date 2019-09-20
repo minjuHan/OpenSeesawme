@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
+    tools:context=".UserMypage">
     <!-- 툴바 -->
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -14,49 +16,39 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
         <TextView
             android:id="@+id/toolbar_title"
             android:text="내정보"
             android:textColor="#ffffff"
             android:textSize="20dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
     </android.support.v7.widget.Toolbar>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_margin="30dp"
-        tools:context=".UserMypaget">
-
-
+        android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp">
-
             <ImageView
                 android:id="@+id/myimage"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/home" />
-
             <TextView
                 android:id="@+id/username2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="90dp"
                 android:layout_marginTop="8dp"
+                android:layout_toRightOf="@+id/door_img_id"
                 android:text="한민주"
                 android:textColor="#333333"
                 android:textSize="22dp" />
-
-
             <TextView
                 android:id="@+id/remain_battery_txt"
                 android:layout_width="wrap_content"
@@ -68,7 +60,6 @@
                 android:text="dadad.naver.con"
                 android:textColor="#333333"
                 android:textSize="20dp" />
-
             <ImageView
                 android:id="@+id/changebtn"
                 android:layout_width="25dp"
@@ -77,11 +68,7 @@
                 android:layout_marginTop="18dp"
                 android:layout_toRightOf="@+id/username2"
                 android:src="@drawable/pencel" />
-
-
         </RelativeLayout>
-
-
         <View
             android:layout_width="wrap_content"
             android:layout_height="2dp"
@@ -112,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Button
-            android:id="@+id/logout"
+            android:id="@+id/btnLogout"
             android:text="로그아웃"
             android:textSize="16dp"
             android:gravity="left|center"
@@ -122,6 +109,5 @@
             android:background="@drawable/btn_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
 </LinearLayout>
