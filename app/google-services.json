@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "756347780058",
+    "firebase_url": "https://openseesawme.firebaseio.com",
+    "project_id": "openseesawme",
+    "storage_bucket": "openseesawme.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:756347780058:android:672a9f2cf0cf9c0f39dee3",
+        "android_client_info": {
+          "package_name": "com.example.openseesawme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "756347780058-ja3v4phcv6und9d8anbv1tokd50f77u0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.openseesawme",
+            "certificate_hash": "e275e06106d6effe18868e2e0f08e1e8448540fe"
+          }
+        },
+        {
+          "client_id": "756347780058-a0516g5vki8imh3inhjg0efr481p81sm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJYsEoWY4sf7DS15QHKivcc0wi5dgQiAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "756347780058-a0516g5vki8imh3inhjg0efr481p81sm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
