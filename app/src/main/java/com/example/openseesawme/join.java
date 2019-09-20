@@ -9,8 +9,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.health.PackageHealthStats;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -34,31 +36,17 @@ public class join extends AppCompatActivity {
     String numText="";
     BluetoothAdapter bluetoothAdapter;
     String user_mac="";
+    String[] permission_list = {
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.RECEIVE_SMS,
+            Manifest.permission.READ_PHONE_STATE
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
         setTitle("회원가입");
-
-        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
-        } else {
-            //TODO
-        }
-
-        int permissionCheck2= ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS);
-        if(permissionCheck2== PackageManager.PERMISSION_GRANTED){
-            Toast.makeText(this,"SMS 수신 권한 있음",Toast.LENGTH_LONG).show();
-        }else{
-            Toast.makeText(this,"SMS 수신 권한 없음",Toast.LENGTH_LONG).show();
-        }
-        if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.SEND_SMS)){
-            Toast.makeText(this,"SMS 권한 설명 필요",Toast.LENGTH_LONG).show();
-        }else{
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS},1);
-        }
 
         btnJoin=findViewById(R.id.btnJoin);
         btnSend=findViewById(R.id.btnSend);
@@ -69,12 +57,20 @@ public class join extends AppCompatActivity {
         edtTel=findViewById(R.id.edtTel);
         edtNum=findViewById(R.id.edtNum);
         tvIdCheck=findViewById(R.id.tvidcheck);
+        checkPermission();
+
+        //문자 받았을 때
+        Intent smsIntent = getIntent();
+        String originSmsText = smsIntent.getStringExtra("originText");
+        edtNum.setText(originSmsText);
+
 
         btnSend.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
-                String tel = edtTel.getText().toString();
+                String smsTel = edtTel.getText().toString();
+                String smsText="";
                 int num;
                 Random random = new Random();
                 numText="";
@@ -82,11 +78,12 @@ public class join extends AppCompatActivity {
                     num= random.nextInt(10);
                     numText=numText+num;
                 }
-                String message = "인증번호는 "+numText+"입니다.";
-                if (tel.length()>0 && message.length()>0)
-                    sendSMS(tel, message);
-                else
-                    Toast.makeText(getApplicationContext(),"번호를 입력해주세요.",Toast.LENGTH_SHORT).show();
+                smsText = "인증번호는 "+numText+"입니다.";
+                if (smsTel.length()>0){
+                    sendSMS(smsTel, smsText);
+                }else{
+                    Toast.makeText(getApplicationContext(), "번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -161,17 +158,94 @@ public class join extends AppCompatActivity {
             }
         });
     }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case 1:
-                if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    //TODO
-                }
-                break;
-            default:
-                break;
+
+    //여기부터 권한설정
+    public void checkPermission(){
+        //현재 안드로이드 버전이 6.0미만이면 메서드를 종료한다.
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+            return;
+
+        for(String permission : permission_list){
+            //권한 허용 여부를 확인한다.
+            int chk = checkCallingOrSelfPermission(permission);
+
+            if(chk == PackageManager.PERMISSION_DENIED){
+                //권한 허용을여부를 확인하는 창을 띄운다
+                requestPermissions(permission_list,0);
+            }
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==0)
+        {
+            for(int i=0; i<grantResults.length; i++)
+            {
+                //허용됬다면
+                if(grantResults[i]== PackageManager.PERMISSION_GRANTED){
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),"앱권한설정하세요",Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+        }
+    }
+    //여기까지 권한설정
+
+    //sms 전송
+    public void sendSMS(String smsNumber, String smsText){
+        PendingIntent sentIntent = PendingIntent.getBroadcast(this, 0, new Intent("SMS_SENT_ACTION"), 0);
+        PendingIntent deliveredIntent = PendingIntent.getBroadcast(this, 0, new Intent("SMS_DELIVERED_ACTION"), 0);
+
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context mContext, Intent intent) {
+                switch(getResultCode()){
+                    case Activity.RESULT_OK:
+                        // 전송 성공
+                        Toast.makeText(mContext, "전송 완료", Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
+                        // 전송 실패
+                        Toast.makeText(mContext, "전송 실패", Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_NO_SERVICE:
+                        // 서비스 지역 아님
+                        Toast.makeText(mContext, "서비스 지역이 아닙니다", Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_RADIO_OFF:
+                        // 무선 꺼짐
+                        Toast.makeText(mContext, "무선(Radio)가 꺼져있습니다", Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_NULL_PDU:
+                        // PDU 실패
+                        Toast.makeText(mContext, "PDU Null", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        }, new IntentFilter("SMS_SENT_ACTION"));
+
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context mContext, Intent intent) {
+                switch (getResultCode()){
+                    case Activity.RESULT_OK:
+                        // 도착 완료
+                        Toast.makeText(mContext, "SMS 도착 완료", Toast.LENGTH_SHORT).show();
+                        break;
+                    case Activity.RESULT_CANCELED:
+                        // 도착 안됨
+                        Toast.makeText(mContext, "SMS 도착 실패", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        }, new IntentFilter("SMS_DELIVERED_ACTION"));
+
+        SmsManager mSmsManager = SmsManager.getDefault();
+        mSmsManager.sendTextMessage(smsNumber, null, smsText, sentIntent, deliveredIntent);
     }
 
     //Mac 주소
@@ -191,78 +265,5 @@ public class join extends AppCompatActivity {
 
         }
         return bluetoothMacAddress;
-    }
-
-    //sms 전송
-    private void sendSMS(String phoneNumber, String message)
-    {
-        String SENT = "SMS_SENT";
-        String DELIVERED = "SMS_DELIVERED";
-
-        PendingIntent sentPI = PendingIntent.getBroadcast(this, 0,
-                new Intent(SENT), 0);
-
-        PendingIntent deliveredPI = PendingIntent.getBroadcast(this, 0,
-                new Intent(DELIVERED), 0);
-
-        //---when the SMS has been sent---
-        registerReceiver(new BroadcastReceiver(){
-            @Override
-            public void onReceive(Context arg0, Intent arg1) {
-                switch (getResultCode())
-                {
-                    case Activity.RESULT_OK:
-                        Toast.makeText(getBaseContext(), "SMS sent",
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                        Toast.makeText(getBaseContext(), "Generic failure",
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                    case SmsManager.RESULT_ERROR_NO_SERVICE:
-                        Toast.makeText(getBaseContext(), "No service",
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                    case SmsManager.RESULT_ERROR_NULL_PDU:
-                        Toast.makeText(getBaseContext(), "Null PDU",
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                    case SmsManager.RESULT_ERROR_RADIO_OFF:
-                        Toast.makeText(getBaseContext(), "Radio off",
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-        }, new IntentFilter(SENT));
-
-        //---when the SMS has been delivered---
-        registerReceiver(new BroadcastReceiver(){
-            @Override
-            public void onReceive(Context arg0, Intent arg1) {
-                switch (getResultCode())
-                {
-                    case Activity.RESULT_OK:
-                        Toast.makeText(getBaseContext(), "SMS delivered",
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                    case Activity.RESULT_CANCELED:
-                        Toast.makeText(getBaseContext(), "SMS not delivered",
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-        }, new IntentFilter(DELIVERED));
-
-        SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
-    }
-
-    // 모니터링 안하고 발송을 원한다면 아래 함수를 이용
-    private void __sendSMS(String phoneNumber, String message)
-    {
-        PendingIntent pi = PendingIntent.getActivity(this, 0,
-                new Intent(this, join.class), 0);
-        SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(phoneNumber, null, message, pi, null);
     }
 }

@@ -8,13 +8,12 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" /><!--인증번호 자동입력 안할거면 필요없음-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -34,27 +33,17 @@
         <activity android:name=".DoorlockItem" />
         <activity android:name=".DoorlockInfo" />
         <activity android:name=".Loading" />
-        <service android:name=".MyFirebaseMessagingService"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
-        <service
-            android:name=".MyFirebaseInstanceIDService"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-            </intent-filter>
-        </service>
         <activity android:name=".JoinAgree" />
         <activity android:name=".RegisterDoorlock4" />
         <activity android:name=".RegisterDoorlock3_2" />
         <activity android:name=".RegisterDoorlock3" />
         <activity android:name=".RegisterDoorlock2" />
-        <activity android:name=".RegisterDoorlock1" />
+        <activity android:name=".RegisterDoorlock1">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".Main2Activity" />
         <activity android:name=".myguestkey" />
@@ -71,28 +60,14 @@
         <activity android:name=".OtherMemo1" />
         <activity android:name=".OtherMemo2" />
         <activity android:name=".OtherGuestkeyEnd" />
-        <activity android:name=".join">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".join" />
         <activity android:name=".Login" />
         <activity android:name=".SendGuestKey" />
         <activity android:name=".TrueMainActivity" />
 
-        <!-- SMS 수신부분 정의 -->
-        <receiver android:name=".SmsReceiver">
-            <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-            </intent-filter>
-        </receiver>
-
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="2be22d73290ff53d3a9e1b69b2fa6c2a" />
-
-
-
     </application>
+
 </manifest>

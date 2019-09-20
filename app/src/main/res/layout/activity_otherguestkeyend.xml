@@ -142,11 +142,12 @@
         android:gravity="center">
 
         <Button
+            android:id="@+id/btnShareKakao"
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:background="@drawable/button_white"
             android:gravity="center"
-            android:text="SMS 전송"
+            android:text="카카오톡 공유"
             android:textColor="#A0A0A0" />
 
         <Button
