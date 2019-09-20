@@ -52,7 +52,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="90dp"
                 android:layout_marginTop="8dp"
-                android:layout_toRightOf="@+id/door_img_id"
                 android:text="한민주"
                 android:textColor="#333333"
                 android:textSize="22dp" />
