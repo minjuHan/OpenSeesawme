@@ -71,14 +71,14 @@
         <activity android:name=".OtherMemo1" />
         <activity android:name=".OtherMemo2" />
         <activity android:name=".OtherGuestkeyEnd" />
-        <activity android:name=".join" />
-        <activity android:name=".Login" />
-        <activity android:name=".SendGuestKey">
+        <activity android:name=".join">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Login" />
+        <activity android:name=".SendGuestKey" />
         <activity android:name=".TrueMainActivity" />
 
         <meta-data
