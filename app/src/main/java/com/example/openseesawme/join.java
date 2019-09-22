@@ -139,7 +139,7 @@ public class join extends AppCompatActivity {
                     }*/
                     else{
                         String result  = new RegisterActivity().execute(user_id,user_pw,user_name,user_tel,user_mac).get();
-                        if(result.equals("회원 가입 성공")){
+                        if(result.equals("회원 가입 성공")||result.equals("게스트키 가입 사용자")){
                             Toast.makeText(join.this, "회원가입이 완료되었습니다.\n다시 로그인해주세요.", Toast.LENGTH_LONG).show();
                             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                             startActivity(intent);
@@ -186,7 +186,7 @@ public class join extends AppCompatActivity {
                 if(grantResults[i]== PackageManager.PERMISSION_GRANTED){
                 }
                 else {
-                    Toast.makeText(getApplicationContext(),"앱권한설정하세요",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"앱 권한을 설정하세요",Toast.LENGTH_LONG).show();
                     finish();
                 }
             }

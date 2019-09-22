@@ -94,6 +94,8 @@ public class SendGuestKey extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_guest_key);
+        checkPermission();
+
         btnRepeat=findViewById(R.id.btnRepeat);
         btnOnce=findViewById(R.id.btnOnce);
         btnContact=findViewById(R.id.btnContact);
@@ -112,6 +114,7 @@ public class SendGuestKey extends AppCompatActivity {
         ckbSelectSat=findViewById(R.id.ckbSelectSat);
         ckbSelectSun=findViewById(R.id.ckbSelectSun);
         activity = this;
+
 
         btnRepeat.setOnClickListener(new View.OnClickListener() {
             @Override
