@@ -33,12 +33,7 @@
         <activity android:name=".DoorlockList" />
         <activity android:name=".DoorlockItem" />
         <activity android:name=".DoorlockInfo" />
-        <activity android:name=".Loading">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".Loading" />
         <service android:name=".MyFirebaseMessagingService"
             android:enabled="true"
             android:exported="false">
@@ -78,7 +73,12 @@
         <activity android:name=".OtherGuestkeyEnd" />
         <activity android:name=".join" />
         <activity android:name=".Login" />
-        <activity android:name=".SendGuestKey" />
+        <activity android:name=".SendGuestKey">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".TrueMainActivity" />
 
         <meta-data

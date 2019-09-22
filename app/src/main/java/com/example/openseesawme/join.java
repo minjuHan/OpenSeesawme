@@ -183,7 +183,6 @@ public class join extends AppCompatActivity {
         {
             for(int i=0; i<grantResults.length; i++)
             {
-                //허용됬다면
                 if(grantResults[i]== PackageManager.PERMISSION_GRANTED){
                 }
                 else {
