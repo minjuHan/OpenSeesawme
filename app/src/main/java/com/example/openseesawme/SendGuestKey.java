@@ -171,6 +171,13 @@ public class SendGuestKey extends AppCompatActivity {
                                     String result  = new SendFCMActivity().execute(user_tel,myID).get();
                                 }catch (Exception e){}
 
+                                Intent intent = new Intent(getApplicationContext(), OtherGuestkeyEnd.class);
+                                intent.putExtra("gk_name", g_name);
+                                intent.putExtra("gk_what", sendData);   //이 부분 SendData가 once면 일회, repeat이면 반복 방문자로 바꿔야함
+                                intent.putExtra("gk_when", u_select);
+                                Log.i("result", "2343423424");
+                                startActivity(intent);
+
                             } else if (result.equals("미가입된 사용자")) {
                                 Toast.makeText(getApplicationContext(), "가입 유도 문자를 보냅니다.", Toast.LENGTH_LONG).show();
                                 //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
@@ -181,13 +188,14 @@ public class SendGuestKey extends AppCompatActivity {
                                 }else{
                                     Toast.makeText(getApplicationContext(), "번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
                                 }
+                                Intent intent = new Intent(getApplicationContext(), OtherGuestkeyEnd.class);
+                                intent.putExtra("gk_name", g_name);
+                                intent.putExtra("gk_what", sendData);   //이 부분 SendData가 once면 일회, repeat이면 반복 방문자로 바꿔야함
+                                intent.putExtra("gk_when", u_select);
+                                Log.i("result", "2343423424");
+                                startActivity(intent);
                             }
-                            Intent intent = new Intent(getApplicationContext(), OtherGuestkeyEnd.class);
-                            intent.putExtra("gk_name", g_name);
-                            intent.putExtra("gk_what", "반복 방문자");   //이 부분 SendData가 once면 일회, repeat이면 반복 방문자로 바꿔야함
-                            intent.putExtra("gk_when", u_select);
-                            Log.i("result", "2343423424");
-                            startActivity(intent);
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
