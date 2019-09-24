@@ -42,6 +42,7 @@ public class GetOtherguestActivity extends AsyncTask<String, Void, String> {
                 receiveMsg = buffer.toString();
             } else {
                 // 통신 실패
+                Log.i("Activity ", "aaaaaaaaaerror");
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();

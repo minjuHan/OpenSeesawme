@@ -46,14 +46,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
-        <service
-            android:name=".MyFirebaseInstanceIDService"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-            </intent-filter>
-        </service>
+
         <activity android:name=".JoinAgree" />
         <activity android:name=".RegisterDoorlock4" />
         <activity android:name=".RegisterDoorlock3_2" />
@@ -84,5 +77,12 @@
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="2be22d73290ff53d3a9e1b69b2fa6c2a" />
+
+        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
+     See README(https://goo.gl/l4GJaQ) for more.
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/알림에 들어갈 사진" />-->
+
     </application>
 </manifest>

@@ -151,6 +151,7 @@
             android:textColor="#A0A0A0" />
 
         <Button
+            android:id="@+id/btnKeyCancel"
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:background="@drawable/button_white"

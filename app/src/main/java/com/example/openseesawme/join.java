@@ -8,28 +8,32 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.health.PackageHealthStats;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.telephony.SmsManager;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import 	android.telephony.SmsManager;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.lang.reflect.Field;
 import java.util.Random;
 
 public class join extends AppCompatActivity {
+    private static final String TAG = "FCMTagee";
+    String tokens;
     Button btnJoin,btnSend;
     EditText edtId,edtPw,edtPwCheck,edtName,edtTel,edtNum;
     TextView tvIdCheck; //중복확인을 위한 텍스트를 써줄 부분
@@ -58,6 +62,32 @@ public class join extends AppCompatActivity {
         edtNum=findViewById(R.id.edtNum);
         tvIdCheck=findViewById(R.id.tvidcheck);
         checkPermission();
+
+        //fcm token 확인
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+                        // Get new Instance ID token
+                        tokens = task.getResult().getToken();
+
+                        //토큰 값을 SharedPreferences 에 저장해놓는다
+                        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = pref.edit();
+                        // 추가한다
+                        editor.putString("token", tokens);
+                        editor.commit();
+
+                        // Log and toast
+                        Log.i(TAG, "tokenis" +tokens.toString());
+//                        Toast.makeText(Loading.this, tokens, Toast.LENGTH_SHORT).show();
+
+                    }
+                });//FCM end
 
         //문자 받았을 때
         Intent smsIntent = getIntent();
@@ -138,6 +168,7 @@ public class join extends AppCompatActivity {
                         Toast.makeText(join.this,"인증번호를 입력해주세요.",Toast.LENGTH_LONG).show();
                     }*/
                     else{
+                        //String result  = new RegisterActivity().execute(user_id,user_pw,user_name,user_tel,user_mac,tokens).get();
                         String result  = new RegisterActivity().execute(user_id,user_pw,user_name,user_tel,user_mac).get();
                         if(result.equals("회원 가입 성공")){
                             Toast.makeText(join.this, "회원가입이 완료되었습니다.\n다시 로그인해주세요.", Toast.LENGTH_LONG).show();

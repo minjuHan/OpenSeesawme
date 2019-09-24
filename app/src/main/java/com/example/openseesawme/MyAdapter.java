@@ -10,20 +10,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 public class MyAdapter extends BaseAdapter {
     Context context;
     int layout;
     LayoutInflater inf;
 
-    int img[];
+    int img;
     String result;
     String[] gData0;    //인덱스
     String[] gData1;    //출입가능 날짜
@@ -34,10 +27,10 @@ public class MyAdapter extends BaseAdapter {
     String[] otherJun;  //게스트키 준 사람 이름
 
 
-    public MyAdapter(Context context, int layout, int[] img, String result, String[]... gData) {
+    public MyAdapter(Context context, int layout, String result, String[]... gData) {
         this.context = context;
         this.layout = layout;
-        this.img = img;
+        this.img = R.drawable.person1;
         this.result = result;
         this.gData0 = gData[0];
         this.gData1 = gData[1];
@@ -50,10 +43,10 @@ public class MyAdapter extends BaseAdapter {
                 (Context.LAYOUT_INFLATER_SERVICE);
     }
     @Override
-    public int getCount() {return img.length;}
+    public int getCount() {return gData0.length;}
 
     @Override
-    public Object getItem(int position) {return img[position];}
+    public Object getItem(int position) {return 0;}//img[position]
 
     @Override
     public long getItemId(int position) {return position;}
@@ -71,7 +64,7 @@ public class MyAdapter extends BaseAdapter {
         LinearLayout linear_black = convertView.findViewById(R.id.linear_black);
         LinearLayout sentgkey = convertView.findViewById(R.id.sentgkey);
 
-        iv.setImageResource(img[position]);
+//        iv.setImageResource(img[position]);
         txt_gname.setText(gData2[position]);
         txt_valdate.setText("출입 날짜 : " + gData1[position]);
         txt_keyfrom.setText("From."+ otherJun[position]);

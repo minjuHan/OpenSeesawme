@@ -41,6 +41,8 @@ public class SendGuestKey extends AppCompatActivity {
     String sendData="repeat";
     String result="-";
     String user_tel,user_select="";
+    String guest_ro;
+    String myID = Dglobal.getLoginID();
 
     String myId = Dglobal.getLoginID();
 
@@ -178,15 +180,21 @@ public class SendGuestKey extends AppCompatActivity {
                                         Log.i("DBTest", "실패-----------");
                                     }
                                     else if(result.equals("가입된 사용자")){
+                                        guest_ro = "o";
                                         Toast.makeText(getApplicationContext(),"보내기 완료",Toast.LENGTH_LONG).show();
+
+                                        //fcm 보내기
+                                        try{
+                                            String result  = new SendFCMActivity().execute(user_tel,myID).get();
+
+                                        }catch (Exception e){}
+
                                         //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
                                         //startActivity(intent);
 
-                                        //FCM 푸시 보내는 jsp 호출
-
-
                                     }
                                     else if(result.equals("미가입된 사용자")){
+                                        guest_ro = "x";
                                         Toast.makeText(getApplicationContext(), "가입 유도 문자를 보냅니다.", Toast.LENGTH_LONG).show();
                                         //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
                                         //startActivity(intent);
@@ -195,6 +203,7 @@ public class SendGuestKey extends AppCompatActivity {
                                     intent.putExtra("gk_name",g_name);
                                     intent.putExtra("gk_what", "반복 방문자");
                                     intent.putExtra("gk_when",u_select);
+                                    intent.putExtra("guest_ro",guest_ro);
 
 
 
@@ -240,11 +249,19 @@ public class SendGuestKey extends AppCompatActivity {
                                         Log.i("DBTest", "실패-----------");
                                     }
                                     else if(result.equals("가입된 사용자")){
+                                        guest_ro = "o";
                                         Toast.makeText(getApplicationContext(),"보내기 완료",Toast.LENGTH_LONG).show();
                                         //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
                                         //startActivity(intent);
+
+                                        //fcm 보내기
+                                        try{
+                                            String result  = new SendFCMActivity().execute(user_tel,myID).get();
+
+                                        }catch (Exception e){}
                                     }
                                     else if(result.equals("미가입된 사용자")){
+                                        guest_ro = "x";
                                         Toast.makeText(getApplicationContext(), "가입 유도 문자를 보냅니다.", Toast.LENGTH_LONG).show();
                                         //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
                                         //startActivity(intent);
@@ -253,6 +270,7 @@ public class SendGuestKey extends AppCompatActivity {
                                     intent.putExtra("gk_name",g_name);
                                     intent.putExtra("gk_what", "일회 사용자");
                                     intent.putExtra("gk_when",String.valueOf(edtDate.getText()));
+                                    intent.putExtra("guest_ro",guest_ro);
                                     startActivity(intent);
                                 }catch (Exception e){
                                     e.printStackTrace();
