@@ -72,7 +72,7 @@ public class OtherMemo1 extends AppCompatActivity {
         to.setSpan(new ForegroundColorSpan(Color.parseColor("#444444")), 0, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvto.setText(to);
 
-        String strfrom = "From. "+ otherJun[position] +" 님";
+        String strfrom = "From. "+ otherJun[position+1] +" 님";
         TextView tvfrom = findViewById(R.id.tvfrom);
         SpannableStringBuilder from = new SpannableStringBuilder(strfrom);
         from.setSpan(new ForegroundColorSpan(Color.parseColor("#444444")), 0, 9, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

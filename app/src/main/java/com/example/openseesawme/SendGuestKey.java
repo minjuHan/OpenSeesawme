@@ -175,6 +175,7 @@ public class SendGuestKey extends AppCompatActivity {
                                 intent.putExtra("gk_name", g_name);
                                 intent.putExtra("gk_what", sendData);   //이 부분 SendData가 once면 일회, repeat이면 반복 방문자로 바꿔야함
                                 intent.putExtra("gk_when", u_select);
+                                intent.putExtra("guest_ro","no");
                                 Log.i("result", "2343423424");
                                 startActivity(intent);
 
@@ -192,6 +193,7 @@ public class SendGuestKey extends AppCompatActivity {
                                 intent.putExtra("gk_name", g_name);
                                 intent.putExtra("gk_what", sendData);   //이 부분 SendData가 once면 일회, repeat이면 반복 방문자로 바꿔야함
                                 intent.putExtra("gk_when", u_select);
+                                intent.putExtra("guest_ro","no");
                                 Log.i("result", "2343423424");
                                 startActivity(intent);
                             }

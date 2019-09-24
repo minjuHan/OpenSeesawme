@@ -24,10 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".TestSec">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity android:name=".UserMypage" />
         <activity android:name=".Outsetitem" />
@@ -38,7 +35,12 @@
         <activity android:name=".DoorlockList" />
         <activity android:name=".DoorlockItem" />
         <activity android:name=".DoorlockInfo" />
-        <activity android:name=".Loading" />
+        <activity android:name=".Loading" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".MyFirebaseMessagingService"

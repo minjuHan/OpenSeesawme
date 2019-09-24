@@ -28,7 +28,7 @@ public class RegisterActivity extends AsyncTask<String,Void,String> {
             OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 
             // 전송할 데이터. GET 방식으로 작성
-            sendMsg = "user_id=" + strings[0] + "&user_pw=" + strings[1] + "&user_name=" + strings[2] + "&user_tel=" + strings[3] + "&user_mac=" + strings[4];
+            sendMsg = "user_id=" + strings[0] + "&user_pw=" + strings[1] + "&user_name=" + strings[2] + "&user_tel=" + strings[3] + "&tokens=" + strings[4];
             //sendMsg = "user_id=" + strings[0] + "&user_pw=" + strings[1] + "&user_name=" + strings[2] + "&user_tel=" + strings[3] + "&user_mac=" + strings[4] + "&user_token=" + strings[5];
 
             osw.write(sendMsg);
