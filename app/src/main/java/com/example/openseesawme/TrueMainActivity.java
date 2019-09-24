@@ -213,6 +213,7 @@ public class TrueMainActivity extends AppCompatActivity {
             case R.id.action_settings4 :
                 Intent intent4 = new Intent(getApplicationContext(), Setting.class);
                 startActivity(intent4);
+                finish();
                 return true;
             default:
                 // If we got here, the user's action was not recognized.

@@ -117,19 +117,19 @@ public class join extends AppCompatActivity {
             }
         });
 
+        //맥번호 관련
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
         if(bluetoothAdapter == null){
             Toast.makeText(this, "블루투스를 지원하지 않는 단말기 입니다.", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
-
         //강제 활성화
         if(!bluetoothAdapter.isEnabled()){
             bluetoothAdapter.enable();
         }
         user_mac=getBluetoothMacAddress();
+        //맥번호 관련 여기까지
 
         btnJoin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -170,7 +170,7 @@ public class join extends AppCompatActivity {
                     else{
                         //String result  = new RegisterActivity().execute(user_id,user_pw,user_name,user_tel,user_mac,tokens).get();
                         String result  = new RegisterActivity().execute(user_id,user_pw,user_name,user_tel,user_mac).get();
-                        if(result.equals("회원 가입 성공")){
+                        if(result.equals("회원 가입 성공")||result.equals("게스트키 가입 사용자")){
                             Toast.makeText(join.this, "회원가입이 완료되었습니다.\n다시 로그인해주세요.", Toast.LENGTH_LONG).show();
                             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                             startActivity(intent);
@@ -214,11 +214,10 @@ public class join extends AppCompatActivity {
         {
             for(int i=0; i<grantResults.length; i++)
             {
-                //허용됬다면
                 if(grantResults[i]== PackageManager.PERMISSION_GRANTED){
                 }
                 else {
-                    Toast.makeText(getApplicationContext(),"앱권한설정하세요",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"앱 권한을 설정하세요",Toast.LENGTH_LONG).show();
                     finish();
                 }
             }
