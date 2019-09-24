@@ -15,7 +15,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,6 +23,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".TestSec">
+
+        </activity>
         <activity android:name=".UserMypage" />
         <activity android:name=".Outsetitem" />
         <activity android:name=".OutdoorsetEnd" />
@@ -34,11 +36,13 @@
         <activity android:name=".DoorlockItem" />
         <activity android:name=".DoorlockInfo" />
         <activity android:name=".Loading" />
-        <service android:name=".MyFirebaseMessagingService"
+
+        <service
+            android:name=".MyFirebaseMessagingService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
         <service
@@ -46,11 +50,17 @@
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
         <activity android:name=".JoinAgree" />
-        <activity android:name=".RegisterDoorlock4" />
+        <activity android:name=".RegisterDoorlock4">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".RegisterDoorlock3_2" />
         <activity android:name=".RegisterDoorlock3" />
         <activity android:name=".RegisterDoorlock2" />
@@ -63,8 +73,8 @@
         <activity android:name=".SmsTest">
             <intent-filter>
                 <data
-                    android:scheme="@string/kakao_scheme"
-                    android:host="@string/kakaolink_host" />
+                    android:host="@string/kakaolink_host"
+                    android:scheme="@string/kakao_scheme" />
             </intent-filter>
         </activity>
         <activity android:name=".OtherGuestkey" />
@@ -72,10 +82,7 @@
         <activity android:name=".OtherMemo2" />
         <activity android:name=".OtherGuestkeyEnd" />
         <activity android:name=".join">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity android:name=".Login" />
         <activity android:name=".SendGuestKey" />
@@ -85,4 +92,5 @@
             android:name="com.kakao.sdk.AppKey"
             android:value="2be22d73290ff53d3a9e1b69b2fa6c2a" />
     </application>
+
 </manifest>

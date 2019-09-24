@@ -58,38 +58,6 @@ public class SendGuestKey extends AppCompatActivity {
     };
     String myId = Dglobal.getLoginID();
 
-    /*//사용자에게 권한 허용받기
-    private boolean checkPermissions() {
-        int permissionState = ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        return permissionState == PackageManager.PERMISSION_GRANTED;
-    }
-    private void startPermissionRequest() {
-        ActivityCompat.requestPermissions(this,
-                new String[] {Manifest.permission.READ_CONTACTS} , 1);
-    }
-    private void requestPermissions() {
-        boolean shouldProviceRationale =
-                ActivityCompat.shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.READ_CONTACTS);
-
-        if( shouldProviceRationale ) {
-            new android.support.v7.app.AlertDialog.Builder(this)
-                    .setTitle("알림")
-                    .setMessage("저장소 권한이 필요합니다.")
-                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            startPermissionRequest();
-                        }
-                    })
-                    .create()
-                    .show();
-        } else {
-            startPermissionRequest();
-        }
-    }
-    //사용자에게 권한 허용받기 종료*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -297,7 +265,7 @@ public class SendGuestKey extends AppCompatActivity {
                 if(grantResults[i]== PackageManager.PERMISSION_GRANTED){
                 }
                 else {
-                    Toast.makeText(getApplicationContext(),"앱권한설정하세요",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"앱 권한 설정하세요",Toast.LENGTH_LONG).show();
                     finish();
                 }
             }
