@@ -87,19 +87,19 @@ public class join extends AppCompatActivity {
             }
         });
 
+        //맥번호 관련
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
         if(bluetoothAdapter == null){
             Toast.makeText(this, "블루투스를 지원하지 않는 단말기 입니다.", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
-
         //강제 활성화
         if(!bluetoothAdapter.isEnabled()){
             bluetoothAdapter.enable();
         }
         user_mac=getBluetoothMacAddress();
+        //맥번호 관련 여기까지
 
         btnJoin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {

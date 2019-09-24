@@ -24,7 +24,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".TestSec">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".UserMypage" />
         <activity android:name=".Outsetitem" />
@@ -55,12 +58,7 @@
         </service>
 
         <activity android:name=".JoinAgree" />
-        <activity android:name=".RegisterDoorlock4">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".RegisterDoorlock4" />
         <activity android:name=".RegisterDoorlock3_2" />
         <activity android:name=".RegisterDoorlock3" />
         <activity android:name=".RegisterDoorlock2" />
