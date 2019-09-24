@@ -1,27 +1,16 @@
 package com.example.openseesawme;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class OtherGuestkey extends AppCompatActivity {
 
@@ -29,6 +18,8 @@ public class OtherGuestkey extends AppCompatActivity {
     Button memobutton;
     LinearLayout sentgkey ; //추가
     Toolbar myToolbar;
+
+    String noData;  //데이터가 없을 때
     String[] receiveData;
     String[] otherG;
 
@@ -51,34 +42,53 @@ public class OtherGuestkey extends AppCompatActivity {
         try {
             //서버에서 온 값
             result  = new GetOtherguestActivity().execute().get();
-            receiveData = result.split("_spl_");
-            otherG = receiveData[0].split("\t");
+            if(result!=null){
+                receiveData = result.split("_spl_");
 
-            gData0 = otherG[0].split(" ");
-            gData1 = otherG[1].split(" ");
-            gData2 = otherG[2].split(" ");
-            gData3 = otherG[3].split(" ");
-            gData4 = otherG[4].split(" ");
-            gData5 = otherG[5].split(" ");
-            Log.i("gData test ", gData1[0] + gData1[1]);
+                //데이터가 없으면
+                if(receiveData[0].equals("fail")){
+                    noData = "true";
+                }
+                else {
+                    otherG = receiveData[0].split("\t");
 
-            otherJun = receiveData[1].split(" ");
+                    gData0 = otherG[0].split(" ");
+                    gData1 = otherG[1].split(" ");
+                    gData2 = otherG[2].split(" ");
+                    gData3 = otherG[3].split(" ");
+                    gData4 = otherG[4].split(" ");
+                    gData5 = otherG[5].split(" ");
+                    Log.i("gData test ", gData1[0] + gData1[1]);
+
+                    otherJun = receiveData[1].split(" ");
+                }
+            }
+            //서버에서 못 받아왔을 때
+            else{
+                noData = "true";
+            }
+
+
 
         }catch (Exception e) {
             e.printStackTrace();
         }
         //이미지...
         int img[] = {
-                R.drawable.person1, R.drawable.person1, R.drawable.person1
+                R.drawable.person1
         };
 
         gridView = findViewById(R.id.guest_grid);
 
-        //어댑터!!
-        MyAdapter adapter1 = new MyAdapter(
-                getApplicationContext(), R.layout.guests, img, result, gData0, gData1, gData2, gData3, gData4, gData5, otherJun
-        );
-        gridView.setAdapter(adapter1);
+        if(noData!="true"){
+            //어댑터!!
+            MyAdapter adapter1 = new MyAdapter(
+                    getApplicationContext(), R.layout.guests, result, gData0, gData1, gData2, gData3, gData4, gData5, otherJun
+            );
+            gridView.setAdapter(adapter1);
+        }
+
+
 
 
         //게스트키 보내기 버튼 클릭

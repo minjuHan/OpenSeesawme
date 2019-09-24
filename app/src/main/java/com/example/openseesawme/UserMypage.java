@@ -49,6 +49,8 @@ public class UserMypage extends AppCompatActivity {
 
                 //로딩페이지로 이동
                 Intent intent = new Intent(getApplicationContext(), Loading.class);
+                //Activity stack 비우기
+
                 startActivity(intent);
                 finish();
             }

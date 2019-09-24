@@ -1,7 +1,6 @@
 package com.example.openseesawme;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -34,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         edtPw.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD );
         edtPw.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
 
         //체크박스(자동로그인) 체크 여부
         chk_keeplogin.setOnClickListener(new View.OnClickListener() {

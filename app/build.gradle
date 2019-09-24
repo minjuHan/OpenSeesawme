@@ -31,7 +31,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.android.support.constraint:constraint-layout:2.0.0-alpha3'
 
-    //
+    //fc  okhttp
     implementation 'com.squareup.okhttp3:okhttp:3.8.0'
     // 카카오링크 sdk를 사용하기 위해 필요.
     implementation group: 'com.kakao.sdk', name: 'kakaolink', version: project.KAKAO_SDK_VERSION

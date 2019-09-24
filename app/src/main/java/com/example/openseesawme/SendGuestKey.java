@@ -18,7 +18,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -49,6 +48,7 @@ public class SendGuestKey extends AppCompatActivity {
     String result="-";
     String user_tel,user_select="";
     String user_index="1";  //임의
+    String myID = Dglobal.getLoginID();
 
     String[] permission_list = {
             Manifest.permission.SEND_SMS,
@@ -166,7 +166,11 @@ public class SendGuestKey extends AppCompatActivity {
                                 //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
                                 //startActivity(intent);
 
-                                //FCM 푸시 보내는 jsp 호출
+                                //fcm 보내기
+                                try{
+                                    String result  = new SendFCMActivity().execute(user_tel,myID).get();
+                                }catch (Exception e){}
+
                             } else if (result.equals("미가입된 사용자")) {
                                 Toast.makeText(getApplicationContext(), "가입 유도 문자를 보냅니다.", Toast.LENGTH_LONG).show();
                                 //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);

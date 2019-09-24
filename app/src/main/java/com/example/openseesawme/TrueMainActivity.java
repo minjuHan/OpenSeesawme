@@ -1,5 +1,6 @@
 package com.example.openseesawme;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.constraint.motion.MotionLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,9 +17,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 public class TrueMainActivity extends AppCompatActivity {
     //..,,
@@ -38,42 +35,20 @@ public class TrueMainActivity extends AppCompatActivity {
     //BottomSheetBehavior bottomSheetBehavior;//bottom sheet layout
     Button btnfp;
     ImageView lock;
+    private String TAG = "firebaseTTT";
 
+    @SuppressLint("WrongThread")
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //FCM 토픽추가
-
-//        FirebaseMessaging.getInstance().subscribeToTopic("news"); //앱이 실행되면 자동으로 news라는 토픽을 구독한다
-//        FirebaseInstanceId.getInstance().getToken();
-
-        //FCM 토큰을 저장할 수 있도록 jsp로 데이터를 보내는 코드
-
-        FirebaseMessaging.getInstance().subscribeToTopic("news");
-        String tokens = FirebaseInstanceId.getInstance().getToken();
-        try {
-            /*String tokenss = autoLogin.getString("tokens", null);
-            SharedPreferences.Editor editor = autoLogin.edit();
-            editor.putString("tokens", tokens);
-            editor.apply();*/
-            String result = new TaskMethod("http://128.134.114.250:8080/doorlock/fcmtoken.jsp",
-                    "token=" + tokens, "UTF-8").execute().get();
-            Log.d("resultssssss", result + ":");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        //=========FCM end
 
 
         //인텐트 받기(MainActivity.java로부터)
         Intent intent = getIntent();
         Boolean keeplogin = intent.getBooleanExtra("keeplog",false);
         String user_id = intent.getStringExtra("userID");
-        Toast.makeText(getApplicationContext(),keeplogin + "   " + user_id, Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(),keeplogin + "   " + user_id, Toast.LENGTH_LONG).show();
 
         //user_id가 null이 아닌 경우 SharedPreferences 설정
         if(user_id != null){
@@ -267,9 +242,6 @@ public class TrueMainActivity extends AppCompatActivity {
         }
     }
 
-    ////=================fcm =============================
-
-///===========================================================fcm end
 
 
 

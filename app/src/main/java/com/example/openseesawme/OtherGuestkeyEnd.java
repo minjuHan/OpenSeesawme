@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kakao.kakaolink.v2.KakaoLinkResponse;
 import com.kakao.kakaolink.v2.KakaoLinkService;
@@ -26,11 +27,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OtherGuestkeyEnd extends AppCompatActivity {
-Button backguestkey,btnShareKakao;
+Button backguestkey,btnShareKakao, btnKeyCancel;
 Toolbar myToolbar;
 TextView txt_gkday, txt_gkname, txt_gkwhat, txt_gkwhen;
     String sendText="";
     String titleText="";
+    String guest_ro;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,7 @@ TextView txt_gkday, txt_gkname, txt_gkwhat, txt_gkwhen;
         txt_gkname = findViewById(R.id.txt_gkname);
         txt_gkwhat = findViewById(R.id.txt_gkwhat);
         txt_gkwhen = findViewById(R.id.txt_gkwhen);
+        btnKeyCancel = findViewById(R.id.btnKeyCancel);
 
 
         setTitle("게스트키 보내기 완료");
@@ -98,11 +101,11 @@ TextView txt_gkday, txt_gkname, txt_gkwhat, txt_gkwhen;
         String gk_name = intent.getStringExtra("gk_name");
         String gk_what = intent.getStringExtra("gk_what");
         String gk_when = intent.getStringExtra("gk_when");
+        guest_ro = intent.getStringExtra("guest_ro");   //계정있는지 없는지 o x
         Log.i("gk_name",gk_name + "  " +  gk_what +  "   " + gk_when);
 
         txt_gkname.setText(gk_name);
         txt_gkwhat.setText(gk_what);
-
 
 
 
@@ -117,7 +120,27 @@ TextView txt_gkday, txt_gkname, txt_gkwhat, txt_gkwhen;
         }
 
 
-    }
+        //취소 버튼
+        btnKeyCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    String myID = Dglobal.getLoginID();
+                    String result  = new GetOtherguestCancelActivity().execute(myID,guest_ro).get();
+                    if(result.equals("삭제 완료")){
+                        Toast.makeText(getApplicationContext(),"취소 완료", Toast.LENGTH_LONG).show();
+                    }
+                }catch (Exception e){}
+
+            }
+        });
+
+
+
+
+    }//oncreate() end
+
+
 
     //키해시 (log 확인) - 카카오톡 관련
     private void getAppKeyHash() {

@@ -1,56 +1,85 @@
 package com.example.openseesawme;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.io.IOException;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
 
 public class MyFirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
-    private static final String TAG = "FirebaseMsgService";
+    private static final String TAG = "Firebase==";
+
+    public MyFirebaseMessagingService() {
+
+    }
 
     @Override
-
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        String message = remoteMessage.getData().get("message");
-        String title = remoteMessage.getData().get("title");
+        // ...
+        // TODO(developer): Handle FCM messages here.
+        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
+        Log.d(TAG, "From: " + remoteMessage.getFrom());
+        // Check if message contains a notification payload.
+        if (remoteMessage.getNotification() != null) {
+            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+        }
+        // Check if message contains a data payload.
+        if (remoteMessage.getData().size() > 0) {
+            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+        }
+        // Also if you intend on generating your own notifications as a result of a received FCM
+        // message, here is where that should be initiated. See sendNotification method below.
 
-        sendNotification(message, title);
-    }
+    }//onMessageReceived() end
+
+
+    @Override
+    public void onNewToken(String token) {
+
+        Log.d(TAG, "Refreshed token: " + token);
+
+//        //토큰 값을 SharedPreferences 에 저장해놓는다
+//        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//        SharedPreferences.Editor editor = pref.edit();
+//        // 추가한다
+//        editor.putString("token", token);
+//        editor.commit();
+
+        sendRegistrationToServer(token);
+
+    }//onNewToken() end
 
 
 
-    private void sendNotification(String messageBody, String title) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+    private void sendRegistrationToServer(String token) {
+        // Add custom implementation, as needed.
 
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        Resources resources = getResources();
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.logo)
-                .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.logo))
-                .setContentTitle(title)
-                .setContentText(messageBody)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setWhen(System.currentTimeMillis())
-                .setContentIntent(pendingIntent);
+        // OKHTTP를 이용해 웹서버로 토큰값을 날려준다.
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = new FormBody.Builder()
+                .add("Token", token)
+                .build();
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        //request
+        Request request = new Request.Builder()
+                .url("http://192.168.0.159:8020/doorlock/fcmtest.jsp")
+                .post(body)
+                .build();
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
-    }
+        try {
+            client.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }//sendRegistrationToServer() end
+
 }
 
 
