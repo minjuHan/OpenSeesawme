@@ -120,6 +120,7 @@ TextView txt_gkday, txt_gkname, txt_gkwhat, txt_gkwhen;
         }
 
 
+        //취소 버튼
         btnKeyCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
