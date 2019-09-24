@@ -67,7 +67,7 @@ public class MyAdapter extends BaseAdapter {
 //        iv.setImageResource(img[position]);
         txt_gname.setText(gData2[position]);
         txt_valdate.setText("출입 날짜 : " + gData1[position]);
-        txt_keyfrom.setText("From."+ otherJun[position+1]);
+        txt_keyfrom.setText("From."+ otherJun[position]);
 
         //사용한 게스트키는 어둡게(?)
         Log.i("gData4[position]", gData4[position]);

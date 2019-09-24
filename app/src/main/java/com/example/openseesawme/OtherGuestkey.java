@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class OtherGuestkey extends AppCompatActivity {
 
@@ -20,7 +21,7 @@ public class OtherGuestkey extends AppCompatActivity {
     Toolbar myToolbar;
 
     String noData;  //데이터가 없을 때
-    String[] receiveData;
+
     String[] otherG;
 
     String result;
@@ -42,8 +43,13 @@ public class OtherGuestkey extends AppCompatActivity {
         try {
             //서버에서 온 값
             result  = new GetOtherguestActivity().execute().get();
+
             if(result!=null){
+                String[] receiveData;
                 receiveData = result.split("_spl_");
+                //Toast.makeText(getApplicationContext(),receiveData[1],Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),receiveData[0],Toast.LENGTH_LONG).show();
+
 
                 //데이터가 없으면
                 if(receiveData[0].equals("fail")){
@@ -51,7 +57,7 @@ public class OtherGuestkey extends AppCompatActivity {
                 }
                 else {
                     otherG = receiveData[0].split("\t");
-
+                    otherJun = receiveData[1].split(" ");
                     gData0 = otherG[0].split(" ");
                     gData1 = otherG[1].split(" ");
                     gData2 = otherG[2].split(" ");
@@ -59,8 +65,6 @@ public class OtherGuestkey extends AppCompatActivity {
                     gData4 = otherG[4].split(" ");
                     gData5 = otherG[5].split(" ");
                     Log.i("gData test ", gData1[0] + gData1[1]);
-
-                    otherJun = receiveData[1].split(" ");
                 }
             }
             //서버에서 못 받아왔을 때
