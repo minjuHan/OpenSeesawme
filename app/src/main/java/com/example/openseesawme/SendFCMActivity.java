@@ -27,7 +27,7 @@ class SendFCMActivity extends AsyncTask<String, Void, String> {
             OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 
             // 전송할 데이터. GET 방식으로 작성
-            sendMsg = "g_tel=" + strings[0];
+            sendMsg = "g_tel=" + strings[0] + "&jun_id=" + strings[1];
 
             osw.write(sendMsg);
             osw.flush();

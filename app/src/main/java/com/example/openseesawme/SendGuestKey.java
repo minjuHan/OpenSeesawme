@@ -166,16 +166,19 @@ public class SendGuestKey extends AppCompatActivity {
                                 //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
                                 //startActivity(intent);
 
+                                Log.i("SendGuestKey","가입된 사용자");
+                                String resultd="";
                                 //fcm 보내기
                                 try{
-                                    String result  = new SendFCMActivity().execute(user_tel,myID).get();
+                                    resultd  = new SendFCMActivity().execute(user_tel,myID).get();
                                 }catch (Exception e){}
+                                Log.i("SendGuestKey","푸시 결과=" + resultd);
 
                                 Intent intent = new Intent(getApplicationContext(), OtherGuestkeyEnd.class);
                                 intent.putExtra("gk_name", g_name);
                                 intent.putExtra("gk_what", sendData);   //이 부분 SendData가 once면 일회, repeat이면 반복 방문자로 바꿔야함
                                 intent.putExtra("gk_when", u_select);
-                                intent.putExtra("guest_ro","no");
+                                intent.putExtra("guest_ro","yees");
                                 Log.i("result", "2343423424");
                                 startActivity(intent);
 
