@@ -3,6 +3,7 @@ package com.example.openseesawme;
 import android.Manifest;
 import android.app.KeyguardManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
@@ -40,6 +41,7 @@ public class Fingerprint extends AppCompatActivity {
     private TextView tv_message;
     private LinearLayout linearLayout;
     Button btn_fpclose;
+    TextView tv_pin;
 
 
     private static final String KEY_NAME = "example_key";
@@ -61,6 +63,7 @@ public class Fingerprint extends AppCompatActivity {
         linearLayout = (LinearLayout) findViewById(R.id.ll_secure);
         btn_fpclose = findViewById(R.id.btn_fpclose);
         linearLayout.setVisibility(LinearLayout.GONE);
+        tv_pin= findViewById(R.id.tv_pin);
 
         //없어도 되나?
         //Intent inIntent = getIntent();
@@ -112,6 +115,29 @@ public class Fingerprint extends AppCompatActivity {
 
                 //============================================
                 finish();
+            }
+        });
+
+        tv_pin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //SharedPreference값읽어오기
+                SharedPreferences pref = getSharedPreferences("pref",MODE_PRIVATE);
+                String pin_key = pref.getString("pin_key","fail");//pin
+
+                Log.i("pinpinpinpinpinpin", pin_key);
+
+                if("fail".equals(pin_key)){
+                    Intent intent = new Intent(getApplicationContext(), pin_register1.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else{
+                    Intent intent = new Intent(getApplicationContext(), pin_enter.class);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         });
 

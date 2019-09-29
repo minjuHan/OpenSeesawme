@@ -52,9 +52,10 @@
             android:layout_marginTop="10dp"
             android:text="Message..." />
         <TextView
+            android:id="@+id/tv_pin"
             android:textColor="#7e7e7e"
             android:text="비밀번호(PIN) 입력"
-            android:textSize="12dp"
+            android:textSize="14dp"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             android:layout_width="wrap_content"

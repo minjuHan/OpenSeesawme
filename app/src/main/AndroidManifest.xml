@@ -23,9 +23,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TestSec">
-
-        </activity>
+        <activity android:name=".pin_enter"></activity>
+        <activity android:name=".pin_register2" />
+        <activity android:name=".pin_register1" />
+        <activity android:name=".TestSec" />
         <activity android:name=".UserMypage" />
         <activity android:name=".Outsetitem" />
         <activity android:name=".OutdoorsetEnd" />
@@ -35,9 +36,10 @@
         <activity android:name=".DoorlockList" />
         <activity android:name=".DoorlockItem" />
         <activity android:name=".DoorlockInfo" />
-        <activity android:name=".Loading" >
+        <activity android:name=".Loading">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -73,9 +75,7 @@
         <activity android:name=".OtherMemo1" />
         <activity android:name=".OtherMemo2" />
         <activity android:name=".OtherGuestkeyEnd" />
-        <activity android:name=".join">
-
-        </activity>
+        <activity android:name=".join" />
         <activity android:name=".Login" />
         <activity android:name=".SendGuestKey" />
         <activity android:name=".TrueMainActivity" />

@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -26,13 +27,14 @@ public class UserMypage extends AppCompatActivity {
     View dialogView;
     EditText usernamechange;
     private int REQ_CODE_PICK_PICTURE;
-    Button btnLogout;
+    Button btnLogout, btnResetPin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_mypage);
 
+        btnResetPin = findViewById(R.id.btnResetPin);
         //로그아웃
         btnLogout=findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +113,24 @@ public class UserMypage extends AppCompatActivity {
             }
         });
 
+        btnResetPin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //비밀번호 확인하는 페이지 추가하기
+                //비밀번호 일치하면 remove
+                //SharedPreference값읽어오기
+                SharedPreferences pref = getSharedPreferences("pref",MODE_PRIVATE);
+                String pin_key = pref.getString("pin_key","fail");//사용자id
+
+                if("fail".equals(pin_key)){
+                    Toast.makeText(getApplicationContext(),"등록된 pin번호가 없습니다.",Toast.LENGTH_SHORT).show();
+                }else {
+                    pref.edit().remove("pin_key").commit();
+                    Toast.makeText(getApplicationContext(),"pin번호가 초기화되었습니다.",Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
