@@ -105,16 +105,17 @@ TextView txt_gkday, txt_gkname, txt_gkwhat, txt_gkwhen;
         Log.i("gk_name",gk_name + "  " +  gk_what +  "   " + gk_when);
 
         txt_gkname.setText(gk_name);
-        txt_gkwhat.setText(gk_what);
 
 
-
-        if(gk_what.equals("repeat")){
+        if("repeat".equals(gk_what)){
+            txt_gkwhat.setText("반복 사용자");
             txt_gkday.setText("요일 반복");
 //            String new_when = String.valueOf(txt_gkwhen).substring(0,txt_gkwhen.length()-1);
-            String new_when = txt_gkwhen.getText().toString().substring(0, txt_gkwhen.length()-1);
-            txt_gkwhen.setText(new_when + "요일");//andro 요일..?
-        }else if(gk_what.equals("once")){
+            String new_when = gk_when.substring(0, gk_when.length()-1);
+            Log.i("gk_name","요일 ::" + new_when);
+            txt_gkwhen.setText(new_when + " 요일");//andro 요일..?
+        }else if("once".equals(gk_what)){
+            txt_gkwhat.setText("일회 사용자");
             txt_gkday.setText("방문 날짜");
             txt_gkwhen.setText(gk_when);
         }

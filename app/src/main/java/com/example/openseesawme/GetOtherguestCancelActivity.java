@@ -16,7 +16,6 @@ class GetOtherguestCancelActivity extends AsyncTask<String,Void,String> {
 
     @Override
     protected String doInBackground(String... strings) {
-
         try{
             Log.i("test", "loginActivity");
             String str;

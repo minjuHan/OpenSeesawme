@@ -158,21 +158,21 @@ public class SendGuestKey extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         try {
+
                             result = new SendGuestKeyActivity().execute(user_index, user_tel, user_select).get();
+                            Log.i("SendGuestKeysss","계정있는지 결과"+ result);////
                             if (result.equals("fail")) {
-                                Log.i("DBTest", "실패-----------");
                             } else if (result.equals("가입된 사용자")) {
                                 Toast.makeText(getApplicationContext(), "보내기 완료", Toast.LENGTH_LONG).show();
                                 //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
                                 //startActivity(intent);
-
-                                Log.i("SendGuestKey","가입된 사용자");
+                                Log.i("SendGuestKeysss","가입된 사용자");/////
                                 String resultd="";
                                 //fcm 보내기
                                 try{
                                     resultd  = new SendFCMActivity().execute(user_tel,myID).get();
                                 }catch (Exception e){}
-                                Log.i("SendGuestKey","푸시 결과=" + resultd);
+                                Log.i("SendGuestKeysss","푸시 결과=" + resultd);////
 
                                 Intent intent = new Intent(getApplicationContext(), OtherGuestkeyEnd.class);
                                 intent.putExtra("gk_name", g_name);
@@ -183,6 +183,7 @@ public class SendGuestKey extends AppCompatActivity {
                                 startActivity(intent);
 
                             } else if (result.equals("미가입된 사용자")) {
+                                Log.i("SendGuestKeysss","미가입된 사용자");////
                                 Toast.makeText(getApplicationContext(), "가입 유도 문자를 보냅니다.", Toast.LENGTH_LONG).show();
                                 //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
                                 //startActivity(intent);
@@ -195,7 +196,7 @@ public class SendGuestKey extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), OtherGuestkeyEnd.class);
                                 intent.putExtra("gk_name", g_name);
                                 intent.putExtra("gk_what", sendData);   //이 부분 SendData가 once면 일회, repeat이면 반복 방문자로 바꿔야함
-                                intent.putExtra("gk_when", u_select);
+                                intent.putExtra("gk_when", user_select);
                                 intent.putExtra("guest_ro","no");
                                 Log.i("result", "2343423424");
                                 startActivity(intent);

@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,13 +24,14 @@ public class OtherMemo1 extends AppCompatActivity {
     Button backkey1 , btn_gdel;
     private Activity activity;
 
-    String[] gData0;    //인덱스
-    String[] gData1;    //출입가능 날짜
-    String[] gData2;    //게스트 이름
-    String[] gData3;    //게스트키 준 날짜
-    String[] gData4;    //게스트키 사용 여부
-    String[] gData5;    //게스트키 수락 여부
-    String[] otherJun;  //게스트키 준 사람 이름
+    String gData0;    //인덱스
+    String gData1;    //출입가능 날짜
+    String gData1_yo; //출입가능 요일
+    String gData2;    //게스트 이름
+    String gData3;    //게스트키 준 날짜
+    String gData4;    //게스트키 사용 여부
+    String gData5;    //게스트키 수락 여부
+    String otherJun;  //게스트키 준 사람 이름
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,51 +44,61 @@ public class OtherMemo1 extends AppCompatActivity {
 
         //인텐트 받기(OtherGuestkey.java 로 부터 받은 값)
         Intent intent = getIntent();
-        final int position = (Integer)intent.getExtras().get("position");
-        String result = intent.getStringExtra("result");
-
-        String[] receiveData;
-        receiveData = result.split("_spl_");
-
-        String[] otherG;
-        otherG = receiveData[0].split("\t");
-        gData0 = otherG[0].split(" ");  //d_guest_index
-        gData1 = otherG[1].split(" ");  //게스트 출입 날짜
-        gData2 = otherG[2].split(" ");  //게스트 이름
-        gData3 = otherG[3].split(" ");  //게스트키 준 날짜
-        gData4 = otherG[4].split(" ");  //사용여부
-        gData5 = otherG[5].split(" ");  //수락 여부
-
-        otherJun = receiveData[1].split(" ");   //게스트키 준 사람 이름
+//        final int position = (Integer)intent.getExtras().get("position");
+////        String result = intent.getStringExtra("result");
+        gData0 = intent.getStringExtra("gData0");
+        gData1 = intent.getStringExtra("gData1");
+        gData1_yo = intent.getStringExtra("gData1_yo");
+        gData2 = intent.getStringExtra("gData2");
+        gData3 = intent.getStringExtra("gData3");
+        gData4 = intent.getStringExtra("gData4");
+        gData5 = intent.getStringExtra("gData5");
+        otherJun = intent.getStringExtra("otherJun");
 
 
-        String strday = gData1[position];       //"매주 토요일"
+        Log.i("OtherMemo1mmmmmmmm", "gData0  :  " + gData0);
+        Log.i("OtherMemo1mmmmmmmm", "gData1  :  " + gData1);
+        Log.i("OtherMemo1mmmmmmmm", "gData1_yo  :  " + gData1_yo);
+        Log.i("OtherMemo1mmmmmmmm", "gData2  :  " + gData2);
+        Log.i("OtherMemo1mmmmmmmm", "gData3  :  " + gData3);
+        Log.i("OtherMemo1mmmmmmmm", "gData4  :  " + gData4);
+        Log.i("OtherMemo1mmmmmmmm", "gData5  :  " + gData5);
+        Log.i("OtherMemo1mmmmmmmm", "otherJun  :  " + otherJun);
+
         TextView tvday = findViewById(R.id.tvday);
-        SpannableStringBuilder day = new SpannableStringBuilder(strday);
-        day.setSpan(new ForegroundColorSpan(Color.parseColor("#03A9F4")), 3, 6, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tvday.setText(day);
+        if("null".equals(gData1)){
+            tvday.setText("매주 " + gData1_yo + "요일");
+        }else {
+            tvday.setText(gData1);
+        }
 
-        String strto = "To. " + gData2[position] + " 님";
+//        String strday = gData1;       //"매주 토요일"
+//        TextView tvday = findViewById(R.id.tvday);
+//        SpannableStringBuilder day = new SpannableStringBuilder(strday);
+//        day.setSpan(new ForegroundColorSpan(Color.parseColor("#03A9F4")), 3, 6, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        tvday.setText(day);
+
+        String strto = "To. " + gData2 + " 님";
         TextView tvto = findViewById(R.id.tvto);
         SpannableStringBuilder to = new SpannableStringBuilder(strto);
         to.setSpan(new ForegroundColorSpan(Color.parseColor("#444444")), 0, 7, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvto.setText(to);
 
-        String strfrom = "From. "+ otherJun[position] +" 님";
+        String strfrom = "From. "+ otherJun +" 님";
         TextView tvfrom = findViewById(R.id.tvfrom);
         SpannableStringBuilder from = new SpannableStringBuilder(strfrom);
         from.setSpan(new ForegroundColorSpan(Color.parseColor("#444444")), 0, 9, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvfrom.setText(from);
 
-        txt_guest_date.setText(gData3[position] + "에 전송됨");
+        txt_guest_date.setText(gData3 + "에 전송됨");
 
-        if(gData4[position].equals("a") && gData5[position].equals("a")){
+        if(gData4.equals("a") && gData5.equals("a")){
             txt_guest_allow.setText("게스트키 상태 : 미수락");
         }
-        else if(gData4[position].equals("a") && gData5[position].equals("b")){
+        else if(gData4.equals("a") && gData5.equals("b")){
             txt_guest_allow.setText("게스트키 상태 : 미사용");
         }
-        else if(gData4[position].equals("b") && gData5[position].equals("b")){
+        else if(gData4.equals("b") && gData5.equals("b")){
             txt_guest_allow.setText("게스트키 상태 : 사용 완료");
         }else{
             txt_guest_allow.setText("값을 잘못 넣었다.!");
@@ -97,7 +109,7 @@ public class OtherMemo1 extends AppCompatActivity {
         btn_gdel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), gData0[position],Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), gData0,Toast.LENGTH_SHORT).show();
                 //팝업 띄우기===== 여기부터
                 //다이얼로그 바디
                 AlertDialog.Builder alertdialog = new AlertDialog.Builder(activity);
@@ -110,7 +122,7 @@ public class OtherMemo1 extends AppCompatActivity {
                         //DB에서 삭제할 Activity 호출하는 코드
                         try{
                             String result;
-                            String g_index = gData0[position];
+                            String g_index = gData0;
                             result  = new GetOtherguestDeleteActivity().execute(g_index).get();
                             if(result.equals("삭제 완료")){
                                 Toast.makeText(getApplicationContext(), "삭제 완료",Toast.LENGTH_SHORT).show();

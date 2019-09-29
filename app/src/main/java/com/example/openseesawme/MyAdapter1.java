@@ -11,39 +11,43 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class MyAdapter extends BaseAdapter {
+public class MyAdapter1 extends BaseAdapter {
     Context context;
     int layout;
     LayoutInflater inf;
 
     int img;
-    String result;
+    String result="";
+
     String[] gData0;    //인덱스
     String[] gData1;    //출입가능 날짜
-    String[] gData1_yo; //출입가능 요일
-    String[] gData2;    //게스트 이름
-    String[] gData3;    //게스트키 준 날짜
-    String[] gData4;    //게스트키 사용 여부
-    String[] gData5;    //게스트키 수락 여부
-    String[] otherJun;  //게스트키 준 사람 이름
+    String[] gData2; //출입가능 요일
+    String[] gData3;    //게트 이름
+    String[] gData4;    //게스트키 준 날짜
+    String[] gData5;    //게스트키 사용 여부
+    String[] gData6;    //게스트키 수락 여부
+    String[] gData7;  //게스트키 준 사람 이름
 
 
-    public MyAdapter(Context context, int layout, String result, String[]... gData) {
+
+    public MyAdapter1(Context context, int layout, String result, String[]... gData) {
         this.context = context;
         this.layout = layout;
         this.img = R.drawable.person1;
         this.result = result;
         this.gData0 = gData[0];
         this.gData1 = gData[1];
-        this.gData1_yo = gData[2];
-        this.gData2 = gData[3];
-        this.gData3 = gData[4];
-        this.gData4 = gData[5];
-        this.gData5 = gData[6];
-        this.otherJun = gData[7];
+        this.gData2 = gData[2];///
+        this.gData3 = gData[3];
+        this.gData4 = gData[4];
+        this.gData5 = gData[5];
+        this.gData6 = gData[6];
+        this.gData7 = gData[7];
 
         inf = (LayoutInflater) context.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
+
+
     }
     @Override
     public int getCount() {return gData0.length;}
@@ -59,6 +63,7 @@ public class MyAdapter extends BaseAdapter {
         if (convertView==null)
             convertView = inf.inflate(layout, null);
 
+        //guest.xml 변수들
         ImageView iv = (ImageView)convertView.findViewById(R.id.img_guest);
         TextView txt_gname = convertView.findViewById(R.id.txt_gname);
         TextView txt_valdate = convertView.findViewById(R.id.txt_valdate);
@@ -68,24 +73,27 @@ public class MyAdapter extends BaseAdapter {
         LinearLayout sentgkey = convertView.findViewById(R.id.sentgkey);
 
 //        iv.setImageResource(img[position]);
-        txt_gname.setText(gData2[position]);
+        //게스트 이름
+        txt_gname.setText(gData3[position]);
+
+
 
         //출입날짜 or 출입 요일
         if("null".equals(gData1[position])){
-            txt_valdate.setText("출입 가능 요일 : " + gData1_yo[position]);
+            txt_valdate.setText("출입 가능 요일 : " + gData2[position]);
             Log.i("myguestkeydfffffff", "날짜 null :  ");
-        }else if("null".equals(gData1_yo[position])){
+        }else if("null".equals(gData2[position])){
             txt_valdate.setText("출입 날짜 : " + gData1[position]);
             Log.i("myguestkeydfffffff", "요일 null :  ");
         }
-
-        txt_keyfrom.setText("From."+ otherJun[position]);
+        //게스트키 준 사람 id
+        txt_keyfrom.setText("From."+ gData7[position]);
 
         //사용한 게스트키는 어둡게(?)
-        Log.i("gData4[position]", gData4[position]);
-        if(gData4[position].equals("a")){
+        Log.i("gData4[position]", gData5[position]);
+        if(gData5[position].equals("a")){
             linear_black.setVisibility(View.INVISIBLE);
-        }else if(gData4[position].equals("b")){
+        }else if(gData5[position].equals("b")){
             linear_black.setVisibility(View.VISIBLE);
         }
 
@@ -115,7 +123,7 @@ public class MyAdapter extends BaseAdapter {
             }
             else if( d_day > 0){
                 txt_dday.setText(d_day + "일 남음");
-            }else if( d_day > 0 && gData4[position].equals("b")){
+            }else if( d_day > 0 && gData5[position].equals("b")){
                 txt_dday.setText("출입 완료");
             }else{
                 txt_dday.setText("기한지남..?");
@@ -124,23 +132,27 @@ public class MyAdapter extends BaseAdapter {
         }catch (Exception e){
             e.printStackTrace();
         }
+        //사용한 게스트키는 어둡게(?)
+        Log.i("gData4[position]", gData4[position]);
+        if(gData4[position].equals("a")){
+            linear_black.setVisibility(View.INVISIBLE);
+        }else if(gData4[position].equals("b")){
+            linear_black.setVisibility(View.VISIBLE);
+        }
 
-        //해당 아이템? 선택시 OtherMemo1.java로 넘기는 이벤트
+        //해당 아이템? 선택시 OtherMemo2.java로 넘기는 이벤트
         sentgkey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, OtherMemo1.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                intent.putExtra("result", result);
-//                intent.putExtra("position", position);
-                intent.putExtra("gData0",gData0[position]);
-                intent.putExtra("gData1",gData1[position]);
-                intent.putExtra("gData1_yo",gData1_yo[position]);
-                intent.putExtra("gData2",gData2[position]);
-                intent.putExtra("gData3",gData3[position]);
-                intent.putExtra("gData4",gData4[position]);
-                intent.putExtra("gData5",gData5[position]);
-                intent.putExtra("otherJun",otherJun[position]);
-
+                Intent intent = new Intent(context, OtherMemo2.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("gData0", gData0[position]);
+                intent.putExtra("gData1", gData1[position]);
+                intent.putExtra("gData2", gData2[position]);
+                intent.putExtra("gData3", gData3[position]);
+                intent.putExtra("gData4", gData4[position]);
+                intent.putExtra("gData5", gData5[position]);
+                intent.putExtra("gData6", gData6[position]);
+                intent.putExtra("gData7", gData7[position]);
                 context.startActivity(intent);
             }
         });

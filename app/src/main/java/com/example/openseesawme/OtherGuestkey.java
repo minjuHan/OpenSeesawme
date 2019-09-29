@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 public class OtherGuestkey extends AppCompatActivity {
 
@@ -22,12 +20,13 @@ public class OtherGuestkey extends AppCompatActivity {
 
     String noData;  //데이터가 없을 때
 
-    String[] otherG;
+    String[] g_info = new String[7];
 
     String result;
     String[] gData0;    //인덱스
     String[] gData1;    //출입가능 날짜
-    String[] gData2;    //게스트 이름
+    String[] gData1_yo; //출입가능 요일
+    String[] gData2;    //게트 이름
     String[] gData3;    //게스트키 준 날짜
     String[] gData4;    //게스트키 사용 여부
     String[] gData5;    //게스트키 수락 여부
@@ -45,27 +44,18 @@ public class OtherGuestkey extends AppCompatActivity {
             result  = new GetOtherguestActivity().execute().get();
 
             if(result!=null){
-                String[] receiveData;
-                receiveData = result.split("_spl_");
-                //Toast.makeText(getApplicationContext(),receiveData[1],Toast.LENGTH_LONG).show();
-                //Toast.makeText(getApplicationContext(),receiveData[0],Toast.LENGTH_LONG).show();
 
+                g_info = result.split("_spl_");
 
-                //데이터가 없으면
-                if(receiveData[0].equals("fail")){
-                    noData = "true";
-                }
-                else {
-                    otherG = receiveData[0].split("\t");
-                    otherJun = receiveData[1].split(" ");
-                    gData0 = otherG[0].split(" ");
-                    gData1 = otherG[1].split(" ");
-                    gData2 = otherG[2].split(" ");
-                    gData3 = otherG[3].split(" ");
-                    gData4 = otherG[4].split(" ");
-                    gData5 = otherG[5].split(" ");
-                    Log.i("gData test ", gData1[0] + gData1[1]);
-                }
+                gData0 = g_info[0].split("!");
+                gData1 = g_info[1].split("!");
+                gData1_yo = g_info[2].split("!");
+                gData2 = g_info[3].split("!");
+                gData3 = g_info[4].split("!");
+                gData4 = g_info[5].split("!");
+                gData5 = g_info[6].split("!");
+                otherJun = g_info[7].split("!");
+
             }
             //서버에서 못 받아왔을 때
             else{
@@ -84,15 +74,13 @@ public class OtherGuestkey extends AppCompatActivity {
 
         gridView = findViewById(R.id.guest_grid);
 
-        if(noData!="true"){
+        if(gData0!=null){
             //어댑터!!
             MyAdapter adapter1 = new MyAdapter(
-                    getApplicationContext(), R.layout.guests, result, gData0, gData1, gData2, gData3, gData4, gData5, otherJun
+                    getApplicationContext(), R.layout.guests, result, gData0, gData1, gData1_yo, gData2, gData3, gData4, gData5, otherJun
             );
             gridView.setAdapter(adapter1);
         }
-
-
 
 
         //게스트키 보내기 버튼 클릭
