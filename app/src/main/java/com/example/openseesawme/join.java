@@ -118,7 +118,7 @@ public class join extends AppCompatActivity {
         });
 
         //맥번호 관련
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+/*        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if(bluetoothAdapter == null){
             Toast.makeText(this, "블루투스를 지원하지 않는 단말기 입니다.", Toast.LENGTH_SHORT).show();
             finish();
@@ -128,7 +128,7 @@ public class join extends AppCompatActivity {
         if(!bluetoothAdapter.isEnabled()){
             bluetoothAdapter.enable();
         }
-        user_mac=getBluetoothMacAddress();
+        user_mac=getBluetoothMacAddress();*/
         //맥번호 관련 여기까지
 
         btnJoin.setOnClickListener(new View.OnClickListener() {
@@ -143,9 +143,9 @@ public class join extends AppCompatActivity {
                     if(edtId.getText().toString().equals("")) {
                         Toast.makeText(join.this, "아이디를 입력하세요.", Toast.LENGTH_SHORT).show();
                     }
-//                    else if(edtId.getText().toString().length()<6||edtId.getText().toString().length()>8){
-//                        Toast.makeText(MainActivity.this, "아이디는 6-10자 사이로 입력해주세요.", Toast.LENGTH_SHORT).show();
-//                    }
+                    else if(edtId.getText().toString().length()<5||edtId.getText().toString().length()>8){
+                        Toast.makeText(join.this, "아이디는 5-10자 사이로 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    }
                     else if(edtPw.getText().toString().equals("")) {
                         Toast.makeText(join.this, "비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show();
                     }
@@ -164,9 +164,9 @@ public class join extends AppCompatActivity {
                     else if(input.equals(numText)==false){
                         Toast.makeText(join.this,"인증번호가 일치하지 않습니다.",Toast.LENGTH_LONG).show();
                     }
-                    /*else if(input.equals("")){
+                    else if(input.equals("")){
                         Toast.makeText(join.this,"인증번호를 입력해주세요.",Toast.LENGTH_LONG).show();
-                    }*/
+                    }
                     else{
                         //String result  = new RegisterActivity().execute(user_id,user_pw,user_name,user_tel,user_mac,tokens).get();
                         String result  = new RegisterActivity().execute(user_id,user_pw,user_name,user_tel,tokens).get();

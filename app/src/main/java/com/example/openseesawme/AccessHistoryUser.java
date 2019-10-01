@@ -1,30 +1,21 @@
 package com.example.openseesawme;
 
-import android.animation.TimeAnimator;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
-import android.os.Build;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class AccessHistory extends AppCompatActivity {
+public class AccessHistoryUser extends AppCompatActivity {
     String d_user_index="1";
     Toolbar myToolbar;
     private UserAdapter_Horizontal userAdapter;    //상단 사용자 목록
@@ -33,16 +24,12 @@ public class AccessHistory extends AppCompatActivity {
     String[] iorow;
     TextView count;
     ImageView ivRestart;
-    //int position=-1;
-
-    //사람마다 다르게 보이도록 하는 거 해야 함------------------------------
-    //userAdapter에 있는 항목?을 가져가서 그거에 해당하는 이름이면 안넣도록 if문..?
-
-
+    String position = "n";
+    String userN="all";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_access_history);
+        setContentView(R.layout.activity_access_history_user);
 
         //상단 사용자 목록
         uinit();
@@ -51,14 +38,13 @@ public class AccessHistory extends AppCompatActivity {
         hinit();
         getData();
 
-        /*UserAdapter_Horizontal.Data data = new UserAdapter_Horizontal.Data();
-        if(!data.getSelectUser().equals("")){
+        //UserAdapter_Horizontal.Data data = new UserAdapter_Horizontal.Data();
+        /*if(!data.getSelectUser().equals("")) {
             Intent intent = getIntent(); *//*데이터 수신*//*
             position = intent.getExtras().getInt("position");
             //position=Integer.parseInt(data.getSelectUser());
-            Toast.makeText(getApplicationContext(),position,Toast.LENGTH_LONG).show(); //안됨
+            Toast.makeText(getApplicationContext(), position, Toast.LENGTH_LONG).show(); //안됨
         }*/
-
 
         //출입내역 개수
         count=findViewById(R.id.count);
@@ -91,7 +77,7 @@ public class AccessHistory extends AppCompatActivity {
 
     //여기부터 상단 사용자 정보 띄우기
     private void uinit() {
-        RecyclerView rvUserList = findViewById(R.id.rvUserList);
+        RecyclerView rvUserList = findViewById(R.id.recycler1);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvUserList.setLayoutManager(linearLayoutManager);
         userAdapter = new UserAdapter_Horizontal(getApplicationContext());
@@ -99,24 +85,28 @@ public class AccessHistory extends AppCompatActivity {
     }
 
     private void getUserData() {
-        String result;
+        String result="";
         String[] row;
         String[] detailrow;
         String[] name = new String[10000];
         String[] img = new String[10000];
         try {
-            result = new UserListActivity().execute(d_user_index).get();
+            if(userN.equals("all")){
+                result = new UserListActivity().execute(d_user_index).get();
+            }
+            else{
+                result = new UserListActivity().execute(d_user_index,userN).get();
+            }
             row = result.split("spl");
             for(int i=0;i<row.length;i++){
                 detailrow=row[i].split(",");
                 name[i]=detailrow[0];
                 img[i]=detailrow[1];
             }
-
-            /*if(position!=-1){
-                userN=name[position];
+            if(!position.equals("a")){
+                userN=name[Integer.parseInt(position)];
             }
-            Toast.makeText(getApplicationContext(),userN,Toast.LENGTH_LONG).show();*/
+            Toast.makeText(getApplicationContext(),userN,Toast.LENGTH_LONG).show();
 
             List<String> listUsername = Arrays.asList(name);
             List<String> listUserimg = Arrays.asList(img);
@@ -140,7 +130,7 @@ public class AccessHistory extends AppCompatActivity {
 
     //여기부터 출입내역 띄우기
     private void hinit() {
-        RecyclerView recycler = findViewById(R.id.rvIoList);
+        RecyclerView recycler = findViewById(R.id.recycler2);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(linearLayoutManager);
@@ -174,19 +164,28 @@ public class AccessHistory extends AppCompatActivity {
             for (int i = 0; i < iorow.length; i++) {
                 HistotyAdapter.Data data = new HistotyAdapter.Data();
                 // 각 List의 값들을 data 객체에 set 해줍니다.
-                data.setImg(listImg.get(i));
-                data.setName(listName.get(i));
-                data.setDname(listDName.get(0));
-                data.setOx(listOx.get(i));
-                data.setTime(listTime.get(i));
-                data.setContext(getApplicationContext());
-
+                if(position.equals("a")){
+                    data.setImg(listImg.get(i));
+                    data.setName(listName.get(i));
+                    data.setDname(listDName.get(0));
+                    data.setOx(listOx.get(i));
+                    data.setTime(listTime.get(i));
+                    data.setContext(getApplicationContext());
+                }
+                else{
+                    if(userN.equals(listName.get(i))){
+                        data.setImg(listImg.get(i));
+                        data.setName(listName.get(i));
+                        data.setDname(listDName.get(0));
+                        data.setOx(listOx.get(i));
+                        data.setTime(listTime.get(i));
+                        data.setContext(getApplicationContext());
+                    }
+                }
                 // 각 값이 들어간 data를 adapter에 추가합니다.
                 ioAdapter.addItem(data);
-                //Toast.makeText(getApplicationContext(),data.getSelectUser(),Toast.LENGTH_LONG).show();
             }
-        } catch (
-                Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
