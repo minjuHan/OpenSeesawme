@@ -12,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.kakao.usermgmt.response.model.User;
 
 import java.sql.Array;
 import java.util.Arrays;
@@ -20,15 +23,20 @@ import java.util.List;
 public class Userlist extends AppCompatActivity {
 
     Toolbar myToolbar;
-    TextView tv_edit;
+    TextView tvUserDelete;
 
     private UserAdapter adapter;
-    private UserAdapter_Delete dadapter;
-    private List<String> listUsername;
 
-    String resultUsername; //전체출력 result;
-    String[] Username;
+    String d_user_index="1";
 
+    String result;
+    String[] row;
+    String[] detailrow;
+    Integer[] index = new Integer[10000];
+    String[] manager = new String[10000];
+    String[] name = new String[10000];
+    String[] img = new String[10000];
+    Boolean m;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,16 +45,6 @@ public class Userlist extends AppCompatActivity {
 
         init();
         getData();
-
-        tv_edit = findViewById(R.id.tv_edit);
-        tv_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dinit();
-                getdData();
-                tv_edit.setText("완료");
-            }
-        });
 
         // 추가된 소스, Toolbar를 생성한다.
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -59,101 +57,53 @@ public class Userlist extends AppCompatActivity {
         //기본 타이틀 보여줄지 말지 설정. 안보여준다.
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         //여기까지 툴바
-
-    }
-
-    public void removeItem(int position) {
-
-        try {
-            resultUsername = new UserListActivity().execute().get();
-            Username = resultUsername.split(" ");
-            List<String> listUsername = Arrays.asList(Username);
-
-            listUsername.remove(position);
-            adapter.notifyDataSetChanged();
-            dadapter.notifyDataSetChanged();
-        } catch (
-                Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void getData() {
-
-//        String resultUsername; //전체출력 result;
-//        String[] Username;
         try {
-            resultUsername = new UserListActivity().execute().get();
-            Username = resultUsername.split(" ");
-            listUsername = Arrays.asList(Username);
-            for (int i = 0; i < Username.length; i++) {
-                // 각 List의 값들을 data 객체에 set 해줍니다.
+            result = new UserListActivity().execute(d_user_index).get();
+            row = result.split("spl");
+            for(int i=0;i<row.length;i++){
+                detailrow=row[i].split(",");
+                index[i]=Integer.parseInt(detailrow[0]);
+                manager[i]=detailrow[1];
+                name[i]=detailrow[2];
+                img[i]=detailrow[3];
+                if(Integer.parseInt(d_user_index)==index[i]){
+                    if(manager[i].equals("1")){ m=true; }
+                    else{ m=false; }
+                }
+            }
+            List<Integer> listUserindex = Arrays.asList(index);
+            List<String> listUsername = Arrays.asList(name);
+            List<String> listUserimg = Arrays.asList(img);
+
+            for (int i = 0; i < row.length; i++) {
                 UserAdapter.Data data = new UserAdapter.Data();
-
+                // 각 List의 값들을 data 객체에 set 해줍니다.
+                data.setUserindex(listUserindex.get(i));
                 data.setUsername(listUsername.get(i));
-
+                data.setUserimg(listUserimg.get(i));
+                data.setContext(getApplicationContext());
                 // 각 값이 들어간 data를 adapter에 추가합니다.
+                data.setManager(m);
                 adapter.addItem(data);
             }
         } catch (
                 Exception e) {
             e.printStackTrace();
         }
+
     }
     public void init() {
         RecyclerView recycler = findViewById(R.id.recycler);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(linearLayoutManager);
-        adapter = new UserAdapter();
+        adapter = new UserAdapter(Userlist.this);
         recycler.setAdapter(adapter);
-
-        /////////////////////3:14 adapter.set
-
     }
 
-
-
-
-
-    private void getdData() {
-
-//        String resultUsername; //전체출력 result;
-//        String[] Username;
-        try {
-            resultUsername = new UserListActivity().execute().get();
-            Username = resultUsername.split(" ");
-            listUsername = Arrays.asList(Username);
-            for (int i = 0; i < Username.length; i++) {
-                // 각 List의 값들을 data 객체에 set 해줍니다.
-                UserAdapter_Delete.Data data = new UserAdapter_Delete.Data();
-
-                data.setUsername(listUsername.get(i));
-
-                // 각 값이 들어간 data를 dadapter에 추가합니다.
-                dadapter.addItem(data);
-            }
-        } catch (
-                Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void dinit() {
-        RecyclerView recycler = findViewById(R.id.recycler);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recycler.setLayoutManager(linearLayoutManager);
-        dadapter = new UserAdapter_Delete();
-        recycler.setAdapter(dadapter);
-
-        dadapter.setOnItemClickListener(new UserAdapter_Delete.OnItemClickListener() {
-            @Override
-            public void onDeleteClick(int position) {
-
-            }
-        });
-    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

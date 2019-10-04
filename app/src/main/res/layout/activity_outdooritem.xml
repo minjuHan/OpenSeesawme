@@ -4,7 +4,6 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="15dp"
     android:gravity="center_vertical"
     android:layout_marginBottom="8dp"
     android:background="@android:color/white">
@@ -23,21 +22,33 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:gravity="center_vertical"
-        android:background="#4D2196F3">
+        android:background="#E3EFFF">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="설정제목"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
+                android:textSize="26dp"
+                android:textColor="#E67E22"
+                android:textStyle="bold"/>
+            <Button
+                android:id="@+id/btnSetDelete"
+                android:text="삭제"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
 
         <TextView
-            android:id="@+id/outtext1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:text="설정제목"
-            android:layout_marginLeft="20dp"
-            android:textSize="26dp"
-            android:textColor="#FF5722"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/outtext2"
+            android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
@@ -49,13 +60,13 @@
             android:layout_gravity="right"/>
 
         <TextView
-            android:id="@+id/outtext3"
+            android:id="@+id/tvSetName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
             android:text="님에 의해 설정되었습니다."
             android:textSize="12dp"
-            android:textColor="#99333333"
+            android:textColor="#997E7E7E"
             android:layout_marginRight="20dp"
             android:layout_marginTop="5dp"
             android:layout_gravity="right"/>

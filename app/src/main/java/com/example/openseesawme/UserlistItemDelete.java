@@ -16,7 +16,7 @@ public class UserlistItemDelete extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(linearLayoutManager);
-        adapter = new UserAdapter();
+        adapter = new UserAdapter(getApplicationContext());
         recycler.setAdapter(adapter);
     }
 }

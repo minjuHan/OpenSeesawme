@@ -16,7 +16,7 @@ public class Outdooritem extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(linearLayoutManager);
-        adapter = new OutdoorAdapter();
+        adapter = new OutdoorAdapter(Outdooritem.this);
         recycler.setAdapter(adapter);
     }
 }

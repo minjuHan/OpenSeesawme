@@ -16,7 +16,7 @@ public class UserlistItem extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(linearLayoutManager);
-        adapter = new UserAdapter();
+        adapter = new UserAdapter(UserlistItem.this);
         recycler.setAdapter(adapter);
     }
 }

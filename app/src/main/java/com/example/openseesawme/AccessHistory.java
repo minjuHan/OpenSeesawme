@@ -102,6 +102,8 @@ public class AccessHistory extends AppCompatActivity {
         String result;
         String[] row;
         String[] detailrow;
+        Integer[] index = new Integer[10000];
+        String[] manager = new String[10000];
         String[] name = new String[10000];
         String[] img = new String[10000];
         try {
@@ -109,28 +111,25 @@ public class AccessHistory extends AppCompatActivity {
             row = result.split("spl");
             for(int i=0;i<row.length;i++){
                 detailrow=row[i].split(",");
-                name[i]=detailrow[0];
-                img[i]=detailrow[1];
+                index[i]=Integer.parseInt(detailrow[0]);
+                manager[i]=detailrow[1];
+                name[i]=detailrow[2];
+                img[i]=detailrow[3];
             }
-
-            /*if(position!=-1){
-                userN=name[position];
-            }
-            Toast.makeText(getApplicationContext(),userN,Toast.LENGTH_LONG).show();*/
-
+            List<Integer> listUserindex = Arrays.asList(index);
             List<String> listUsername = Arrays.asList(name);
             List<String> listUserimg = Arrays.asList(img);
 
             for (int i = 0; i < row.length; i++) {
                 UserAdapter_Horizontal.Data data = new UserAdapter_Horizontal.Data();
                 // 각 List의 값들을 data 객체에 set 해줍니다.
+                data.setUserindex(listUserindex.get(i));
                 data.setUsername(listUsername.get(i));
                 data.setUserimg(listUserimg.get(i));
                 data.setContext(getApplicationContext());
                 // 각 값이 들어간 data를 adapter에 추가합니다.
                 userAdapter.addItem(data);
             }
-
         } catch (
                 Exception e) {
             e.printStackTrace();

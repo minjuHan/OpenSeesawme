@@ -34,15 +34,20 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
         <TextView
             android:id="@+id/user_name"
+            android:layout_weight="4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:padding="5dp"
             android:text="Hello"
             android:textSize="20dp" />
+        <Button
+            android:id="@+id/btnUserDelete"
+            android:text="삭제"
+            android:layout_weight="10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </LinearLayout>

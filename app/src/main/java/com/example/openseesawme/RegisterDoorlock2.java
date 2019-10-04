@@ -59,6 +59,8 @@ public class RegisterDoorlock2 extends AppCompatActivity {
 
         btnBack=findViewById(R.id.btnBack);
         btnNext=findViewById(R.id.btnNext);
+        btnSearch=findViewById(R.id.btnSearch);
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +73,21 @@ public class RegisterDoorlock2 extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),RegisterDoorlock3.class);
                 startActivity(intent);
+            }
+        });
+
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //검색버튼 비활성화
+                btnSearch.setEnabled(false);
+                //mBluetoothAdapter.isDiscovering() : 블루투스 검색중인지 여부 확인
+                //mBluetoothAdapter.cancelDiscovery() : 블루투스 검색 취소
+                if(mBluetoothAdapter.isDiscovering()){
+                    mBluetoothAdapter.cancelDiscovery();
+                }
+                //mBluetoothAdapter.startDiscovery() : 블루투스 검색 시작
+                mBluetoothAdapter.startDiscovery();
             }
         });
 
@@ -137,17 +154,20 @@ public class RegisterDoorlock2 extends AppCompatActivity {
         listDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectDevice=position;
+                String mac=bluetoothDevices.get(position).getAddress();
+                Toast.makeText(RegisterDoorlock2.this, mac, Toast.LENGTH_SHORT).show();
+                /*//페어링 하는 부분
                 BluetoothDevice device = bluetoothDevices.get(position);
-
                 try {
                     //선택한 디바이스 페어링 요청
                     Method method = device.getClass().getMethod("createBond", (Class[]) null);
                     method.invoke(device, (Object[]) null);
                     selectDevice = position;
-                    /*Toast.makeText(RegisterDoorlock2.this, "도어락에 기기가 등록되었습니다.", Toast.LENGTH_SHORT).show();*/
+                    Toast.makeText(RegisterDoorlock2.this, "도어락에 기기가 등록되었습니다.", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
+                }*/
             }
         });
     }
@@ -197,29 +217,14 @@ public class RegisterDoorlock2 extends AppCompatActivity {
 
                     //블루투스 디바이스 저장
                     bluetoothDevices.add(device);
-                    //uuid.setText(device.getUuids().toString());
                     break;
                 //블루투스 디바이스 검색 종료
                 case BluetoothAdapter.ACTION_DISCOVERY_FINISHED:
-                    /*Toast.makeText(RegisterDoorlock2.this, "블루투스 검색 종료", Toast.LENGTH_SHORT).show();*/
                     btnSearch.setEnabled(true);
                     break;
             }
         }
     };
-
-    //블루투스 검색 버튼 클릭
-    public void mOnBluetoothSearch(View v){
-        //검색버튼 비활성화
-        btnSearch.setEnabled(false);
-        //mBluetoothAdapter.isDiscovering() : 블루투스 검색중인지 여부 확인
-        //mBluetoothAdapter.cancelDiscovery() : 블루투스 검색 취소
-        if(mBluetoothAdapter.isDiscovering()){
-            mBluetoothAdapter.cancelDiscovery();
-        }
-        //mBluetoothAdapter.startDiscovery() : 블루투스 검색 시작
-        mBluetoothAdapter.startDiscovery();
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

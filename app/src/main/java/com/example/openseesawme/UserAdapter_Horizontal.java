@@ -40,28 +40,28 @@ public class UserAdapter_Horizontal extends RecyclerView.Adapter<UserAdapter_Hor
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemViewHolder holder, final int i ) {
+    public void onBindViewHolder(@NonNull ItemViewHolder holder, final int position ) {
         // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*int ii=userData.get(position).getUserindex();
+                for (int i = 0; i < userData.size(); i++){
+                    if(userData.get(i).getUserindex()!=position){
+                        deleteThisView(position);
+                    }
+                }
+                deleteThisView(position);*/
                 Toast.makeText(mContext,"값",Toast.LENGTH_LONG).show();
-                //UserAdapter_Horizontal.Data data = new UserAdapter_Horizontal.Data();
-                //data.setSelectUser(Integer.toString(i));
-                /*Intent intent = new Intent(mContext, AccessHistory.class);
-                intent.putExtra("position", Integer.toString(i));
-                mContext.startActivity(intent);*/
-                //Toast.makeText(mContext,Integer.toString(i),Toast.LENGTH_LONG).show();*/
-                /*Intent intent = new Intent(data.getContext(),AccessHistory.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                data.getContext().startActivity(intent);*/
-
-                /*UserAdapter_Horizontal.Data data1 = new UserAdapter_Horizontal.Data();
-                HistotyAdapter.Data data2 = new HistotyAdapter.Data();
-                data2.setSelectUser(data1.getUsername());*/
             }
         });
-        holder.onBind(userData.get(i));
+        holder.onBind(userData.get(position));
+    }
+
+    public void deleteThisView(int position){
+        userData.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, userData.size());
     }
 
     @Override
@@ -107,11 +107,22 @@ public class UserAdapter_Horizontal extends RecyclerView.Adapter<UserAdapter_Hor
 
     public static class Data {
 
+        private int userindex;
         private String userimg;
         private String username;
         private Context context;
+        private Boolean manager;
+        public Boolean getManager() {
+            return manager;
+        }
 
-        private String selectUser="";
+        public void setManager(Boolean manager) {
+            this.manager = manager;
+        }
+
+        public int getUserindex() { return userindex; }
+
+        public void setUserindex(int userindex) { this.userindex = userindex; }
 
         public String getUsername() {
             return username;
@@ -132,18 +143,5 @@ public class UserAdapter_Horizontal extends RecyclerView.Adapter<UserAdapter_Hor
         public Context getContext() { return context; }
 
         public void setContext(Context context) { this.context = context; }
-
-        //사용자가 선택한 사용자 이름 저장(상단 사용자 선택하여 보기)
-        public String getSelectUser() { return selectUser; }
-        public void setSelectUser(String selectUser) { this.selectUser = selectUser; }
-
-        //        public String getTime() {
-//            return iotime;
-//        }
-//
-//        public void setTime(String iotime) {
-//            this.iotime = iotime;
-//        }
-
     }
 }
