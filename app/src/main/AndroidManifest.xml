@@ -54,7 +54,9 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
+        <activity android:name=".pin_enter"></activity>
+        <activity android:name=".pin_register2" />
+        <activity android:name=".pin_register1" />
         <activity android:name=".JoinAgree" />
         <activity android:name=".RegisterDoorlock4" />
         <activity android:name=".RegisterDoorlock3_2" />

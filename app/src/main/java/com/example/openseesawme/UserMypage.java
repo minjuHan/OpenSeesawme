@@ -170,7 +170,7 @@ public class UserMypage extends AppCompatActivity {
         //사용자 사진 띄우기
         Picasso.with(getApplicationContext())
                 .load("http://128.134.114.250:8080/doorlock/userImages/"+imageName)
-                .placeholder(R.drawable.person1)//이미지가 존재하지 않을 경우                                                                                                    경우 대체 이미지
+                .placeholder(R.drawable.person1)//이미지가 존재하지 않을 경우   경우 대체 이미지
                 /*.resize(2000, 2000) // 이미지 크기를 재조정하고 싶을 경우*/
                 .into(ivUserImage);
     }
