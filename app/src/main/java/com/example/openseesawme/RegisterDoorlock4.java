@@ -64,13 +64,11 @@ public class RegisterDoorlock4 extends AppCompatActivity {
     String doorNum="d2";    //s_info_num (일단 2번 도어락에 등록)
     String userId="bb";     //s_user_id (일단 bb로 지정)
 
-
     //여기부터 권한설정
     String[] permission_list = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
-
 
     public void checkPermission(){
         //현재 안드로이드 버전이 6.0미만이면 메서드를 종료한다.
@@ -104,8 +102,8 @@ public class RegisterDoorlock4 extends AppCompatActivity {
             }
         }
     }
-
     //여기까지 권한설정
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -197,7 +195,6 @@ public class RegisterDoorlock4 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -308,7 +305,9 @@ public class RegisterDoorlock4 extends AppCompatActivity {
             Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
             return myBitmap;
         }
-        Toast.makeText(getApplicationContext(),"파일 없음",Toast.LENGTH_LONG).show();
-        return null;
+        else{
+            Toast.makeText(getApplicationContext(),"파일 없음",Toast.LENGTH_LONG).show();
+            return null;
+        }
     }
 }

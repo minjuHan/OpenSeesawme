@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:gravity="center_vertical"
+    android:layout_marginBottom="8dp"
+    android:background="@android:color/white">
+
+    <CheckBox
+        android:id="@+id/item_checkbox"
+        android:clickable="false"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/iteminfo"
+        android:layout_width="0dp"
+        android:layout_height="130dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:background="#4D2196F3">
+
+        <TextView
+            android:id="@+id/outtext1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="설정제목"
+            android:layout_marginLeft="20dp"
+            android:textSize="26dp"
+            android:textColor="#FF5722"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/outtext2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="설정기간"
+            android:textSize="18dp"
+            android:textColor="#CC333333"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="25dp"
+            android:layout_gravity="right"/>
+
+        <TextView
+            android:id="@+id/outtext3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="님에 의해 설정되었습니다."
+            android:textSize="12dp"
+            android:textColor="#99333333"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="right"/>
+    </LinearLayout>
+
+</LinearLayout>

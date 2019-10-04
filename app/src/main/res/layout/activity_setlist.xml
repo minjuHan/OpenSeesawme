@@ -25,96 +25,89 @@
             />
     </android.support.v7.widget.Toolbar>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="30dp"
-    tools:context=".SetList">
-
-    <RelativeLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp">
-        <ImageView
-            android:id="@+id/door_img_id"
-            android:src="@drawable/house"
-            android:layout_width="80dp"
-            android:layout_height="80dp" />
-        <TextView
-            android:id="@+id/door_name"
-            android:text="우리집"
-            android:textSize="30dp"
-            android:textColor="#333333"
-            android:layout_toRightOf="@+id/door_img_id"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/remain_battery_txt"
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="30dp"
+        tools:context=".SetList">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:layout_marginRight="8dp"
-            android:layout_toLeftOf="@+id/remain_battery_img"
-            android:text="80%"
-            android:textColor="#333333"
-            android:textSize="20dp" />
-        <TextView
-            android:text="배터리"
-            android:textColor="#333333"
-            android:textSize="14dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_toLeftOf="@+id/remain_battery_img"
-            android:layout_below="@+id/remain_battery_txt"
-            android:layout_width="wrap_content"
+            android:layout_marginBottom="40dp">
+            <ImageView
+                android:id="@+id/door_img_id"
+                android:src="@drawable/home"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+            <TextView
+                android:id="@+id/door_name"
+                android:text="우리집"
+                android:textSize="30dp"
+                android:textColor="#333333"
+                android:layout_toRightOf="@+id/door_img_id"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+            <TextView
+                android:id="@+id/remain_battery_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginRight="8dp"
+                android:layout_toLeftOf="@+id/remain_battery_img"
+                android:text="80%"
+                android:textColor="#333333"
+                android:textSize="20dp" />
+            <TextView
+                android:text="배터리"
+                android:textColor="#333333"
+                android:textSize="14dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_toLeftOf="@+id/remain_battery_img"
+                android:layout_below="@+id/remain_battery_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/remain_battery_img"
+                android:layout_width="40dp"
+                android:layout_height="80dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_battery_80_black_24dp" />
+        </RelativeLayout>
+
+
+        <Button
+            android:id="@+id/btnbangbum"
+            android:text="장기간 외출 설정"
+            android:textSize="16dp"
+            android:gravity="left|center"
+            android:paddingRight="10dp"
+            android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/btn_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btnset_user"
+            android:text="사용자 설정"
+            android:textSize="16dp"
+            android:gravity="left|center"
+            android:paddingRight="10dp"
+            android:drawableRight="@drawable/ic_chevron_right_black_24dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/btn_bg"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <ImageView
-            android:id="@+id/remain_battery_img"
-            android:layout_width="40dp"
-            android:layout_height="80dp"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_battery_80_black_24dp" />
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/btnbell"
-        android:text="도어락 소리 크기 조절"
-        android:textSize="16dp"
-        android:gravity="left|center"
-        android:paddingRight="10dp"
-        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/btn_bg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/btnbangbum"
-        android:text="장기간 외출 설정"
-        android:textSize="16dp"
-        android:gravity="left|center"
-        android:paddingRight="10dp"
-        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/btn_bg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/btnset_user"
-        android:text="사용자 설정"
-        android:textSize="16dp"
-        android:gravity="left|center"
-        android:paddingRight="10dp"
-        android:drawableRight="@drawable/ic_chevron_right_black_24dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/btn_bg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-</LinearLayout>
+    </LinearLayout>
 </LinearLayout>

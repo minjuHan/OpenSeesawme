@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -50,6 +51,7 @@ public class RegisterDoorlock2 extends AppCompatActivity {
     List<BluetoothDevice> bluetoothDevices;
     int selectDevice;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +85,8 @@ public class RegisterDoorlock2 extends AppCompatActivity {
 
         //Adapter2
         dataDevice = new ArrayList<>();
-        adapterDevice = new SimpleAdapter(this, dataDevice, android.R.layout.simple_list_item_2, new String[]{"name","address"}, new int[]{android.R.id.text1, android.R.id.text2});
+        adapterDevice = new SimpleAdapter(this, dataDevice, android.R.layout.simple_list_item_2, new String[]{"name","address"},
+                new int[]{android.R.id.text1, android.R.id.text2});
         listDevice.setAdapter(adapterDevice);
 
         //검색된 블루투스 디바이스 데이터
@@ -129,7 +132,6 @@ public class RegisterDoorlock2 extends AppCompatActivity {
         }else{
 
         }
-
 
         //검색된 디바이스목록 클릭시 페어링 요청
         listDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -195,6 +197,7 @@ public class RegisterDoorlock2 extends AppCompatActivity {
 
                     //블루투스 디바이스 저장
                     bluetoothDevices.add(device);
+                    //uuid.setText(device.getUuids().toString());
                     break;
                 //블루투스 디바이스 검색 종료
                 case BluetoothAdapter.ACTION_DISCOVERY_FINISHED:
@@ -229,7 +232,7 @@ public class RegisterDoorlock2 extends AppCompatActivity {
                 //블루투스 활성화 거절
                 else{
                     Toast.makeText(this, "블루투스를 활성화해야 합니다.", Toast.LENGTH_SHORT).show();
-                    finish();
+                    //finish();
                     return;
                 }
                 break;

@@ -10,23 +10,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 public class MyAdapter extends BaseAdapter {
     Context context;
     int layout;
     LayoutInflater inf;
 
-    int img[];
+    int img;
     String result;
     String[] gData0;    //인덱스
     String[] gData1;    //출입가능 날짜
+    String[] gData1_yo; //출입가능 요일
     String[] gData2;    //게스트 이름
     String[] gData3;    //게스트키 준 날짜
     String[] gData4;    //게스트키 사용 여부
@@ -34,26 +28,28 @@ public class MyAdapter extends BaseAdapter {
     String[] otherJun;  //게스트키 준 사람 이름
 
 
-    public MyAdapter(Context context, int layout, int[] img, String result, String[]... gData) {
+    public MyAdapter(Context context, int layout, String result, String[]... gData) {
         this.context = context;
         this.layout = layout;
-        this.img = img;
+        this.img = R.drawable.person1;
         this.result = result;
         this.gData0 = gData[0];
         this.gData1 = gData[1];
-        this.gData2 = gData[2];
-        this.gData3 = gData[3];
-        this.gData4 = gData[4];
-        this.gData5 = gData[5];
-        this.otherJun = gData[6];
+        this.gData1_yo = gData[2];
+        this.gData2 = gData[3];
+        this.gData3 = gData[4];
+        this.gData4 = gData[5];
+        this.gData5 = gData[6];
+        this.otherJun = gData[7];
+
         inf = (LayoutInflater) context.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
     }
     @Override
-    public int getCount() {return img.length;}
+    public int getCount() {return gData0.length;}
 
     @Override
-    public Object getItem(int position) {return img[position];}
+    public Object getItem(int position) {return 0;}//img[position]
 
     @Override
     public long getItemId(int position) {return position;}
@@ -71,9 +67,18 @@ public class MyAdapter extends BaseAdapter {
         LinearLayout linear_black = convertView.findViewById(R.id.linear_black);
         LinearLayout sentgkey = convertView.findViewById(R.id.sentgkey);
 
-        iv.setImageResource(img[position]);
+//        iv.setImageResource(img[position]);
         txt_gname.setText(gData2[position]);
-        txt_valdate.setText("출입 날짜 : " + gData1[position]);
+
+        //출입날짜 or 출입 요일
+        if("null".equals(gData1[position])){
+            txt_valdate.setText("출입 가능 요일 : " + gData1_yo[position]);
+            Log.i("myguestkeydfffffff", "날짜 null :  ");
+        }else if("null".equals(gData1_yo[position])){
+            txt_valdate.setText("출입 날짜 : " + gData1[position]);
+            Log.i("myguestkeydfffffff", "요일 null :  ");
+        }
+
         txt_keyfrom.setText("From."+ otherJun[position]);
 
         //사용한 게스트키는 어둡게(?)
@@ -125,8 +130,17 @@ public class MyAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, OtherMemo1.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("result", result);
-                intent.putExtra("position", position);
+//                intent.putExtra("result", result);
+//                intent.putExtra("position", position);
+                intent.putExtra("gData0",gData0[position]);
+                intent.putExtra("gData1",gData1[position]);
+                intent.putExtra("gData1_yo",gData1_yo[position]);
+                intent.putExtra("gData2",gData2[position]);
+                intent.putExtra("gData3",gData3[position]);
+                intent.putExtra("gData4",gData4[position]);
+                intent.putExtra("gData5",gData5[position]);
+                intent.putExtra("otherJun",otherJun[position]);
+
                 context.startActivity(intent);
             }
         });

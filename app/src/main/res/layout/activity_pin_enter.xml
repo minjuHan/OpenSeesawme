@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="30dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".pin_enter">
+    <TextView
+        android:text="pin번호 입력"
+        android:textSize="20dp"
+        android:textColor="#333333"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="도어락 잠금 해제를 위해 pin번호를 입력해주세요"
+        android:gravity="center"
+        android:textColor="#333333"
+        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/edt_pin1"
+            android:width="40dp"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/edt_pin2"
+            android:width="40dp"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/edt_pin3"
+            android:width="40dp"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/edt_pin4"
+            android:width="40dp"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/edt_pin5"
+            android:width="40dp"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_enter_finish"
+        android:text="완료"
+        android:enabled="false"
+        android:layout_gravity="right"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

@@ -1,37 +1,42 @@
 package com.example.openseesawme;
 
-import android.content.Context;
+import android.animation.TimeAnimator;
+import android.content.Intent;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class AccessHistory extends AppCompatActivity {
+    String d_user_index="1";
     Toolbar myToolbar;
-    private UserAdapter_Horizontal uadapter;
-    private HistoryDateAdapter dadapter;
-    private HistotyAdapter hadapter;
+    private UserAdapter_Horizontal userAdapter;    //상단 사용자 목록
+    private HistotyAdapter ioAdapter;            //출입내역 목록
 
-    ListView listview;
-    LinearLayout history_listview; //추가
+    String[] iorow;
+    TextView count;
+    ImageView ivRestart;
+    //int position=-1;
+
+    //사람마다 다르게 보이도록 하는 거 해야 함------------------------------
+    //userAdapter에 있는 항목?을 가져가서 그거에 해당하는 이름이면 안넣도록 if문..?
 
 
     @Override
@@ -39,14 +44,36 @@ public class AccessHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_access_history);
 
+        //상단 사용자 목록
         uinit();
         getUserData();
 
-        dinit();
-        getdateData();
-
         hinit();
         getData();
+
+        /*UserAdapter_Horizontal.Data data = new UserAdapter_Horizontal.Data();
+        if(!data.getSelectUser().equals("")){
+            Intent intent = getIntent(); *//*데이터 수신*//*
+            position = intent.getExtras().getInt("position");
+            //position=Integer.parseInt(data.getSelectUser());
+            Toast.makeText(getApplicationContext(),position,Toast.LENGTH_LONG).show(); //안됨
+        }*/
+
+
+        //출입내역 개수
+        count=findViewById(R.id.count);
+        count.setText("총 "+Integer.toString(iorow.length)+"개");
+
+        //새로고침
+        ivRestart=findViewById(R.id.ivRestart);
+        ivRestart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            }
+        });
 
         // 추가된 소스, Toolbar를 생성한다.
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -62,129 +89,108 @@ public class AccessHistory extends AppCompatActivity {
 
     }
 
+    //여기부터 상단 사용자 정보 띄우기
     private void uinit() {
-        RecyclerView recycler = findViewById(R.id.urecycler);
-
+        RecyclerView rvUserList = findViewById(R.id.rvUserList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recycler.setLayoutManager(linearLayoutManager);
-        uadapter = new UserAdapter_Horizontal();
-        recycler.setAdapter(uadapter);
+        rvUserList.setLayoutManager(linearLayoutManager);
+        userAdapter = new UserAdapter_Horizontal(getApplicationContext());
+        rvUserList.setAdapter(userAdapter);
     }
 
     private void getUserData() {
-
-        String resultUsername; //전체출력 result;
-        String[] Username;
+        String result;
+        String[] row;
+        String[] detailrow;
+        String[] name = new String[10000];
+        String[] img = new String[10000];
         try {
-            resultUsername = new UserListActivity().execute().get();
-            Username = resultUsername.split(" ");
-            List<String> listUsername = Arrays.asList(Username);
-            for (int i = 0; i < Username.length; i++) {
-                // 각 List의 값들을 data 객체에 set 해줍니다.
+            result = new UserListActivity().execute(d_user_index).get();
+            row = result.split("spl");
+            for(int i=0;i<row.length;i++){
+                detailrow=row[i].split(",");
+                name[i]=detailrow[0];
+                img[i]=detailrow[1];
+            }
+
+            /*if(position!=-1){
+                userN=name[position];
+            }
+            Toast.makeText(getApplicationContext(),userN,Toast.LENGTH_LONG).show();*/
+
+            List<String> listUsername = Arrays.asList(name);
+            List<String> listUserimg = Arrays.asList(img);
+
+            for (int i = 0; i < row.length; i++) {
                 UserAdapter_Horizontal.Data data = new UserAdapter_Horizontal.Data();
-
-                data.setUsername(listUsername.get(i));
-
-                // 각 값이 들어간 data를 adapter에 추가합니다.
-                uadapter.addItem(data);
-            }
-        } catch (
-                Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    private void dinit() {
-        RecyclerView recycler = findViewById(R.id.drecycler);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recycler.setLayoutManager(linearLayoutManager);
-        dadapter = new HistoryDateAdapter();
-        recycler.setAdapter(dadapter);
-    }
-
-    private void getdateData() {
-
-        String resultIOdate; //전체출력 result;
-        String[] IOdate;
-        try {
-            resultIOdate = new HistoryActivity_date().execute().get();
-            IOdate = resultIOdate.split(" ");
-            List<String> listIOdate = Arrays.asList(IOdate);
-
-            for (int i = 0; i < listIOdate.size(); i++) {
                 // 각 List의 값들을 data 객체에 set 해줍니다.
-                HistoryDateAdapter.Data data = new HistoryDateAdapter.Data();
-                data.setIOdate(listIOdate.get(i));
+                data.setUsername(listUsername.get(i));
+                data.setUserimg(listUserimg.get(i));
+                data.setContext(getApplicationContext());
                 // 각 값이 들어간 data를 adapter에 추가합니다.
-                dadapter.addItem(data);
+                userAdapter.addItem(data);
             }
+
         } catch (
                 Exception e) {
             e.printStackTrace();
         }
     }
+    //여기까지 상단 사용자 정보 띄우기
 
-
+    //여기부터 출입내역 띄우기
     private void hinit() {
-        RecyclerView recycler = findViewById(R.id.recycler);
+        RecyclerView recycler = findViewById(R.id.rvIoList);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(linearLayoutManager);
-        hadapter = new HistotyAdapter();
-        recycler.setAdapter(hadapter);
+        ioAdapter = new HistotyAdapter();
+        recycler.setAdapter(ioAdapter);
     }
 
     private void getData() {
-
-        String resultUname, resultIOname, resultTime, resultOX; //전체출력 result;
-        String[] IOname, HistoryTime, HistoryOX;
+        String[] detailrow;
+        String[] img=new String[1000];
+        String[] name=new String[1000];
+        String[] ox=new String[1000];
+        String[] time=new String[1000];
         try {
-            resultIOname = new HistoryActivity().execute().get();
-            IOname = resultIOname.split(" ");
-            List<String> listIOname = Arrays.asList(IOname);
+            String result = new HistoryActivity().execute(d_user_index).get();
+            iorow=result.split("spl");
+            for(int i=0;i<iorow.length;i++){
+                detailrow=iorow[i].split(",");
+                img[i]=detailrow[0];
+                name[i]=detailrow[1];
+                ox[i]=detailrow[2];
+                time[i]=detailrow[3];
+            }
+            String dname = new HistoryDoorNameActivity().execute(d_user_index).get();
+            List<String> listImg = Arrays.asList(img);
+            List<String> listName = Arrays.asList(name);
+            List<String> listDName = Arrays.asList(dname);
+            List<String> listOx = Arrays.asList(ox);
+            List<String> listTime = Arrays.asList(time);
 
-            resultTime = new HistoryActicity_time().execute().get();
-            HistoryTime = resultTime.split(" ");
-            List<String> listTime = Arrays.asList(HistoryTime);
-
-            resultOX = new HistoryAcitivity_ox().execute().get();
-            HistoryOX = resultOX.split(" ");
-            List<String> listOX = Arrays.asList(HistoryOX);
-
-//            for (int i = 0; i < listIOname.size(); i++) {
-//                // 각 List의 값들을 data 객체에 set 해줍니다.
-//                HistotyAdapter.Data data = new HistotyAdapter.Data();
-//                System.out.println(listOX.get(i));
-//
-//            }
-
-
-            for (int i = 0; i < listIOname.size(); i++) {
-                // 각 List의 값들을 data 객체에 set 해줍니다.
+            for (int i = 0; i < iorow.length; i++) {
                 HistotyAdapter.Data data = new HistotyAdapter.Data();
-                String OX = listOX.get(i);
-
-                if (OX == "0"){
-                    data.setIOname(listIOname.get(i) + "님이 나가셨습니다.");
-                    data.getIOcolor();
-
-                }
-                else if(OX == "1") {
-                    data.setIOname(listIOname.get(i) + "님이 들어오셨습니다.");
-                    data.getIOcolor();
-                }
+                // 각 List의 값들을 data 객체에 set 해줍니다.
+                data.setImg(listImg.get(i));
+                data.setName(listName.get(i));
+                data.setDname(listDName.get(0));
+                data.setOx(listOx.get(i));
                 data.setTime(listTime.get(i));
+                data.setContext(getApplicationContext());
+
                 // 각 값이 들어간 data를 adapter에 추가합니다.
-                hadapter.addItem(data);
+                ioAdapter.addItem(data);
+                //Toast.makeText(getApplicationContext(),data.getSelectUser(),Toast.LENGTH_LONG).show();
             }
         } catch (
                 Exception e) {
             e.printStackTrace();
         }
     }
-
+    //여기까지 출입내역 띄우기
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

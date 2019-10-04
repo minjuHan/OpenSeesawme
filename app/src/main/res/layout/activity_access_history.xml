@@ -54,8 +54,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-
                 <TextView
                     android:id="@+id/total"
                     android:layout_width="wrap_content"
@@ -69,16 +67,20 @@
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/urecycler"
+                android:id="@+id/rvUserList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="#FFFFFF"
                 android:scrollbars="horizontal"></android.support.v7.widget.RecyclerView>
-
         </LinearLayout>
 
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:background="#DDDDDD" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -101,47 +103,18 @@
                     android:text="4개"
                     android:textColor="#9B9B9B"
                     android:textSize="18dp" />
-
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
-
                 <ImageView
+                    android:id="@+id/ivRestart"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:src="@drawable/sync" />
             </LinearLayout>
 
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.3dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="#4682B4" />
-
-
-        <LinearLayout
-            android:id="@+id/historydate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#4DFFFFFF"
-            android:orientation="vertical">
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/drecycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="#FFFFFF">
-                <!--android:scrollbars="vertical"-->
-            </android.support.v7.widget.RecyclerView>
-
-        </LinearLayout>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="0.3dp"
@@ -158,12 +131,12 @@
 
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler"
+                android:id="@+id/rvIoList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:scrollbars="vertical"
                 android:background="#FFFFFF">
-                <!--android:scrollbars="vertical"-->
             </android.support.v7.widget.RecyclerView>
 
         </LinearLayout>

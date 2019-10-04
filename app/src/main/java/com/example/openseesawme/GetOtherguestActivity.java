@@ -19,13 +19,17 @@ public class GetOtherguestActivity extends AsyncTask<String, Void, String> {
             String str;
 //
             // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
-            URL url = new URL("http://192.168.0.159:8040/doorlock/androidTestDB.jsp");
+            URL url = new URL("http://128.134.114.250:8080/doorlock/androidTestDB.jsp");
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestMethod("POST");
             OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 
+            // 전송할 데이터. GET 방식으로 작성
+//            sendMsg = "s_id=" + Dglobal.getLoginID();
+//              sendMsg = "d_user_index=" + ;
+//            osw.write(sendMsg);
             osw.flush();
 
             //jsp와 통신 성공 시 수행
@@ -42,6 +46,7 @@ public class GetOtherguestActivity extends AsyncTask<String, Void, String> {
                 receiveMsg = buffer.toString();
             } else {
                 // 통신 실패
+                Log.i("Activity ", "aaaaaaaaaerror");
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();

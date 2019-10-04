@@ -11,18 +11,18 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class HistoryActivity_date extends AsyncTask<String, Void, String> {
+public class Doorlock_name extends AsyncTask<String, Void, String> {
     String sendMsg, receiveMsg;
 
     @Override
     protected String doInBackground(String... strings) {
 
         try {
-            Log.i("test", "HistoryActicity_date");
+            Log.i("test", "Doorlock_name");
             String str;
 
             // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
-            URL url = new URL("http://172.30.44.29:9090/doorlock/androidHistoryDB_date.jsp");
+            URL url = new URL("http://192.168.35.6:9090/doorlock/androidDoorlock_name.jsp");
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -47,6 +47,7 @@ public class HistoryActivity_date extends AsyncTask<String, Void, String> {
                     buffer.append(str);
                 }
                 receiveMsg = buffer.toString();
+                Log.i("test",receiveMsg);
             } else {
                 Log.i("test", "failfail");
             }
