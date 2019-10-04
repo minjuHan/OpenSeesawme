@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TrueMainActivity">
-    <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
     <!-- 툴바 -->
     <android.support.v7.widget.Toolbar
@@ -29,31 +26,25 @@
             android:layout_gravity="center"/>
     </android.support.v7.widget.Toolbar>
 
-        <!-- 모션레이아웃 -->
-        <android.support.constraint.motion.MotionLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/motion_container"
-            app:layoutDescription="@xml/motion_scene"
-            android:layout_centerInParent="true">
+    <!-- 도어락 viewpager -->
+    <android.support.v4.view.ViewPager
+        android:foregroundGravity="center"
+        android:id="@+id/viewPager"
+        android:layout_centerInParent="true"
+        android:overScrollMode="never"
+        android:clipToPadding="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
 
-            <include layout="@layout/mainviews"/>
-        </android.support.constraint.motion.MotionLayout>
+    <!-- 지문인증-->
 
-        <!-- 지문인증-->
-
-            <Button
-                android:layout_alignParentBottom="true"
-                android:background="#91000000"
-                android:textColor="#ffffff"
-                android:id="@+id/btnfp"
-                android:text="버튼을 눌러서 지문 인식 해주세요"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-
-
-</android.support.design.widget.CoordinatorLayout>
+    <Button
+        android:layout_alignParentBottom="true"
+        android:background="#91000000"
+        android:textColor="#ffffff"
+        android:id="@+id/btnfp"
+        android:text="버튼을 눌러서 지문 인식 해주세요"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

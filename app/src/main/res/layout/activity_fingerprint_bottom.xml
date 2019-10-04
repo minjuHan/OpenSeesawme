@@ -51,6 +51,11 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="Message..." />
+
+        <!-- 블루투스 -->
+
+        <!---->
+
         <TextView
             android:textColor="#7e7e7e"
             android:text="비밀번호(PIN) 입력"

@@ -1,221 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical">
 
-    <FrameLayout android:id="@+id/v1"
-        android:layout_width="304dp"
-        android:layout_height="360dp"
-        android:background="#8de4ff"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        >
 
-
-        <ImageView
-            android:id="@+id/lock"
-            android:src="@drawable/closelock"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"/>
-        <TextView
-            android:text="우리집"
-            android:layout_marginTop="30dp"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_gravity="center"
-            android:textColor="@android:color/background_light" android:textSize="24sp" android:textStyle="bold"/>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_gravity="bottom"
-            android:background="#fff"
-            android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            >
             <LinearLayout
-                android:clickable="true"
-                android:id="@+id/inout"
                 android:orientation="vertical"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp">
-                <ImageView
-                    android:src="@drawable/ic_list"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"/>
-                <TextView
-                    android:text="출입내역"
-                    android:layout_gravity="center|bottom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <View
-                android:layout_marginTop="10dp"
-                android:layout_width="2dp"
-                android:layout_height="80dp"
-                android:layout_centerInParent="true"
-                android:background="#c7c7c7"/>
-            <LinearLayout
-                android:clickable="true"
-                android:id="@+id/keylist"
-                android:orientation="vertical"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp">
-                <ImageView
-                    android:src="@drawable/ic_key"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"/>
-                <TextView
-                    android:text="게스트키"
-                    android:layout_gravity="center|bottom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <View
-                android:layout_marginTop="10dp"
-                android:layout_width="2dp"
-                android:layout_height="80dp"
-                android:layout_centerInParent="true"
-                android:background="#c7c7c7"/>
-            <LinearLayout
-                android:clickable="true"
-                android:id="@+id/setlist"
-                android:orientation="vertical"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp">
-                <ImageView
-                    android:src="@drawable/ic_settings"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"/>
-                <TextView
-                    android:text="설정"
-                    android:layout_gravity="center|bottom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-        </LinearLayout>
-    </FrameLayout>
+                android:id="@+id/v1"
+                android:layout_width="304dp"
+                android:layout_height="360dp"
+                android:background="#8de4ff"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
 
-    <FrameLayout
-        android:id="@+id/v2"
-        android:layout_width="304dp"
-        android:layout_height="360dp"
-        android:background="@android:color/holo_orange_dark"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-        <ImageView
-            android:src="@drawable/closelock"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="25dp"/>
-        <TextView
-            android:text="회사"
-            android:layout_marginTop="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_gravity="center"
-            android:textColor="@android:color/background_light" android:textSize="24sp" android:textStyle="bold"/>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_gravity="bottom"
-            android:background="#fff"
-            android:layout_width="match_parent"
-            android:layout_height="100dp">
-            <LinearLayout
-                android:clickable="true"
-                android:id="@+id/inout2"
-                android:orientation="vertical"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp">
                 <ImageView
-                    android:src="@drawable/ic_list"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"/>
+                    android:id="@+id/lock"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="25dp"
+                    android:src="@drawable/closelock"
+                    />
                 <TextView
-                    android:text="출입내역"
-                    android:layout_gravity="center|bottom"
+                    android:id="@+id/tvdoorlockName"
+                    android:text="doorlockname"
+                    android:layout_marginTop="30dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content" android:layout_gravity="center"
+                    android:textColor="@android:color/background_light" android:textSize="24sp" android:textStyle="bold"/>
+                <LinearLayout
+                    android:id="@+id/cardBottomTab"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal"
+                    android:layout_gravity="bottom"
+                    android:background="#fff"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+                    <LinearLayout
+                        android:clickable="true"
+                        android:id="@+id/inout"
+                        android:orientation="vertical"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp">
+                        <ImageView
+                            android:src="@drawable/ic_list"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"/>
+                        <TextView
+                            android:text="출입내역"
+                            android:layout_gravity="center|bottom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <View
+                        android:layout_marginTop="10dp"
+                        android:layout_width="2dp"
+                        android:layout_height="80dp"
+                        android:layout_centerInParent="true"
+                        android:background="#c7c7c7"/>
+                    <LinearLayout
+                        android:clickable="true"
+                        android:id="@+id/keylist"
+                        android:orientation="vertical"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp">
+                        <ImageView
+                            android:src="@drawable/ic_key"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"/>
+                        <TextView
+                            android:text="게스트키"
+                            android:layout_gravity="center|bottom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                    <View
+                        android:layout_marginTop="10dp"
+                        android:layout_width="2dp"
+                        android:layout_height="80dp"
+                        android:layout_centerInParent="true"
+                        android:background="#c7c7c7"/>
+                    <LinearLayout
+                        android:clickable="true"
+                        android:id="@+id/setlist"
+                        android:orientation="vertical"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp">
+                        <ImageView
+                            android:src="@drawable/ic_settings"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"/>
+                        <TextView
+                            android:text="설정"
+                            android:layout_gravity="center|bottom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
-            <View
-                android:layout_marginTop="10dp"
-                android:layout_width="2dp"
-                android:layout_height="80dp"
-                android:layout_centerInParent="true"
-                android:background="#c7c7c7"/>
-            <LinearLayout
-                android:clickable="true"
-                android:id="@+id/keylist2"
-                android:orientation="vertical"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp">
-                <ImageView
-                    android:src="@drawable/ic_key"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"/>
-                <TextView
-                    android:text="게스트키"
-                    android:layout_gravity="center|bottom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-            <View
-                android:layout_marginTop="10dp"
-                android:layout_width="2dp"
-                android:layout_height="80dp"
-                android:layout_centerInParent="true"
-                android:background="#c7c7c7"/>
-            <LinearLayout
-                android:clickable="true"
-                android:id="@+id/setlist2"
-                android:orientation="vertical"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp">
-                <ImageView
-                    android:src="@drawable/ic_settings"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"/>
-                <TextView
-                    android:text="설정"
-                    android:layout_gravity="center|bottom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-        </LinearLayout>
-    </FrameLayout>
+        </RelativeLayout>
 
-    <FrameLayout
-        android:id="@+id/v3"
-        android:layout_width="304dp"
-        android:layout_height="360dp"
-        android:background="@android:color/holo_red_light"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-        <ImageView
-            android:src="@drawable/ic_add"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="50dp"/>
-        <TextView
-            android:layout_marginTop="50dp"
-            android:text="추가하세요"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_gravity="center"
-            android:textColor="@android:color/background_light" android:textSize="24sp" android:textStyle="bold"/>
-    </FrameLayout>
-</merge>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
