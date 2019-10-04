@@ -1,6 +1,7 @@
 package com.example.openseesawme;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -14,10 +15,13 @@ import android.graphics.Color;
 import android.graphics.ColorSpace;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -25,8 +29,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,15 +43,20 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
@@ -61,8 +72,8 @@ public class RegisterDoorlock4 extends AppCompatActivity {
     String doorName="우리집";
     String imgName;
 
-    String doorNum="d2";    //s_info_num (일단 2번 도어락에 등록)
-    String userId="bb";     //s_user_id (일단 bb로 지정)
+    String doorNum="d3";    //s_info_num (일단 2번 도어락에 등록)
+    String userId="dd";     //s_user_id (일단 bb로 지정)
 
     //여기부터 권한설정
     String[] permission_list = {
@@ -110,6 +121,8 @@ public class RegisterDoorlock4 extends AppCompatActivity {
         setContentView(R.layout.activity_register_doorlock4);
         checkPermission();
 
+        checkPermission();
+
         btnNext=findViewById(R.id.btnNext);
         llGallery = findViewById(R.id.llGallery);
         llHome=findViewById(R.id.llHome);
@@ -124,11 +137,13 @@ public class RegisterDoorlock4 extends AppCompatActivity {
                 llHome.setBackgroundColor(Color.rgb(241,241,241));
                 llCor.setBackgroundColor(Color.rgb(241,241,241));
                 selectImage="gallery";
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT); //ACTION_PICk과 차이점?
-                intent.setType("image/*"); //이미지만 보이게
+                Intent dImage = new Intent(Intent.ACTION_PICK);
+                dImage.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+                dImage.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(dImage, 1);
 
                 //Intent 시작 - 갤러리앱을 열어서 원하는 이미지를 선택할 수 있다.
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+                startActivityForResult(Intent.createChooser(dImage, "Select Picture"), 1);
             }
         });
         llHome.setOnClickListener(new View.OnClickListener() {
@@ -196,7 +211,6 @@ public class RegisterDoorlock4 extends AppCompatActivity {
             }
         });
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -220,7 +234,7 @@ public class RegisterDoorlock4 extends AppCompatActivity {
                 ivGallery.setImageBitmap(null);
 
             } else {
-                Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
             Toast.makeText(this, "로딩에 오류가 있습니다.", Toast.LENGTH_LONG).show();
@@ -250,7 +264,7 @@ public class RegisterDoorlock4 extends AppCompatActivity {
 
         path = Environment.getExternalStorageDirectory();
         //path= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        file= new File(path, "test.jpg");
+        file= new File(path, doorNum+userId+".jpg");
 
         try {
             outStream = new FileOutputStream(file);
