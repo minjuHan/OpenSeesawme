@@ -305,7 +305,9 @@ public class RegisterDoorlock4 extends AppCompatActivity {
             Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
             return myBitmap;
         }
-        Toast.makeText(getApplicationContext(),"파일 없음",Toast.LENGTH_LONG).show();
-        return null;
+        else{
+            Toast.makeText(getApplicationContext(),"파일 없음",Toast.LENGTH_LONG).show();
+            return null;
+        }
     }
 }

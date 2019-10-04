@@ -30,10 +30,10 @@ public class UserListActivity extends AsyncTask<String, Void, String> {
             OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 
             // 전송할 데이터. GET 방식으로 작성
-            //sendMsg = "user_name=" + strings[0];
+            sendMsg = "d_user_index=" + strings[0];
 
 
-            //osw.write(sendMsg);
+            osw.write(sendMsg);
             osw.flush();
 
             //jsp와 통신 성공 시 수행
