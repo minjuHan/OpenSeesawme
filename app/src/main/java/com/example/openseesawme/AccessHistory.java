@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AccessHistory extends AppCompatActivity {
-    String d_user_index="1";
+    String d_user_index=Dglobal.getDoorID();
     Toolbar myToolbar;
     private UserAdapter_Horizontal userAdapter;    //상단 사용자 목록
     private HistotyAdapter ioAdapter;            //출입내역 목록

@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Outdoorset extends AppCompatActivity {
-    String d_user_index="4";    //나중에 인덱스로 바꿔주기
+    String d_user_index=Dglobal.getDoorID();
 
     private static  final String TAG = "Outdoorset";
     RecyclerView recycler;

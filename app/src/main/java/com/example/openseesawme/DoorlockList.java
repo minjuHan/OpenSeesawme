@@ -21,7 +21,8 @@ public class DoorlockList extends AppCompatActivity {
     private List<String> listdname, listdnumber, listddate;
     String doorname, doornumber, doordate; //전체출력 result;
     String[] dname, dnumber,ddate;
-    LinearLayout doorlockitem;
+
+    String user_id=Dglobal.getLoginID();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,10 +75,9 @@ public class DoorlockList extends AppCompatActivity {
     }
 
     private void getData() {
-
         try {
-            doorname = new Doorlock_name().execute().get();
-            //Log.i("outsettitle", outsettitle);
+
+            /*doorname = new Doorlock_name().execute().get();
             dname =  doorname.split(" ");
             listdname = Arrays.asList(dname);
 
@@ -100,7 +100,7 @@ public class DoorlockList extends AppCompatActivity {
 
                 // 각 값이 들어간 data를 adapter에 추가합니다.
                 adapter.addItem(data);
-            }
+            }*/
         } catch (
                 Exception e) {
             e.printStackTrace();

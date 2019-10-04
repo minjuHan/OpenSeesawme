@@ -39,7 +39,11 @@
         <activity android:name=".DoorlockItem" />
         <activity android:name=".DoorlockInfo" />
         <activity android:name=".Loading">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <service
@@ -54,13 +58,7 @@
         <activity android:name=".pin_register2" />
         <activity android:name=".pin_register1" />
         <activity android:name=".JoinAgree" />
-        <activity android:name=".RegisterDoorlock4">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".RegisterDoorlock4" />
         <activity android:name=".RegisterDoorlock3_2" />
         <activity android:name=".RegisterDoorlock3" />
         <activity android:name=".RegisterDoorlock2" />
