@@ -1,7 +1,6 @@
 package com.example.openseesawme;
 
 import android.Manifest;
-import android.animation.ArgbEvaluator;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.le.BluetoothLeAdvertiser;
 import android.bluetooth.le.BluetoothLeScanner;
@@ -12,38 +11,28 @@ import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
-import java.util.concurrent.ExecutionException;
 
 public class TrueMainActivity extends AppCompatActivity {
     Toolbar myToolbar; //툴바.
@@ -186,10 +175,23 @@ public class TrueMainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), myguestkey.class);
                 startActivity(intent);
                 return true;
+            case R.id.action_settings2 :
+                Intent intent2 = new Intent(getApplicationContext(), DoorlockList.class);
+                startActivity(intent2);
+                return true;
+            case R.id.action_settings3 :
+                Intent intent3 = new Intent(getApplicationContext(), UserMypage.class);
+                startActivity(intent3);
+                return true;
+            case R.id.action_settings4 :
+                Intent intent4 = new Intent(getApplicationContext(), Setting.class);
+                startActivity(intent4);
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
+
         }
     }
     //1. 여기까지 툴바관련
