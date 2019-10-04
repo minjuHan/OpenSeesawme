@@ -139,7 +139,7 @@ public class pin_enter extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "도어락 잠금이 해제되었습니다",Toast.LENGTH_SHORT).show();
                     //jsp로 보내는 코드
                     try {
-//                        String result2  = new FingerActivity().execute("open").get();
+                        String result2  = new FingerActivity().execute("open").get();
                     }catch (Exception e){}
 
                     Intent intent1 = new Intent(getApplicationContext(), TrueMainActivity.class);

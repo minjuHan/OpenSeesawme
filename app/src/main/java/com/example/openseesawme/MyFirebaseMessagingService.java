@@ -68,7 +68,7 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
 
         //request
         Request request = new Request.Builder()
-                .url("http://192.168.0.159:8020/doorlock/fcmtest.jsp")
+                .url("http://128.134.114.250:8080/doorlock/fcmtest.jsp")
                 .post(body)
                 .build();
 
