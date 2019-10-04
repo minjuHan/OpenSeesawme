@@ -14,8 +14,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-@TargetApi(Build.VERSION_CODES.M)//이녀석은 또 처음 보는군.
+@TargetApi(Build.VERSION_CODES.M)
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback{
+
+
     CancellationSignal cancellationSignal;
     private Context context;
 
@@ -77,9 +79,6 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             Ringtone r = RingtoneManager.getRingtone((Activity)context, notification);
             r.play();
-
-
-
 
         }
 

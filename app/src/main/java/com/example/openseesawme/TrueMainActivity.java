@@ -1,13 +1,31 @@
 package com.example.openseesawme;
 
-import android.annotation.SuppressLint;
+import android.Manifest;
+import android.animation.ArgbEvaluator;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.le.BluetoothLeAdvertiser;
+import android.bluetooth.le.BluetoothLeScanner;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanFilter;
+import android.bluetooth.le.ScanRecord;
+import android.bluetooth.le.ScanResult;
+import android.bluetooth.le.ScanSettings;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.constraint.motion.MotionLayout;
+
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,39 +34,63 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.Vector;
+import java.util.concurrent.ExecutionException;
+
 public class TrueMainActivity extends AppCompatActivity {
-    //..,,
-    public static TrueMainActivity activity;
+    Toolbar myToolbar; //툴바.
 
+    ViewPager viewPager; //viewpager
+    TrueMainDoorlockIndexAdapter adapter; //
+    List<TData> doorlocks; //
 
+    String resultDoorlockIndexname; //가져온 도어락 전체 출력
+    String[] doorlockIndex; //도어락인덱스
+    String[] doorlockName; //도어락이름
 
-    Toolbar myToolbar; //툴바
-    MotionLayout motion_container; //모션레이아웃
-    Integer selectedIndex = 0;
-    FrameLayout v1, v2, v3;
-
-    //LinearLayout bottom_linear,
-    LinearLayout inout, setlist, keylist,inout2, setlist2, keylist2;
-    Button MainButton;
-    //BottomSheetBehavior bottomSheetBehavior;//bottom sheet layout
     Button btnfp;
     ImageView lock;
-    private String TAG = "firebaseTTT";
 
-    @SuppressLint("WrongThread")
+    //지문 인텐트
+    String fingerComplete = "fingeryet";
+
+    //<!--ble스캔-->---------------시작----------------------
+    BluetoothAdapter mBluetoothAdapter;
+    BluetoothLeScanner mBluetoothLeScanner;
+    BluetoothLeAdvertiser mBluetoothLeAdvertiser;
+    private static final int PERMISSIONS = 100;
+    //Vector<Beacon> beacon;
+    ScanSettings.Builder mScanSettings;
+    List<ScanFilter> scanFilters;
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss", Locale.KOREAN);
+    //추가
+    private String mDeviceAddress = "6C:C3:74:F3:CB:E4";
+    String scanComplete="scanyet";
+    Boolean fComplete= true;
+    Boolean sComplete = true;
+    String scanDeviceAddress; //스캔한 비콘의 맥주소
+    //
+
+//<!--ble스캔-->--------------끝-----------------------
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         //인텐트 받기(MainActivity.java로부터)
         Intent intent = getIntent();
         Boolean keeplogin = intent.getBooleanExtra("keeplog",false);
         String user_id = intent.getStringExtra("userID");
-//        Toast.makeText(getApplicationContext(),keeplogin + "   " + user_id, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),keeplogin + "   " + user_id, Toast.LENGTH_LONG).show();
 
         //user_id가 null이 아닌 경우 SharedPreferences 설정
         if(user_id != null){
@@ -75,112 +117,54 @@ public class TrueMainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         //여기까지 툴바
 
-
-        //모션레이아웃
-        motion_container = findViewById(R.id.motion_container);
-        v1 = findViewById(R.id.v1);
-        v2 = findViewById(R.id.v2);
-        v3 = findViewById(R.id.v3);
-        v1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(selectedIndex!=0){
-                    motion_container.setTransition(R.id.s2, R.id.s1); //orange to blue transition
-                    motion_container.transitionToEnd();
-                }
-                selectedIndex = 0;
-            }
-        });
-
-
-        v2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (selectedIndex == 2) {
-                    motion_container.setTransition(R.id.s3, R.id.s2);  //red to orange transition
-                    motion_container.transitionToEnd();
-                } else if (selectedIndex ==0) {
-                    motion_container.setTransition(R.id.s1, R.id.s2); //blue to orange transition
-                    motion_container.transitionToEnd();
-                } else {
-                }
-
-                selectedIndex = 1;
-            }
-        });
-        v3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (selectedIndex != 2) {
-                    motion_container.setTransition(R.id.s2, R.id.s3); //orange to red transition
-                    motion_container.transitionToEnd();
-                }
-                selectedIndex = 2;
-            }
-        });
-        //여기까지 모션레이아웃
-
-
-        //onclick
-        inout = findViewById(R.id.inout);
-        setlist = findViewById(R.id.setlist);
-        keylist = findViewById(R.id.keylist);
-        setlist2 = findViewById(R.id.setlist2);
-        keylist2 = findViewById(R.id.keylist2);
-
-        inout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AccessHistory.class);
-                startActivity(intent);
-            }
-        });
-
-        setlist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),SetList.class);
-                startActivity(intent);
-            }
-        });
-        keylist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),OtherGuestkey.class);
-                startActivity(intent);
-            }
-        });
-        setlist2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),SetList.class);
-                startActivity(intent);
-            }
-        });
-        keylist2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),OtherGuestkey.class);
-                startActivity(intent);
-            }
-        });
-
-        //지문인식 intent
-        btnfp = findViewById(R.id.btnfp);
+        //지문인식 intent -------------
+        btnfp = findViewById(R.id.btnfp); //지문버튼
         btnfp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Fingerprint.class);
                 //intent.putExtra("done",false);
                 //startActivityForResult(intent,0);
-                intent.putExtra("done",true);
+                //intent.putExtra("done",true);
                 startActivityForResult(intent,0);
             }
         });
         lock = findViewById(R.id.lock);
+        //지문인식 intent -------------
 
+        // viewPager -------------
+        viewPager = findViewById(R.id.viewPager);
+        doorlocks = new ArrayList<>();
+        adapter = new TrueMainDoorlockIndexAdapter(doorlocks, this);
 
+        doorlockListAdd(); ////for문으로 불러온 도어락 개수만큼 add
+        doorlocks.add(new TData("nodata", "추가하세요", doorlocks.size(),
+                "colorlast")); //도어락 등록
 
+        viewPager.setAdapter(adapter);
+        viewPager.setPadding(60, 0, 60, 0);
+        //viewPager -------------
+
+        //ble스캔-------------------------
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSIONS);
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
+        mBluetoothLeAdvertiser = mBluetoothAdapter.getBluetoothLeAdvertiser();
+        //beacon = new Vector<>();
+        mScanSettings = new ScanSettings.Builder();
+        mScanSettings.setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY);
+        ScanSettings scanSettings = mScanSettings.build();
+
+        scanFilters = new Vector<>();
+        ScanFilter.Builder scanFilter = new ScanFilter.Builder();
+        scanFilter.setDeviceAddress("6C:C3:74:F3:CB:E4"); //ex) 00:00:00:00:00:00
+        ScanFilter scan = scanFilter.build();
+        scanFilters.add(scan);
+        mBluetoothLeScanner.startScan(scanFilters, scanSettings, mScanCallback);
+
+        //ble스캔--------------------------
     }//onCreate end
 
 
@@ -202,36 +186,19 @@ public class TrueMainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), myguestkey.class);
                 startActivity(intent);
                 return true;
-            case R.id.action_settings2 :
-                Intent intent2 = new Intent(getApplicationContext(), DoorlockList.class);
-                startActivity(intent2);
-                return true;
-            case R.id.action_settings3 :
-                Intent intent3 = new Intent(getApplicationContext(), UserMypage.class);
-                startActivity(intent3);
-                return true;
-            case R.id.action_settings4 :
-                Intent intent4 = new Intent(getApplicationContext(), Setting.class);
-                startActivity(intent4);
-                finish();
-                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
         }
     }
-
     //1. 여기까지 툴바관련
 
     //지문인텐트 받아오기
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         //super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            boolean done=data.getBooleanExtra("done",true);
             Toast.makeText(getApplicationContext(), "지문인증이 완료되었습니다", Toast.LENGTH_SHORT).show();
 
             //여기에서 원 이미지(원안에 자물쇠)바꾸기 ?
@@ -239,11 +206,183 @@ public class TrueMainActivity extends AppCompatActivity {
 
             //버튼 숨기기
             btnfp.setVisibility(Button.INVISIBLE);
+
+            //지문성공시 변수값 done으로 변경
+            fingerComplete = "done"; /*String형*/
+            Log.d("fingerComplete값",fingerComplete);
         }
     }
 
+    //ble스캔-------------------시작----------------
+    ScanCallback mScanCallback = new ScanCallback() {
+        @Override
+        public void onScanResult(int callbackType, ScanResult result) {
+            super.onScanResult(callbackType, result);
+            try {
+                ScanRecord scanRecord = result.getScanRecord();
+                //Log.d("getTxPowerLevel()", scanRecord.getTxPowerLevel() + "");
+                Log.d("onScanResult()", result.getDevice().getAddress() + "\n" + result.getRssi() + "\n" + result.getDevice().getName()
+                        + "\n" + result.getDevice().getBondState() + "\n" + result.getDevice().getType());
 
 
+                final ScanResult scanResult = result;
+                scanDeviceAddress = scanResult.getDevice().getAddress(); //final 지워도 되나..?
+                //스레드 시작
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
 
+                                if(mDeviceAddress.equals(scanResult.getDevice().getAddress())) {
+                                    scanComplete = "done";
+                                    Log.d("scanComplete값",scanComplete);
+                                    Log.d("fingerComplete값",fingerComplete);
+                                    //함수 하나 만들어서 여기에 함수 호출? 아니면 밖에서 값 저장해서 사용?
+                                }else{
+                                    Log.d("scan","Undetectable");
+                                }
+                                //-------------------
 
-}//class end
+                            }
+                        });
+                        ///////////////////////
+                    }
+                }).start();
+                //스레드 종료
+                //*Complete 변수값들이 done이면
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onBatchScanResults(List<ScanResult> results) {
+            super.onBatchScanResults(results);
+            Log.d("onBatchScanResults", results.size() + "");
+        }
+
+        @Override
+        public void onScanFailed(int errorCode) {
+            super.onScanFailed(errorCode);
+            Log.d("onScanFailed()", errorCode + "");
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mBluetoothLeScanner.stopScan(mScanCallback);
+    }
+    //ble스캔------끝----------------------------
+
+    //지속적인 Complete 변수 판단을 위한 스레드 추가------
+    Handler fhandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            sendfingerJspThread();
+        }
+    };
+    Handler shandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            beaconfinThread();
+        }
+    };
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Thread cThread = new Thread(new Runnable() {
+            public void run() {
+                while (sComplete) {
+                    try {
+                        shandler.sendMessage(shandler.obtainMessage());
+                        Thread.sleep(1000);
+                    } catch (Throwable t) {
+                    }
+                }
+                while (fComplete) {
+                    try {
+                        fhandler.sendMessage(fhandler.obtainMessage());
+                        Thread.sleep(1000);
+                    } catch (Throwable t) {
+                    }
+                }
+            }
+        });
+        cThread.start();
+    }
+    private void sendfingerJspThread() {
+        //*Complete 변수값들이 done이면
+        if(scanComplete.equals(fingerComplete)){
+            //jsp로 보내는 코드------------------
+            String d_open = "open";
+            try {
+                String result2 = new FingerActivity().execute(d_open,scanDeviceAddress).get(); //local 변수로..?
+                Log.i("openopen======","1");
+                Log.i("openopen======return",result2);
+
+                Toast.makeText(getApplicationContext(),
+                        "Try door open",
+                        Toast.LENGTH_SHORT).show();
+                fComplete = false;
+            }catch (Exception e){}
+            //-------------------------
+        }else{ }
+    }
+
+    private void beaconfinThread() {
+        //비콘을 스캔하면
+        if(scanComplete == "done"){
+            //지문인증화면 띄워주기-------------
+            try {
+                Intent intent = new Intent(getApplicationContext(), Fingerprint.class);
+                startActivityForResult(intent,0);
+
+                sComplete = false;
+
+            }catch (Exception e){}
+            //----------------------
+        }else{ }
+    }
+
+    //도어락리스트 불러와서 배열에 저장-------------------------
+    public void doorlockListAdd() {
+        try {
+            resultDoorlockIndexname = new TrueMainDoorlockIndexActivity().execute(Dglobal.getLoginID()).get();//
+            Log.d("값", "resultDoorlockIndexname :" + resultDoorlockIndexname);
+
+            try {//가져와서, split, 배열에 넣기
+                String row[] = resultDoorlockIndexname.split("spl");
+                int rowLen = row.length;
+                doorlockIndex = new String[rowLen];
+                doorlockName = new String[rowLen];
+
+                for (int j = 0; j < row.length; j++) {
+                    String row2[] = row[j].split(",");
+                    doorlockIndex[j] = row2[0];
+                    doorlockName[j] = row2[1];
+                }
+
+                for (int i = 0; i < doorlockIndex.length; i++) {
+                    // 각 List의 값들을 TData 객체에 set 해줍니다.
+                    doorlocks.add(new TData(doorlockIndex[i], doorlockName[i], i,
+                            String.valueOf(i%3)));
+
+//                    Log.d("값", "doorlockIndex :" + doorlockIndex[i] + "\n" +
+//                            "doorlockName :" + doorlockName[i] + "\n" +
+//                            "cardIndex :" + i + "\n" +
+//                            "bgcolor :" + doorlocks.get(i).getcBgcolor() + "\n");
+                }
+            } catch (NullPointerException e){
+                btnfp.setVisibility(Button.INVISIBLE);
+                e.printStackTrace();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+}

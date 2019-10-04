@@ -51,6 +51,11 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="Message..." />
+
+        <!-- 블루투스 -->
+
+        <!---->
+
         <TextView
             android:id="@+id/tv_pin"
             android:textColor="#7e7e7e"

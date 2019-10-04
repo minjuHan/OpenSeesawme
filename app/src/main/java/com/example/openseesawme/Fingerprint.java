@@ -2,22 +2,42 @@ package com.example.openseesawme;
 
 import android.Manifest;
 import android.app.KeyguardManager;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattService;
+import android.bluetooth.le.BluetoothLeAdvertiser;
+import android.bluetooth.le.BluetoothLeScanner;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanFilter;
+import android.bluetooth.le.ScanRecord;
+import android.bluetooth.le.ScanResult;
+import android.bluetooth.le.ScanSettings;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -29,6 +49,13 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
+import java.util.Vector;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -41,7 +68,6 @@ public class Fingerprint extends AppCompatActivity {
     private TextView tv_message;
     private LinearLayout linearLayout;
     Button btn_fpclose;
-    TextView tv_pin;
 
 
     private static final String KEY_NAME = "example_key";
@@ -51,6 +77,7 @@ public class Fingerprint extends AppCompatActivity {
     private KeyGenerator keyGenerator;
     private Cipher cipher;
     private FingerprintManager.CryptoObject cryptoObject;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +90,6 @@ public class Fingerprint extends AppCompatActivity {
         linearLayout = (LinearLayout) findViewById(R.id.ll_secure);
         btn_fpclose = findViewById(R.id.btn_fpclose);
         linearLayout.setVisibility(LinearLayout.GONE);
-        tv_pin= findViewById(R.id.tv_pin);
 
         //없어도 되나?
         //Intent inIntent = getIntent();
@@ -74,7 +100,7 @@ public class Fingerprint extends AppCompatActivity {
             fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
             keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
 
-            if(!fingerprintManager.isHardwareDetected()){//Manifest에 Fingerprint 퍼미션을 추가해 워야 사용가능
+            if(!fingerprintManager.isHardwareDetected()){//Manifest에 Fingerprint 퍼미션을 추가해 줘야 사용가능
                 tv_message.setText("지문을 사용할 수 없는 디바이스 입니다.");
             } else if(ContextCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED){
                 tv_message.setText("지문사용을 허용해 주세요.");
@@ -97,51 +123,28 @@ public class Fingerprint extends AppCompatActivity {
             }
         }
 
+
         //화면 닫기
         btn_fpclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent outIntent = new Intent(getApplicationContext(), MainActivity.class);
-                //outIntent.putExtra("done",done);
+
+                Intent outIntent = new Intent(getApplicationContext(), TrueMainActivity.class);
+                //outIntent.putExtra("done",true);
                 setResult(RESULT_OK, outIntent);
 
-                //jsp로 보내는 코드 -=========================
-                String d_open = "open";
-                try {
-                    String result2  = new FingerActivity().execute(d_open).get();
-                    Log.i("openopen======","1");
-                    Log.i("openopen======return",result2);
-                }catch (Exception e){}
-
+                //jsp로 보내는 코드★★★★★가있었던 자리 -=========================
                 //============================================
+                //startActivity(outIntent);
                 finish();
             }
-        });
 
-        tv_pin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //SharedPreference값읽어오기
-                SharedPreferences pref = getSharedPreferences("pref",MODE_PRIVATE);
-                String pin_key = pref.getString("pin_key","fail");//pin
 
-                Log.i("pinpinpinpinpinpin", pin_key);
-
-                if("fail".equals(pin_key)){
-                    Intent intent = new Intent(getApplicationContext(), pin_register1.class);
-                    startActivity(intent);
-                    finish();
-                }
-                else{
-                    Intent intent = new Intent(getApplicationContext(), pin_enter.class);
-                    startActivity(intent);
-                    finish();
-                }
-
-            }
         });
 
     }
+
+
     //Cipher Init()
     public boolean cipherInit(){
         try {
@@ -195,4 +198,5 @@ public class Fingerprint extends AppCompatActivity {
             throw new RuntimeException(e);
         }
     }
+
 }
