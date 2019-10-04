@@ -142,8 +142,6 @@ public class Fingerprint extends AppCompatActivity {
 
         });
 
-
-
     }
 
 
