@@ -32,6 +32,7 @@ public class RegisterDoorlock3_2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),RegisterDoorlock4.class);
+                //도어락 s_info_num 넘겨주기
                 startActivity(intent);
             }
         });
