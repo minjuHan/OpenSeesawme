@@ -73,7 +73,7 @@ public class RegisterDoorlock4 extends AppCompatActivity {
     String imgName;
 
     String doorNum="d3";    //s_info_num (일단 2번 도어락에 등록)
-    String userId="dd";     //s_user_id (일단 bb로 지정)
+    String userId="cc";     //s_user_id (일단 bb로 지정)
 
     //여기부터 권한설정
     String[] permission_list = {
@@ -131,6 +131,11 @@ public class RegisterDoorlock4 extends AppCompatActivity {
         ivGallery = findViewById(R.id.ivGallery);
         tvGallery = findViewById(R.id.tvGallery);
 
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()
+                .penaltyLog().build());
         llGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -140,7 +145,7 @@ public class RegisterDoorlock4 extends AppCompatActivity {
                 Intent dImage = new Intent(Intent.ACTION_PICK);
                 dImage.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
                 dImage.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(dImage, 1);
+                //startActivityForResult(dImage, 1);
 
                 //Intent 시작 - 갤러리앱을 열어서 원하는 이미지를 선택할 수 있다.
                 startActivityForResult(Intent.createChooser(dImage, "Select Picture"), 1);
@@ -189,22 +194,22 @@ public class RegisterDoorlock4 extends AppCompatActivity {
                 if(selectImage.equals("non")){
                     Bitmap home = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.house);
                     Toast.makeText(getApplicationContext(),home.toString(),Toast.LENGTH_LONG).show();
-                    saveToExternalStorage(home);
+                    saveToExternalStorage(home,"home");
                 }
                 else if(selectImage.equals("home")){
                     //String imageUri = getResources().getDrawable(R.drawable.ic_home).toString();
                     Bitmap home = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.house);
                     Toast.makeText(getApplicationContext(),home.toString(),Toast.LENGTH_LONG).show();
-                    saveToExternalStorage(home);
+                    saveToExternalStorage(home,"home");
                 }
                 else if(selectImage.equals("cor")){
                     //String imageUri = getResources().getDrawable(R.drawable.ic_home).toString();
                     Bitmap cor = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.company);
                     Toast.makeText(getApplicationContext(),cor.toString(),Toast.LENGTH_LONG).show();
-                    saveToExternalStorage(cor);
+                    saveToExternalStorage(cor,"cor");
                 }
                 else if(selectImage.equals("gallery")){
-                    saveToExternalStorage(scaled);  //외부저장소에 저장 + DB 에 저장
+                    saveToExternalStorage(scaled,"user");  //외부저장소에 저장 + DB 에 저장
                 }
                 Intent intent = new Intent(getApplicationContext(),TrueMainActivity.class);
                 startActivity(intent);
@@ -213,33 +218,32 @@ public class RegisterDoorlock4 extends AppCompatActivity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        try {
-            //이미지를 하나 골랐을때
-            if (requestCode == 1 && resultCode == RESULT_OK && null != data) {
-                //data에서 절대경로로 이미지를 가져옴
-                Uri uri = data.getData();
-                //selectedPath1 = getPath(uri);
+        Toast.makeText(getBaseContext(), "resultCode : " + data, Toast.LENGTH_SHORT).show();
 
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
-                //이미지가 한계 이상 크면 불러 오지 못하므로 사이즈를 줄여 준다.
-                int nh = (int) (bitmap.getHeight() * (1024.0 / bitmap.getWidth()));
-                scaled = Bitmap.createScaledBitmap(bitmap, 1024, nh, true);  //가져온 비트맵
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                try {
+                    Uri uri = data.getData();
+                    Toast.makeText(getBaseContext(), "img_path : " + uri, Toast.LENGTH_SHORT).show();
+                    //이미지를 비트맵형식으로 반환
+                    Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
+                    int reWidth = (int) (getWindowManager().getDefaultDisplay().getWidth());
+                    int reHeight = (int) (getWindowManager().getDefaultDisplay().getHeight());
 
-                //저장 안하고 바로 띄우기
-                Drawable drawable = new BitmapDrawable(scaled);
-                llGallery.setBackgroundDrawable(drawable);
+                    //image_bitmap 으로 받아온 이미지의 사이즈를 임의적으로 조절함. width: 400 , height: 300
+                    scaled = Bitmap.createScaledBitmap(image_bitmap, 130, 130, true);
+                    //저장 안하고 바로 띄우기
+                    Drawable drawable = new BitmapDrawable(scaled);
+                    llGallery.setBackgroundDrawable(drawable);
 
-                tvGallery.setText("");
-                ivGallery.setImageBitmap(null);
-
-            } else {
-                //Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_LONG).show();
+                    tvGallery.setText("");
+                    ivGallery.setImageBitmap(null);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (Exception e) {
-            Toast.makeText(this, "로딩에 오류가 있습니다.", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     //절대경로 가져오기 -- 지금은 필요 x
@@ -251,7 +255,7 @@ public class RegisterDoorlock4 extends AppCompatActivity {
         return cursor.getString(column_index);
     }
 
-    private void saveToExternalStorage(Bitmap bitmap) {
+    private void saveToExternalStorage(Bitmap bitmap, String name) {
         String state= Environment.getExternalStorageState(); //외부저장소(SDcard)의 상태 얻어오기
         File path;    //저장 데이터가 존재하는 디렉토리경로
         File file;     //파일명까지 포함한 경로
@@ -264,7 +268,17 @@ public class RegisterDoorlock4 extends AppCompatActivity {
 
         path = Environment.getExternalStorageDirectory();
         //path= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        file= new File(path, doorNum+userId+".jpg");
+        String s="";
+        if (name.equals("home")) {
+            s="home";
+        }
+        else if(name.equals("cor")){
+            s="company";
+        }
+        else if(name.equals("user")){
+            s=doorNum+userId;
+        }
+        file= new File(path, s+".jpg");
 
         try {
             outStream = new FileOutputStream(file);
@@ -292,7 +306,8 @@ public class RegisterDoorlock4 extends AppCompatActivity {
         }
 
         //도어락 이미지
-        imgName=file.toString();
+        imgName=file.toString();  //경로 저장
+        //imgName=s+".jpg";   //파일명만 저장
 
         //DB 연결해주는 부분 ----------------------- (insert)
         try {

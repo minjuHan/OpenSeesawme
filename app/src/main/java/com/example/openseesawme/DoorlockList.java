@@ -18,9 +18,19 @@ public class DoorlockList extends AppCompatActivity {
     private DoorlockAdapter adapter;
     Toolbar myToolbar;
     Button doorlockadd;
-    private List<String> listdname, listdnumber, listddate;
-    String doorname, doornumber, doordate; //전체출력 result;
-    String[] dname, dnumber,ddate;
+    //private List<String> listdname, listdnumber, listddate;
+    //String doorname, doornumber, doordate; //전체출력 result;
+    //String[] dname, dnumber,ddate;
+
+    String result;
+    String[] row;
+    String[] detailrow;
+
+    String[] img = new String[10000];
+    String[] name = new String[10000];
+    String[] date = new String[10000];
+    String[] dnum = new String[10000];
+    Integer[] index = new Integer[10000];
 
     String user_id=Dglobal.getLoginID();
 
@@ -53,30 +63,47 @@ public class DoorlockList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-//        doorlockitem = findViewById(R.id.doorlockitem);
-//        doorlockitem.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(),DoorlockInfo.class);
-//                startActivity(intent);
-//            }
-//        });
-
-
-
     }
+
     private void init() {
         RecyclerView recycler = findViewById(R.id.recycler);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(linearLayoutManager);
-        adapter = new DoorlockAdapter();
+        adapter = new DoorlockAdapter(DoorlockList.this);
         recycler.setAdapter(adapter);
     }
 
     private void getData() {
         try {
+            result = new DoorListActivity().execute(user_id).get();
+            row = result.split("spl");
+            for(int i=0;i<row.length;i++){
+                detailrow=row[i].split(",");
+                img[i]=detailrow[0];
+                name[i]=detailrow[1];
+                dnum[i]=detailrow[2];
+                date[i]=detailrow[3];
+                index[i]=Integer.parseInt(detailrow[4]);
+            }
+            List<String> listImg = Arrays.asList(img);
+            List<String> listName = Arrays.asList(name);
+            List<String> listDnum = Arrays.asList(dnum);
+            List<String> listDate = Arrays.asList(date);
+            List<Integer> listIndex = Arrays.asList(index);
 
+            for (int i = 0; i < row.length; i++) {
+                DoorlockAdapter.Data data = new DoorlockAdapter.Data();
+                // 각 List의 값들을 data 객체에 set 해줍니다.
+                data.setImg(listImg.get(i));
+                data.setName(listName.get(i));
+                data.setDnum(listDnum.get(i));
+                data.setDate(listDate.get(i));
+                data.setIndex(listIndex.get(i));
+                data.setContext(getApplicationContext());
+                // 각 값이 들어간 data를 adapter에 추가합니다.
+                adapter.addItem(data);
+            }
             /*doorname = new Doorlock_name().execute().get();
             dname =  doorname.split(" ");
             listdname = Arrays.asList(dname);

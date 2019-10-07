@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +34,7 @@ public class OutdoorAdapter extends RecyclerView.Adapter<OutdoorAdapter.ItemView
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, final int position) {
         // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
-        holder.btnSetDelete.setOnClickListener(new View.OnClickListener() {
+        holder.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(mContext,"삭제 "+position,Toast.LENGTH_LONG).show();
@@ -99,7 +100,7 @@ public class OutdoorAdapter extends RecyclerView.Adapter<OutdoorAdapter.ItemView
         private TextView outtext1;
         private TextView outtext2;
         private TextView outtext3;
-        private Button btnSetDelete;
+        private ImageView ivDelete;
 
         ItemViewHolder(View itemView) {
             super(itemView);
@@ -107,7 +108,7 @@ public class OutdoorAdapter extends RecyclerView.Adapter<OutdoorAdapter.ItemView
             outtext1 = itemView.findViewById(R.id.tvTitle);
             outtext2 = itemView.findViewById(R.id.tvDate);
             outtext3 = itemView.findViewById(R.id.tvSetName);
-            btnSetDelete = itemView.findViewById(R.id.btnSetDelete);
+            ivDelete = itemView.findViewById(R.id.ivDelete);
         }
 
         void onBind(Data data) {
@@ -115,13 +116,12 @@ public class OutdoorAdapter extends RecyclerView.Adapter<OutdoorAdapter.ItemView
             outtext2.setText(data.getDate());
             outtext3.setText(data.getSetName()+"님에 의해 설정되었습니다.");
             if(data.getLoginIndex().equals(Integer.toString(data.getIndex()))){
-                btnSetDelete.setVisibility(View.VISIBLE);
+                ivDelete.setVisibility(View.VISIBLE);
             }
         }
     }
 
     public static class Data {
-
         private String title;
         private String setName;
         private String date;
@@ -158,5 +158,4 @@ public class OutdoorAdapter extends RecyclerView.Adapter<OutdoorAdapter.ItemView
 
         public void setContext(Context context) { this.context = context; }
     }
-
 }

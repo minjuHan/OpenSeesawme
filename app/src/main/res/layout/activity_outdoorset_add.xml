@@ -112,8 +112,8 @@
                 android:layout_width="380dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center"
+                android:scrollbars="vertical"
                 android:background="#FFFFFF">
-                //android:scrollbars="vertical"
 
             </android.support.v7.widget.RecyclerView>
 
