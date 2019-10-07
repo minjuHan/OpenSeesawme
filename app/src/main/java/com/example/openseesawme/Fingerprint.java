@@ -135,8 +135,9 @@ public class Fingerprint extends AppCompatActivity {
 
                 //jsp로 보내는 코드★★★★★가있었던 자리 -=========================
                 //============================================
-                //startActivity(outIntent);
                 finish();
+                //startActivity(outIntent);
+
             }
 
 
