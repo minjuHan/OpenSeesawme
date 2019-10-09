@@ -14,9 +14,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public class OutdoorsetAdd extends AppCompatActivity {
@@ -24,12 +24,20 @@ public class OutdoorsetAdd extends AppCompatActivity {
     Button  outsetsend;
     EditText outsetname;
     private OutAddAdapter adapter;
-    private List<String> listaddtitle;
-    String outaddtitle;
-    String[] addtitle;
     private Button startdate,enddate;
     private DatePickerDialog.OnDateSetListener callbackMethod;
     private DatePickerDialog.OnDateSetListener callbackMethod2;
+
+    String d_user_index=Dglobal.getDoorID();
+
+    String result;
+    String[] row;
+    String[] detailrow;
+    Integer[] index = new Integer[10000];
+    String[] manager = new String[10000];
+    String[] name = new String[10000];
+    String[] img = new String[10000];
+    Boolean m;
 
 
 
@@ -46,10 +54,11 @@ public class OutdoorsetAdd extends AppCompatActivity {
         this.InitializeView2();
         this.InitializeListener2();
 
-        init();
-        getData();
         startdate=findViewById(R.id.startdate);
         enddate=findViewById(R.id.enddate);
+
+        init();
+        getData();
 
         //보내기 버튼
         outsetsend = findViewById(R.id.outsetsend);
@@ -67,79 +76,38 @@ public class OutdoorsetAdd extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         //여기까지 툴바
 
-        long now = System.currentTimeMillis();
-        final Date date = new Date(now);
-
 
         //DB로 값보내기
         outsetsend.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 try {
-//                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault());
-//                    Date date = new Date();
-//                    String d_sec_date = dateFormat.format(date);
-//                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//                    String d_sec_date = sdf.format(date);
-//                    Date currentTime = Calendar.getInstance().getTime();
-//                    String d_sec_date = new SimpleDateFormat("yyyy-mm-dd", Locale.getDefault()).format(currentTime);
+                      String d_sec_start_date = startdate.getText().toString();
+                      Log.i("d_sec_start_date", d_sec_start_date);
+                      String d_sec_end_date = enddate.getText().toString();
+                      Log.i("d_sec_end_date", d_sec_end_date);
+                      String d_sec_title = outsetname.getText().toString();
+                      Log.i("d_sec_title", d_sec_title);
 
+                    if(d_sec_start_date.getBytes().length <= 0 || d_sec_end_date.getBytes().length <= 0 ||
+                            d_sec_title.getBytes().length <= 0){//빈값이 넘어올때의 처리
+                        Toast.makeText(getApplicationContext(), "모든 값을 입력하세요.", Toast.LENGTH_SHORT).show();
+                    }else {
 
-                    String d_sec_start_date = startdate.getText().toString();
-                    Log.i("d_sec_start_date", d_sec_start_date);
-                    String d_sec_end_date = enddate.getText().toString();
-                    Log.i("d_sec_end_date", d_sec_end_date);
-                    String d_sec_title = outsetname.getText().toString();
-                    Log.i("d_sec_title", d_sec_title);
+                        String result = new OutsetAddDBActivity().execute(d_sec_start_date, d_sec_end_date,
+                                d_sec_title, Dglobal.getDoorID()).get();
+                        Log.i("dffsdsdffdreturn", result);
 
+                        Intent intent = new Intent(getApplicationContext(), Outdoorset.class);
+                        startActivity(intent);
+                    }
 
-
-
-                    String result  = new OutsetAddDBActivity().execute(d_sec_start_date,d_sec_end_date,d_sec_title).get();
-                    Log.i("dffsdsdffdreturn", result);
-
-                    Intent intent = new Intent(getApplicationContext(), Outdoorset.class);
-                    startActivity(intent);
 
                 } catch (Exception e) {
                     Log.i("DBtest", "ERROR!");
                 }
             }
         });
-
-
-    }
-
-    private void init() {
-        RecyclerView outrecycler = findViewById(R.id.outrecycler);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        outrecycler.setLayoutManager(linearLayoutManager);
-        adapter = new OutAddAdapter();
-        outrecycler.setAdapter(adapter);
-    }
-
-    private void getData() {
-        try {
-            outaddtitle = new OutAdd_people().execute().get();
-            // Log.i("outaddtitle", outaddtitle);
-            addtitle = outaddtitle.split("\t");
-            listaddtitle = Arrays.asList(addtitle);
-            for (int i = 0; i < addtitle.length; i++) {
-                // 각 List의 값들을 data 객체에 set 해줍니다.
-                OutAddAdapter.Data data = new OutAddAdapter.Data();
-
-                data.setaddTitle(listaddtitle.get(i));
-
-                // 각 값이 들어간 data를 adapter에 추가합니다.
-                adapter.addItem(data);
-
-            }
-        } catch (
-                Exception e) {
-            e.printStackTrace();
-        }
-    }
-
+    } //onCreate end
 
 
     @Override
@@ -165,7 +133,7 @@ public class OutdoorsetAdd extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
             {
-                startdate.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+                startdate.setText(year + "-" + (monthOfYear+1) + "-" + dayOfMonth);
 
             }
         };
@@ -191,7 +159,7 @@ public class OutdoorsetAdd extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
             {
-                enddate.setText(year + "-" + monthOfYear + "-" + dayOfMonth);
+                enddate.setText(year + "-" + (monthOfYear+1) + "-" + dayOfMonth);
 
             }
         };
@@ -203,4 +171,50 @@ public class OutdoorsetAdd extends AppCompatActivity {
 
         dialog.show();
     }
+
+    private void init() {
+        RecyclerView outrecycler = findViewById(R.id.outrecycler);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        outrecycler.setLayoutManager(linearLayoutManager);
+        adapter = new OutAddAdapter();
+        outrecycler.setAdapter(adapter);
+    }
+
+    private void getData() {
+        try {
+            result = new UserListActivity().execute(d_user_index).get();
+            row = result.split("spl");
+            for(int i=0;i<row.length;i++){
+                detailrow=row[i].split(",");
+                index[i]=Integer.parseInt(detailrow[0]);
+                manager[i]=detailrow[1];
+                name[i]=detailrow[2];
+                img[i]=detailrow[3];
+                if(Integer.parseInt(d_user_index)==index[i]){
+                    if(manager[i].equals("1")){ m=true; }
+                    else{ m=false; }
+                }
+            }
+            List<Integer> listUserindex = Arrays.asList(index);
+            List<String> listUsername = Arrays.asList(name);
+            List<String> listUserimg = Arrays.asList(img);
+
+            for (int i = 0; i < row.length; i++) {
+                OutAddAdapter.Data data = new OutAddAdapter.Data();
+                // 각 List의 값들을 data 객체에 set 해줍니다.
+                //data.setUserindex(listUserindex.get(i));
+                data.setUsername(listUsername.get(i));
+                data.setUserimg(listUserimg.get(i));
+                data.setContext(getApplicationContext());
+                // 각 값이 들어간 data를 adapter에 추가합니다.
+                //data.setManager(m);
+                adapter.addItem(data);
+            }
+        } catch (
+                Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

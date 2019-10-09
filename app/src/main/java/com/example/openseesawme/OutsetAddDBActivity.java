@@ -20,8 +20,7 @@ public class OutsetAddDBActivity extends AsyncTask<String,Void,String> {
             String str;
             Log.i("OutsetAdd","들어옴.......");
             // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
-
-            URL url = new URL("http://192.168.43.7:8080/doorlock/androidOutsetAddDB.jsp");
+            URL url = new URL("http://128.134.114.250:8080/doorlock/testfinger.jsp");
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -29,7 +28,8 @@ public class OutsetAddDBActivity extends AsyncTask<String,Void,String> {
             OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 
             // 전송할 데이터. GET 방식으로 작성
-            sendMsg =  "d_sec_start_date=" + strings[0] + "&d_sec_end_date=" + strings[1] + "&d_sec_title=" + strings[2];
+            sendMsg =  "d_sec_start_date=" + strings[0] + "&d_sec_end_date=" + strings[1] + "&d_sec_title=" + strings[2]
+                        + "&d_user_index=" + strings[3];
             Log.i("OutsetAdd",sendMsg);
 
             osw.write(sendMsg);
