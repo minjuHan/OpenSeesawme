@@ -7,9 +7,6 @@
     android:orientation="vertical"
     tools:context=".OutdoorsetAdd">
 
-    <!--1. 버튼 보이게// 2. 마진은 밖에 30dp(안에있는거 지우고) 3. 고치고 commit-->
-    <!--1. 아이콘 "<"던 "<-"던 하나로 통일하기// 2. 색깔 똑같이 바꾸기-->
-
     <!-- 툴바 -->
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -124,7 +121,6 @@
                 android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:background="#FFFFFF"></android.support.v7.widget.RecyclerView>
-
         </LinearLayout>
 
         <Button

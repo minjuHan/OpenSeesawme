@@ -64,7 +64,7 @@ public class OutdoorsetAdd extends AppCompatActivity {
         outsetsend = findViewById(R.id.outsetsend);
         outsetname = findViewById(R.id.outsetname);
 
-        // 추가된 소스, Toolbar를 생성한다.
+        // Toolbar를 생성한다.---------
         myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
@@ -74,7 +74,7 @@ public class OutdoorsetAdd extends AppCompatActivity {
 
         //기본 타이틀 보여줄지 말지 설정. 안보여준다.
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        //여기까지 툴바
+        //툴바----------
 
 
         //DB로 값보내기
