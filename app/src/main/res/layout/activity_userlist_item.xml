@@ -12,15 +12,8 @@
         android:layout_height="wrap_content"
         android:paddingVertical="10dp"
         android:paddingHorizontal="20dp"
+        android:gravity="center"
         android:orientation="horizontal">
-        <!--<CheckBox-->
-        <!--android:id="@+id/chk_udelete"-->
-        <!--android:layout_width="32dp"-->
-        <!--android:layout_height="32dp"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:visibility="invisible"-->
-        <!--android:layout_marginTop="4dp"-->
-        <!--android:layout_marginBottom="4dp"/>-->
         <ImageView
             android:id="@+id/user_img"
             android:layout_width="52dp"
@@ -43,11 +36,10 @@
             android:padding="5dp"
             android:text="Hello"
             android:textSize="20dp" />
-        <Button
-            android:id="@+id/btnUserDelete"
-            android:text="삭제"
-            android:layout_weight="10"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/ivDelete"
+            android:src="@drawable/delete"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
     </LinearLayout>
 </LinearLayout>

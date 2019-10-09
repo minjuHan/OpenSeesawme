@@ -4,36 +4,50 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="15dp"
     android:gravity="center_vertical"
-    android:layout_marginBottom="8dp"
-    android:background="@android:color/white"
-    >
-
-
+    android:layout_marginBottom="10dp"
+    android:background="@android:color/white">\
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
         <LinearLayout
+            android:paddingTop="15dp"
+            android:paddingBottom="20dp"
+            android:paddingRight="15dp"
+            android:paddingLeft="10dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:background="#AFE3FD">
-
-            <ImageView
-                android:id="@+id/doorimg"
-                android:src="@drawable/home"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical" />
-
+            <LinearLayout
+                android:id="@+id/btnDoorDelete"
+                android:gravity="right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/ivDelete"
+                    android:src="@drawable/delete"
+                    android:layout_marginTop="2dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/doorimg"
+                    android:src="@drawable/home"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp" />
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="#DFD9D9"
+            android:background="#ECECEC"
             android:orientation="vertical"
             android:layout_weight="1">
             <TextView

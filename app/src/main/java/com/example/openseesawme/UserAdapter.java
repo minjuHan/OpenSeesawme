@@ -44,7 +44,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ItemViewHolder
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, final int position) {
         // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
-        holder.btnUserDelete.setOnClickListener(new View.OnClickListener() {
+        holder.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(mContext,"삭제 "+position,Toast.LENGTH_LONG).show();
@@ -112,7 +112,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ItemViewHolder
 
         private ImageView user_img;
         private TextView user_name;
-        private Button btnUserDelete;
+        private ImageView ivDelete;
 
         ItemViewHolder(View itemView) {
             super(itemView);
@@ -120,15 +120,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ItemViewHolder
 
             user_img = itemView.findViewById(R.id.user_img);
             user_name = itemView.findViewById(R.id.user_name);
-            btnUserDelete = itemView.findViewById(R.id.btnUserDelete);
+            ivDelete = itemView.findViewById(R.id.ivDelete);
         }
 
         void onBind(UserAdapter.Data data) {
             if(data.getManager()) {
-                btnUserDelete.setVisibility(View.VISIBLE);
+                ivDelete.setVisibility(View.VISIBLE);
             }
             else{
-                btnUserDelete.setVisibility(View.GONE);
+                ivDelete.setVisibility(View.GONE);
             }
             //사용자 사진 띄우기
             Picasso.with(data.getContext())

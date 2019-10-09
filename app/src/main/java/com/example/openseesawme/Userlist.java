@@ -27,7 +27,7 @@ public class Userlist extends AppCompatActivity {
 
     private UserAdapter adapter;
 
-    String d_user_index="1";
+    String d_user_index=Dglobal.getDoorID();
 
     String result;
     String[] row;

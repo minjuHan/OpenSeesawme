@@ -16,7 +16,7 @@
             android:layout_gravity="center"
             android:layout_margin="10dp"
             android:padding="5dp"
-            android:text="도어락 이름"
+            android:text="변경할 도어락 이름을 입력해주세요."
             android:textColor="#7E7E7B"
             android:textSize="20dp" />
         <EditText

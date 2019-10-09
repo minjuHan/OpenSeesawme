@@ -9,12 +9,13 @@ import android.view.View;
 import android.widget.Button;
 
 public class SetList extends AppCompatActivity {
-    Button btnset_user,btnbangbum;
+    Button btnset_user,btnbangbum,btnset_doorlock;
     Toolbar myToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setlist);
+
 
         btnbangbum = findViewById(R.id.btnbangbum);
         btnbangbum.setOnClickListener(new View.OnClickListener() {
@@ -28,12 +29,22 @@ public class SetList extends AppCompatActivity {
         });
 
         btnset_user = findViewById(R.id.btnset_user);
-
         btnset_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //인텐트 선언 -> 현재 액티비티, 넘어갈 액티비티
                 Intent intent = new Intent(SetList.this, Userlist.class);
+                //인텐트 실행
+                startActivity(intent);
+            }
+        });
+
+        btnset_doorlock=findViewById(R.id.btnset_doorlock);
+        btnset_doorlock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //인텐트 선언 -> 현재 액티비티, 넘어갈 액티비티
+                Intent intent = new Intent(SetList.this, DoorlockInfo.class);
                 //인텐트 실행
                 startActivity(intent);
             }

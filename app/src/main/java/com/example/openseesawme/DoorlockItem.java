@@ -16,7 +16,7 @@ public class DoorlockItem extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(linearLayoutManager);
-        adapter = new DoorlockAdapter();
+        adapter = new DoorlockAdapter(DoorlockItem.this);
         recycler.setAdapter(adapter);
     }
 }

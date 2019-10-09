@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     android:orientation="vertical"
     tools:context=".DoorlockInfo">
 
@@ -27,70 +28,92 @@
             android:layout_height="wrap_content"
             />
     </android.support.v7.widget.Toolbar>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:gravity="center">
-
-        <ImageView
-            android:layout_marginTop="20dp"
-            android:id="@+id/doorimg"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:src="@drawable/home" />
-
-        <TextView
-            android:id="@+id/doorname2"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="170dp"
-            android:text="도어락 이름"
-            android:textColor="#7E7E7B"
-            android:textSize="20dp" />
-
-        <ImageView
-            android:id="@+id/doornamechange"
-            android:layout_width="35dp"
-            android:layout_height="17dp"
-            android:layout_toRightOf="@id/doorname2"
-            android:layout_marginTop="170dp"
-            android:src="@drawable/pencel" />
-    </RelativeLayout>
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:layout_margin="30dp"
         android:orientation="vertical"
-        android:layout_weight="1">
-        <TextView
-            android:text="모델명"
-            android:textSize="20dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="40dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/doornumber2"
-            android:hint="A20-CH"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:text="등록일자"
-            android:textSize="20dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="40dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/doordate2"
-            android:hint="2019. 01. 05"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/doorimg"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:src="@drawable/home" />
+                <ImageView
+                    android:id="@+id/ivSImage"
+                    android:layout_alignBottom="@+id/doorimg"
+                    android:layout_alignRight="@+id/doorimg"
+                    android:src="@drawable/camera"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+            </RelativeLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tvDoorName"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:text="도어락 이름"
+                    android:textColor="#7E7E7B"
+                    android:textSize="24dp" />
+                <ImageView
+                    android:id="@+id/doornamechange"
+                    android:layout_width="35dp"
+                    android:layout_height="17dp"
+                    android:src="@drawable/pencel" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:text="모델명"
+                    android:textSize="22dp"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/tvDoorNum"
+                    android:text="bbb1111"
+                    android:textSize="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:text="등록일자"
+                    android:textSize="22dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/tvDoorDate"
+                    android:text="2019. 01. 05"
+                    android:textSize="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
