@@ -60,6 +60,7 @@ public class OutdoorsetAdd extends AppCompatActivity {
 
         init();
         getData();
+
         startdate=findViewById(R.id.startdate);
         enddate=findViewById(R.id.enddate);
 
@@ -131,25 +132,6 @@ public class OutdoorsetAdd extends AppCompatActivity {
     }
 
     private void getData() {
-        /*try {
-            outaddtitle = new OutAdd_people().execute().get();
-            // Log.i("outaddtitle", outaddtitle);
-            addtitle = outaddtitle.split("\t");
-            listaddtitle = Arrays.asList(addtitle);
-            for (int i = 0; i < addtitle.length; i++) {
-                // 각 List의 값들을 data 객체에 set 해줍니다.
-                OutAddAdapter.Data data = new OutAddAdapter.Data();
-
-                data.setaddTitle(listaddtitle.get(i));
-
-                // 각 값이 들어간 data를 adapter에 추가합니다.
-                adapter.addItem(data);
-
-            }
-        } catch (
-                Exception e) {
-            e.printStackTrace();
-        }*/
         try {
             result = new UserListActivity().execute(d_user_index).get();
             row = result.split("spl");

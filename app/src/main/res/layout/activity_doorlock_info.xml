@@ -42,11 +42,13 @@
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <ImageView
                     android:id="@+id/doorimg"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
                     android:src="@drawable/home" />
+
                 <ImageView
                     android:id="@+id/ivSImage"
                     android:layout_alignBottom="@+id/doorimg"

@@ -46,8 +46,6 @@ public class OutAddAdapter extends RecyclerView.Adapter<OutAddAdapter.ItemViewHo
         listData.add(data);
     }
 
-
-
     // RecyclerView의 핵심인 ViewHolder 입니다.
     // 여기서 subView를 setting 해줍니다.
     class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -76,7 +74,6 @@ public class OutAddAdapter extends RecyclerView.Adapter<OutAddAdapter.ItemViewHo
             }
             user_name.setText(data.getUsername());
         }
-
     }
     public static class Data  {
         private String userimg;

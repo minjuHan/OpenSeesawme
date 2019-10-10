@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         txtJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),join.class);
+                Intent intent=new Intent(getApplicationContext(),JoinAgree.class);
                 startActivity(intent);
             }
         });
