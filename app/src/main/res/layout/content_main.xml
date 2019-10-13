@@ -36,7 +36,7 @@
     tools:context=".MyAdapter">
 
     <TextView
-        android:text="*출입완료는 30일 이후에 자동 삭제됩니다."
+        android:text="계정이 없는 게스트는 전화번호로 이름을 대신합니다.\n*출입완료는 30일 이후에 자동 삭제됩니다."
         android:textColor="#333333"
         android:textSize="14dp"
         android:layout_marginTop="5dp"

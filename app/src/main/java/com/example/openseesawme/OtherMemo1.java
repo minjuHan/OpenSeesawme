@@ -123,7 +123,13 @@ public class OtherMemo1 extends AppCompatActivity {
                         try{
                             String result;
                             String g_index = gData0;
-                            result  = new GetOtherguestDeleteActivity().execute(g_index).get();
+                            if(gData2.substring(0,2).equals("010")){
+                                result  = new GetOthertempguestDeleteActivity().execute(g_index).get();
+                            }
+                            else {
+                                result  = new GetOtherguestDeleteActivity().execute(g_index).get();
+                            }
+
                             if(result.equals("삭제 완료")){
                                 Toast.makeText(getApplicationContext(), "삭제 완료",Toast.LENGTH_SHORT).show();
                             }

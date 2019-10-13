@@ -14,6 +14,7 @@ public class RegisterDoorlock3_2 extends AppCompatActivity {
     TextView tvCheckNum;
     int num;
     String numText="";
+    String serverText = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +41,12 @@ public class RegisterDoorlock3_2 extends AppCompatActivity {
         tvCheckNum=findViewById(R.id.tvCheckNum);
 
         Random random = new Random();
-        for(int i=0;i<5;i++){
-            num= random.nextInt(10);
-            numText=numText+num+" ";
+        for(int i=0 ; i<5 ; i++){
+            num = random.nextInt(10);
+            numText = numText + num + " ";
+            serverText += num;
         }
+        numText = "#" + numText;
         tvCheckNum.setText(numText);
     }
 }
