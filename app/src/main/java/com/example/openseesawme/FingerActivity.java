@@ -7,7 +7,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -30,7 +29,7 @@ public class FingerActivity extends AsyncTask<String, Void, String> {
             OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 
             // 전송할 데이터. GET 방식으로 작성
-            sendMsg = "d_open=" + strings[0]+ "&macAddress=" + strings[1]; //macAddress변수 jsp에있는걸로바꾸기
+            sendMsg = "s_id=" + Dglobal.getLoginID() + "&b_id=" + strings[0]; //macAddress변수 jsp에있는걸로바꾸기
             Log.i("openopen======strg",strings[0]);
             osw.write(sendMsg);
             osw.flush();

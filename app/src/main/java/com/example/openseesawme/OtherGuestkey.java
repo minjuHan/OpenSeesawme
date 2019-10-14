@@ -20,7 +20,7 @@ public class OtherGuestkey extends AppCompatActivity {
 
     String noData;  //데이터가 없을 때
 
-    String[] g_info = new String[7];
+    String[] g_info = new String[8];
 
     String result;
     String[] gData0;    //인덱스
@@ -31,6 +31,7 @@ public class OtherGuestkey extends AppCompatActivity {
     String[] gData4;    //게스트키 사용 여부
     String[] gData5;    //게스트키 수락 여부
     String[] otherJun;  //게스트키 준 사람 이름
+    String[] gData6;  //게스트 s_user_img
 
 
     @Override
@@ -55,6 +56,7 @@ public class OtherGuestkey extends AppCompatActivity {
                 gData4 = g_info[5].split("!");
                 gData5 = g_info[6].split("!");
                 otherJun = g_info[7].split("!");
+                gData6 = g_info[8].split("!");
 
             }
             //서버에서 못 받아왔을 때
@@ -77,7 +79,7 @@ public class OtherGuestkey extends AppCompatActivity {
         if(gData0!=null){
             //어댑터!!
             MyAdapter adapter1 = new MyAdapter(
-                    getApplicationContext(), R.layout.guests, result, gData0, gData1, gData1_yo, gData2, gData3, gData4, gData5, otherJun
+                    getApplicationContext(), R.layout.guests, result, gData0, gData1, gData1_yo, gData2, gData3, gData4, gData5, otherJun, gData6
             );
             gridView.setAdapter(adapter1);
         }

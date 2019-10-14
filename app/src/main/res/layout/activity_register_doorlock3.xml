@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:text="도어록 실외 키패드에 *을 두 번 누른 후\n아래의 번호를 차례대로 입력해주세요."
+                android:text="*문을 열고 진행해주세요 \n\n인증을 위해 도어락 키패드에 아래와 같이 입력해주세요"
                 android:textSize="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
