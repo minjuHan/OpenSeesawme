@@ -49,7 +49,7 @@ public class TrueMainActivity extends AppCompatActivity {
     ImageView lock;
 
     //지문 인텐트
-    String fingerComplete = "fingeryet";
+    //String fingerComplete = "fingeryet";
 
     //<!--ble스캔-->---------------시작----------------------
     BluetoothAdapter mBluetoothAdapter;
@@ -63,7 +63,7 @@ public class TrueMainActivity extends AppCompatActivity {
     //추가
     private String mDeviceAddress = "6C:C3:74:F3:CB:E4";
     String scanComplete="scanyet";
-    Boolean fComplete= true;
+    //    Boolean fComplete= true;
     Boolean sComplete = true;
     String scanDeviceAddress; //스캔한 비콘의 맥주소
     //
@@ -210,8 +210,10 @@ public class TrueMainActivity extends AppCompatActivity {
             btnfp.setVisibility(Button.INVISIBLE);
 
             //지문성공시 변수값 done으로 변경
-            fingerComplete = "done"; /*String형*/
-            Log.d("fingerComplete값",fingerComplete);
+//            fingerComplete = "done"; /*String형*/
+//            Log.d("fingerComplete값",fingerComplete);
+
+
         }
     }
 
@@ -240,7 +242,7 @@ public class TrueMainActivity extends AppCompatActivity {
                                 if(mDeviceAddress.equals(scanResult.getDevice().getAddress())) {
                                     scanComplete = "done";
                                     Log.d("scanComplete값",scanComplete);
-                                    Log.d("fingerComplete값",fingerComplete);
+                                    //Log.d("fingerComplete값",fingerComplete);
                                     //함수 하나 만들어서 여기에 함수 호출? 아니면 밖에서 값 저장해서 사용?
                                 }else{
                                     Log.d("scan","Undetectable");
@@ -280,12 +282,7 @@ public class TrueMainActivity extends AppCompatActivity {
     //ble스캔------끝----------------------------
 
     //지속적인 Complete 변수 판단을 위한 스레드 추가------
-    Handler fhandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            sendfingerJspThread();
-        }
-    };
+
     Handler shandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -304,34 +301,9 @@ public class TrueMainActivity extends AppCompatActivity {
                     } catch (Throwable t) {
                     }
                 }
-                while (fComplete) {
-                    try {
-                        fhandler.sendMessage(fhandler.obtainMessage());
-                        Thread.sleep(1000);
-                    } catch (Throwable t) {
-                    }
-                }
             }
         });
         cThread.start();
-    }
-    private void sendfingerJspThread() {
-        //*Complete 변수값들이 done이면
-        if(scanComplete.equals(fingerComplete)){
-            //jsp로 보내는 코드------------------
-            String d_open = "open";
-            try {
-                String result2 = new FingerActivity().execute(scanDeviceAddress).get(); //local 변수로..?
-                Log.i("openopen======","1");
-                Log.i("openopen======return",result2);
-
-                Toast.makeText(getApplicationContext(),
-                        "Try door open",
-                        Toast.LENGTH_SHORT).show();
-                fComplete = false;
-            }catch (Exception e){}
-            //-------------------------
-        }else{ }
     }
 
     private void beaconfinThread() {
@@ -340,10 +312,15 @@ public class TrueMainActivity extends AppCompatActivity {
             //지문인증화면 띄워주기-------------
             try {
                 ///////////////////////////////////////////////////////
+                String s_id = Dglobal.getLoginID();
+                String result2 = new BeaconSigActivity().execute(s_id, scanDeviceAddress).get();
+
+
                 //비콘신호를 받으면 beaconSig.jsp를 부른다.
-                String result4 = new BeaconActivity().execute(scanDeviceAddress).get();
+//                String result4 = new BeaconActivity().execute(scanDeviceAddress).get();
 
                 Intent intent = new Intent(getApplicationContext(), Fingerprint.class);
+                intent.putExtra("bea_id",scanDeviceAddress);
                 startActivityForResult(intent,0);
 
 
