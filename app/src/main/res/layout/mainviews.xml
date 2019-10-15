@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:gravity="center_vertical">
 
     <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         >
@@ -15,109 +15,129 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_gravity="center"
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             >
+
             <LinearLayout
-                android:orientation="vertical"
                 android:id="@+id/v1"
-                android:layout_width="304dp"
-                android:layout_height="360dp"
+                android:layout_width="334dp"
+                android:layout_height="400dp"
+                android:layout_gravity="center_horizontal"
                 android:background="#8de4ff"
-                app:layout_constraintTop_toTopOf="parent"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/lock"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="25dp"
-                    android:src="@drawable/closelock"
-                    />
+                    android:src="@drawable/closelock" />
+
                 <TextView
                     android:id="@+id/tvdoorlockName"
-                    android:text="doorlockname"
-                    android:layout_marginTop="30dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:layout_gravity="center"
-                    android:textColor="@android:color/background_light" android:textSize="24sp" android:textStyle="bold"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+                    android:text="doorlockname"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
                 <LinearLayout
                     android:id="@+id/cardBottomTab"
-                    android:layout_marginTop="30dp"
-                    android:orientation="horizontal"
-                    android:layout_gravity="bottom"
-                    android:background="#fff"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp">
+                    android:layout_height="120dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="30dp"
+                    android:background="#fff"
+                    android:orientation="horizontal">
+
                     <LinearLayout
-                        android:clickable="true"
                         android:id="@+id/inout"
-                        android:orientation="vertical"
-                        android:layout_width="80dp"
+                        android:layout_width="90dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-                        <ImageView
-                            android:src="@drawable/ic_list"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"/>
-                        <TextView
-                            android:text="출입내역"
-                            android:layout_gravity="center|bottom"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                    <View
-                        android:layout_marginTop="10dp"
-                        android:layout_width="2dp"
-                        android:layout_height="80dp"
-                        android:layout_centerInParent="true"
-                        android:background="#c7c7c7"/>
-                    <LinearLayout
+                        android:layout_margin="10dp"
                         android:clickable="true"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_list" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|bottom"
+                            android:text="출입내역" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="100dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="10dp"
+                        android:background="#c7c7c7" />
+
+                    <LinearLayout
                         android:id="@+id/keylist"
-                        android:orientation="vertical"
-                        android:layout_width="80dp"
+                        android:layout_width="90dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-                        <ImageView
-                            android:src="@drawable/ic_key"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"/>
-                        <TextView
-                            android:text="게스트키"
-                            android:layout_gravity="center|bottom"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-                    <View
-                        android:layout_marginTop="10dp"
-                        android:layout_width="2dp"
-                        android:layout_height="80dp"
-                        android:layout_centerInParent="true"
-                        android:background="#c7c7c7"/>
-                    <LinearLayout
+                        android:layout_margin="10dp"
                         android:clickable="true"
-                        android:id="@+id/setlist"
-                        android:orientation="vertical"
-                        android:layout_width="80dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
+                        android:orientation="vertical">
+
                         <ImageView
-                            android:src="@drawable/ic_settings"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"/>
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_key" />
+
                         <TextView
-                            android:text="설정"
-                            android:layout_gravity="center|bottom"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|bottom"
+                            android:text="게스트키" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="100dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="10dp"
+                        android:background="#c7c7c7" />
+
+                    <LinearLayout
+                        android:id="@+id/setlist"
+                        android:layout_width="90dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:clickable="true"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_settings" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|bottom"
+                            android:text="설정" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
