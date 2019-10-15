@@ -38,8 +38,7 @@ public class OutdoorsetAdd extends AppCompatActivity {
     String[] name = new String[10000];
     String[] img = new String[10000];
     Boolean m;
-
-
+    String d_useres="";
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -77,9 +76,11 @@ public class OutdoorsetAdd extends AppCompatActivity {
         //툴바----------
 
 
+
         //DB로 값보내기
         outsetsend.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+
                 try {
                     String d_sec_start_date = startdate.getText().toString();
                     Log.i("d_sec_start_date", d_sec_start_date);
@@ -92,6 +93,14 @@ public class OutdoorsetAdd extends AppCompatActivity {
                             d_sec_title.getBytes().length <= 0){//빈값이 넘어올때의 처리
                         Toast.makeText(getApplicationContext(), "모든 값을 입력하세요.", Toast.LENGTH_SHORT).show();
                     }else {
+
+
+                        ///////////////////////////////////////////////////////////////////
+                        //푸시 메시지 보내기
+                        String result2 = new OutsetFCMActivity().execute(d_user_index).get();
+                        Log.i("dffsdsdffdreturn", result2);
+
+
 
                         String result = new OutsetAddDBActivity().execute(d_sec_start_date, d_sec_end_date,
                                 d_sec_title, Dglobal.getDoorID()).get();
@@ -108,6 +117,8 @@ public class OutdoorsetAdd extends AppCompatActivity {
             }
         });
     } //onCreate end
+
+
 
 
     @Override
@@ -196,6 +207,9 @@ public class OutdoorsetAdd extends AppCompatActivity {
                     else{ m=false; }
                 }
             }
+
+
+
             List<Integer> listUserindex = Arrays.asList(index);
             List<String> listUsername = Arrays.asList(name);
             List<String> listUserimg = Arrays.asList(img);

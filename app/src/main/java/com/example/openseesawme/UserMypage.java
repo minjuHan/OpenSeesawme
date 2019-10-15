@@ -2,7 +2,6 @@ package com.example.openseesawme;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -16,7 +15,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -33,7 +31,6 @@ import com.squareup.picasso.Picasso;
 
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -47,7 +44,7 @@ public class UserMypage extends AppCompatActivity {
     View dialogView;
     EditText usernamechange;
     private int REQ_CODE_PICK_PICTURE;
-    Button btnLogout;
+    Button btnLogout, btnResetPin;
     String imageName="";
 
     String user_id=Dglobal.getLoginID();
@@ -100,6 +97,27 @@ public class UserMypage extends AppCompatActivity {
             }
         });
         //여기까지 로그아웃
+
+        btnResetPin = findViewById(R.id.btnResetPin);
+        btnResetPin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //SharedPreference값읽어오기
+                SharedPreferences pref = getSharedPreferences("pref",MODE_PRIVATE);
+                String pin_key = pref.getString("pin_key","fail");//pin 번호
+
+                if(pin_key.equals("fail")){
+                    Toast.makeText(getApplicationContext(),"pin번호를 등록하지 않았습니다.", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    try{
+                        pref.edit().remove("pin_key").commit();
+                        Toast.makeText(getApplicationContext(),"pin번호 초기화 완료", Toast.LENGTH_LONG).show();
+                    }catch (Exception e){}
+
+                }
+            }
+        });
 
         /*//여기부터 이름 바꾸기
         ibChangeName.setOnClickListener(new View.OnClickListener() {

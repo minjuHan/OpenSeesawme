@@ -16,6 +16,7 @@ public class MyAdapter extends BaseAdapter {
     int layout;
     LayoutInflater inf;
 
+
     int img;
     String result;
     String[] gData0;    //인덱스
@@ -26,6 +27,7 @@ public class MyAdapter extends BaseAdapter {
     String[] gData4;    //게스트키 사용 여부
     String[] gData5;    //게스트키 수락 여부
     String[] otherJun;  //게스트키 준 사람 이름
+    String[] gData6;  //게스트 s_user_img
 
 
     public MyAdapter(Context context, int layout, String result, String[]... gData) {
@@ -41,6 +43,7 @@ public class MyAdapter extends BaseAdapter {
         this.gData4 = gData[5];
         this.gData5 = gData[6];
         this.otherJun = gData[7];
+        this.gData6 = gData[8];
 
         inf = (LayoutInflater) context.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
@@ -59,7 +62,7 @@ public class MyAdapter extends BaseAdapter {
         if (convertView==null)
             convertView = inf.inflate(layout, null);
 
-        ImageView iv = (ImageView)convertView.findViewById(R.id.img_guest);
+        ImageView img_guest = (ImageView)convertView.findViewById(R.id.img_guest);
         TextView txt_gname = convertView.findViewById(R.id.txt_gname);
         TextView txt_valdate = convertView.findViewById(R.id.txt_valdate);
         TextView txt_keyfrom = convertView.findViewById(R.id.txt_keyfrom);
@@ -67,7 +70,19 @@ public class MyAdapter extends BaseAdapter {
         LinearLayout linear_black = convertView.findViewById(R.id.linear_black);
         LinearLayout sentgkey = convertView.findViewById(R.id.sentgkey);
 
-//        iv.setImageResource(img[position]);
+//        img_guest.setImageResource(img[position]);
+        //게스트 이미지
+        if(gData6[position].equals("basicUser")){
+            img_guest.setImageResource(R.drawable.person1);
+        }
+        else{
+            //변수 : gData6[position]
+
+
+        }
+
+
+
         txt_gname.setText(gData2[position]);
 
         //출입날짜 or 출입 요일

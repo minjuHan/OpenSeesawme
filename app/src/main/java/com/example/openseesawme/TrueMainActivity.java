@@ -321,7 +321,7 @@ public class TrueMainActivity extends AppCompatActivity {
             //jsp로 보내는 코드------------------
             String d_open = "open";
             try {
-                String result2 = new FingerActivity().execute(d_open,scanDeviceAddress).get(); //local 변수로..?
+                String result2 = new FingerActivity().execute(scanDeviceAddress).get(); //local 변수로..?
                 Log.i("openopen======","1");
                 Log.i("openopen======return",result2);
 
@@ -339,8 +339,13 @@ public class TrueMainActivity extends AppCompatActivity {
         if(scanComplete == "done"){
             //지문인증화면 띄워주기-------------
             try {
+                ///////////////////////////////////////////////////////
+                //비콘신호를 받으면 beaconSig.jsp를 부른다.
+                String result4 = new BeaconActivity().execute(scanDeviceAddress).get();
+
                 Intent intent = new Intent(getApplicationContext(), Fingerprint.class);
                 startActivityForResult(intent,0);
+
 
                 sComplete = false;
 
