@@ -1,21 +1,21 @@
 package com.example.openseesawme;
 
 import android.Manifest;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.le.BluetoothLeAdvertiser;
-import android.bluetooth.le.BluetoothLeScanner;
-import android.bluetooth.le.ScanCallback;
-import android.bluetooth.le.ScanFilter;
-import android.bluetooth.le.ScanRecord;
-import android.bluetooth.le.ScanResult;
-import android.bluetooth.le.ScanSettings;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,13 +28,23 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Vector;
+import com.squareup.picasso.Picasso;
 
-public class TrueMainActivity extends AppCompatActivity {
+import org.altbeacon.beacon.Beacon;
+import org.altbeacon.beacon.BeaconConsumer;
+import org.altbeacon.beacon.BeaconManager;
+import org.altbeacon.beacon.BeaconParser;
+import org.altbeacon.beacon.RangeNotifier;
+import org.altbeacon.beacon.Region;
+import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
+import org.altbeacon.beacon.startup.BootstrapNotifier;
+import org.altbeacon.beacon.startup.RegionBootstrap;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+public class TrueMainActivity extends AppCompatActivity implements BootstrapNotifier, BeaconConsumer {
     Toolbar myToolbar; //툴바.
 
     ViewPager viewPager; //viewpager
@@ -48,32 +58,114 @@ public class TrueMainActivity extends AppCompatActivity {
     Button btnfp;
     ImageView lock;
 
-    //지문 인텐트
-    //String fingerComplete = "fingeryet";
+    public static Boolean registernof = true;
 
-    //<!--ble스캔-->---------------시작----------------------
-    BluetoothAdapter mBluetoothAdapter;
-    BluetoothLeScanner mBluetoothLeScanner;
-    BluetoothLeAdvertiser mBluetoothLeAdvertiser;
+    //ble스캔--------------------------------
     private static final int PERMISSIONS = 100;
-    //Vector<Beacon> beacon;
-    ScanSettings.Builder mScanSettings;
-    List<ScanFilter> scanFilters;
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss", Locale.KOREAN);
     //추가
     private String mDeviceAddress = "6C:C3:74:F3:CB:E4";
-    String scanComplete="scanyet";
-    //    Boolean fComplete= true;
-    Boolean sComplete = true;
+    Boolean scanComplete=false; //스캔 완료 확인
     String scanDeviceAddress; //스캔한 비콘의 맥주소
+    Boolean fingerComplete=false; //지문 완료 확인
     //
 
-//<!--ble스캔-->--------------끝-----------------------
+//ble스캔--------------------------------
+
+    //foreground +scan --------------------
+    private static final String TAG = "TrueMainActivity";
+    private RegionBootstrap regionBootstrap;
+    private BackgroundPowerSaver backgroundPowerSaver;
+    private boolean haveDetectedBeaconsSinceBoot = false;
+    private String cumulativeLog = "";
+
+    private BeaconManager beaconManager;
+    //foreground +scan --------------------
+
+    //사용자가 등록한 도어락의 비콘s---
+    String resultBeaconIds;
+    String[] beaconId;
+///---
+    //앱 종료시
+    private long pressedTime;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //foreground----------------------
+        beaconManager = BeaconManager.getInstanceForApplication(this);
+        //beaconManager = org.altbeacon.beacon.BeaconManager.getInstanceForApplication(this);
+
+        // By default the AndroidBeaconLibrary will only find AltBeacons.  If you wish to make it
+        // find a different type of beacon, you must specify the byte layout for that beacon's
+        // advertisement with a line like below.  The example shows how to find a beacon with the
+        // same byte layout as AltBeacon but with a beaconTypeCode of 0xaabb.  To find the proper
+        // layout expression for other beacon types, do a web search for "setBeaconLayout"
+        // including the quotes.
+        //
+        beaconManager.getBeaconParsers().clear();
+//        beaconManager.getBeaconParsers().add(new BeaconParser().
+//                setBeaconLayout("m:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25")); //
+        beaconManager.getBeaconParsers().add(new BeaconParser().
+                setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
+        beaconManager.setDebug(true);
+
+        // Uncomment the code below to use a foreground service to scan for beacons. This unlocks
+        // the ability to continually scan for long periods of time in the background on Andorid 8+
+        // in exchange for showing an icon at the top of the screen and a always-on notification to
+        // communicate to users that your app is using resources in the background.
+        //
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setContentTitle("Open Seesawme - Scanning for Beacons");
+        Intent fintent = new Intent(this, TrueMainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                this, 0, fintent, PendingIntent.FLAG_UPDATE_CURRENT
+        );
+        builder.setContentIntent(pendingIntent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("My Notification Channel ID",
+                    "My Notification Name", NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("My Notification Channel Description");
+            NotificationManager notificationManager = (NotificationManager) getSystemService(
+                    Context.NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(channel);
+            builder.setChannelId(channel.getId());
+        }
+        try {
+            beaconManager.enableForegroundServiceScanning(builder.build(), 456);
+
+            beaconManager.setEnableScheduledScanJobs(false);
+            beaconManager.setBackgroundScanPeriod(1100); //1100->1.1s
+            //beaconManager.setBackgroundBetweenScanPeriod(10000l); //100001->10000ms, 10000 ms = 10.0 secs
+            //beaconManager.setForegroundBetweenScanPeriod(10000l);
+
+            beaconManager.setBackgroundScanPeriod(1100l);
+            beaconManager.setForegroundScanPeriod(1100l);
+
+        } catch (Exception ee){ }
+
+        // For the above foreground scanning service to be useful, you need to disable
+        // JobScheduler-based scans (used on Android 8+) and set a fast background scan
+        // cycle that would otherwise be disallowed by the operating system.
+        //
+        Log.d(TAG, "setting up background monitoring for beacons and power saving");
+        // wake up the app when a beacon is seen
+        Region region = new Region("backgroundRegion",
+                null, null, null);
+        regionBootstrap = new RegionBootstrap(this, region);
+
+        // simply constructing this class and holding a reference to it in your custom Application
+        // class will automatically cause the BeaconLibrary to save battery whenever the application
+        // is not visible.  This reduces bluetooth power usage by about 60%
+        backgroundPowerSaver = new BackgroundPowerSaver(this);
+
+        // If you wish to test beacon detection in the Android Emulator, you can use code like this:
+        // BeaconManager.setBeaconSimulator(new TimedBeaconSimulator() );
+        // ((TimedBeaconSimulator) BeaconManager.getBeaconSimulator()).createTimedSimulatedBeacons();
+        //----------------------
+
 
         //인텐트 받기(MainActivity.java로부터)
         Intent intent = getIntent();
@@ -106,6 +198,8 @@ public class TrueMainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         //여기까지 툴바
 
+        beaconidlist(); //도어락의 beacon_info 가져오기
+
         //지문인식 intent -------------
         btnfp = findViewById(R.id.btnfp); //지문버튼
         btnfp.setOnClickListener(new View.OnClickListener() {
@@ -134,26 +228,12 @@ public class TrueMainActivity extends AppCompatActivity {
         viewPager.setPadding(60, 0, 60, 0);
         //viewPager -------------
 
-        //ble스캔-------------------------
+        //ble스캔 권한-------------------------
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSIONS);
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
-        mBluetoothLeAdvertiser = mBluetoothAdapter.getBluetoothLeAdvertiser();
-        //beacon = new Vector<>();
-        mScanSettings = new ScanSettings.Builder();
-        mScanSettings.setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY);
-        ScanSettings scanSettings = mScanSettings.build();
+        //ble스캔 권한--------------------------
 
-        scanFilters = new Vector<>();
-        ScanFilter.Builder scanFilter = new ScanFilter.Builder();
-        scanFilter.setDeviceAddress("6C:C3:74:F3:CB:E4"); //ex) 00:00:00:00:00:00
-        ScanFilter scan = scanFilter.build();
-        scanFilters.add(scan);
-        mBluetoothLeScanner.startScan(scanFilters, scanSettings, mScanCallback);
-
-        //ble스캔--------------------------
     }//onCreate end
 
 
@@ -199,118 +279,36 @@ public class TrueMainActivity extends AppCompatActivity {
     //지문인텐트 받아오기
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             Toast.makeText(getApplicationContext(), "지문인증이 완료되었습니다", Toast.LENGTH_SHORT).show();
 
             //여기에서 원 이미지(원안에 자물쇠)바꾸기 ?
-            lock.setImageResource(R.drawable.openlock);
+            //lock.setImageResource(R.drawable.openlock);
+            //Caused by: java.lang.NullPointerException: Attempt to invoke virtual method 'void android.widget.ImageView.setImageResource(int)' on a null object reference
+            //        at com.example.openseesawme.TrueMainActivity.onActivityResult(TrueMainActivity.java:320)
+            //setImageResource 대신 이걸로 try
+//            Picasso.with(getApplicationContext())
+//                    .load("http://128.134.114.250:8080/doorlock/userImages/"+imageName) //imageName : 파일 이름
+//                    .placeholder(R.drawable.person1)//이미지가 존재하지 않을 경우   경우 대체 이미지
+//                    /*.resize(2000, 2000) // 이미지 크기를 재조정하고 싶을 경우*/
+//                    .into(lock);
 
             //버튼 숨기기
             btnfp.setVisibility(Button.INVISIBLE);
 
-            //지문성공시 변수값 done으로 변경
-//            fingerComplete = "done"; /*String형*/
-//            Log.d("fingerComplete값",fingerComplete);
-
-
-        }
-    }
-
-    //ble스캔-------------------시작----------------
-    ScanCallback mScanCallback = new ScanCallback() {
-        @Override
-        public void onScanResult(int callbackType, ScanResult result) {
-            super.onScanResult(callbackType, result);
+            //지문성공시
             try {
-                ScanRecord scanRecord = result.getScanRecord();
-                //Log.d("getTxPowerLevel()", scanRecord.getTxPowerLevel() + "");
-                Log.d("onScanResult()", result.getDevice().getAddress() + "\n" + result.getRssi() + "\n" + result.getDevice().getName()
-                        + "\n" + result.getDevice().getBondState() + "\n" + result.getDevice().getType());
-
-
-                final ScanResult scanResult = result;
-                scanDeviceAddress = scanResult.getDevice().getAddress(); //final 지워도 되나..?
-                //스레드 시작
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                if(mDeviceAddress.equals(scanResult.getDevice().getAddress())) {
-                                    scanComplete = "done";
-                                    Log.d("scanComplete값",scanComplete);
-                                    //Log.d("fingerComplete값",fingerComplete);
-                                    //함수 하나 만들어서 여기에 함수 호출? 아니면 밖에서 값 저장해서 사용?
-                                }else{
-                                    Log.d("scan","Undetectable");
-                                }
-                                //-------------------
-
-                            }
-                        });
-                        ///////////////////////
-                    }
-                }).start();
-                //스레드 종료
-                //*Complete 변수값들이 done이면
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                //jsp로 보내는 코드------------------
+                String result2 = new FingerActivity().execute().get();
+                fingerComplete = true;
+            }catch (Exception e){ }
         }
-
-        @Override
-        public void onBatchScanResults(List<ScanResult> results) {
-            super.onBatchScanResults(results);
-            Log.d("onBatchScanResults", results.size() + "");
-        }
-
-        @Override
-        public void onScanFailed(int errorCode) {
-            super.onScanFailed(errorCode);
-            Log.d("onScanFailed()", errorCode + "");
-        }
-    };
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mBluetoothLeScanner.stopScan(mScanCallback);
-    }
-    //ble스캔------끝----------------------------
-
-    //지속적인 Complete 변수 판단을 위한 스레드 추가------
-
-    Handler shandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            beaconfinThread();
-        }
-    };
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Thread cThread = new Thread(new Runnable() {
-            public void run() {
-                while (sComplete) {
-                    try {
-                        shandler.sendMessage(shandler.obtainMessage());
-                        Thread.sleep(1000);
-                    } catch (Throwable t) {
-                    }
-                }
-            }
-        });
-        cThread.start();
     }
 
-    private void beaconfinThread() {
-        //비콘을 스캔하면
-        if(scanComplete == "done"){
-            //지문인증화면 띄워주기-------------
+    private void beaconfinThread() {//비콘을 스캔하면
             try {
+                Toast.makeText(getApplicationContext(), "비콘이 스캔되었습니다.", Toast.LENGTH_SHORT).show();
                 ///////////////////////////////////////////////////////
                 String s_id = Dglobal.getLoginID();
                 String result2 = new BeaconSigActivity().execute(s_id, scanDeviceAddress).get();
@@ -319,16 +317,15 @@ public class TrueMainActivity extends AppCompatActivity {
                 //비콘신호를 받으면 beaconSig.jsp를 부른다.
 //                String result4 = new BeaconActivity().execute(scanDeviceAddress).get();
 
-                Intent intent = new Intent(getApplicationContext(), Fingerprint.class);
-                intent.putExtra("bea_id",scanDeviceAddress);
-                startActivityForResult(intent,0);
-
-
-                sComplete = false;
+                if (fingerComplete==false) { //지문->비콘 을 위해서 추가, 지문 안했으면
+                    Intent intent = new Intent(getApplicationContext(), Fingerprint.class); //지문인증화면
+                    //intent.putExtra("bea_id", scanDeviceAddress);
+                    startActivityForResult(intent, 0);
+                }
 
             }catch (Exception e){}
             //----------------------
-        }else{ }
+        //}
     }
 
     //도어락리스트 불러와서 배열에 저장-------------------------
@@ -368,5 +365,151 @@ public class TrueMainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    //foreground-----------------
+    public void disableMonitoring() {
+        if (regionBootstrap != null) {
+            regionBootstrap.disable();
+            regionBootstrap = null;
+        }
+    }
+    public void enableMonitoring() {
+        Region region = new Region("backgroundRegion",
+                null, null, null);
+        regionBootstrap = new RegionBootstrap(this, region);
+    }
+
+
+    @Override
+    public void didEnterRegion(Region arg0) {
+        // In this example, this class sends a notification to the user whenever a Beacon
+        // matching a Region (defined above) are first seen.
+        Log.d(TAG, "did enter region.");
+        if (!haveDetectedBeaconsSinceBoot) {
+            Log.d(TAG, "auto launching MainActivity");
+
+            // The very first time since boot that we detect an beacon, we launch the MainActivity
+            //Intent intent = new Intent(this, MainActivity.class);
+            // Important:  make sure to add android:launchMode="singleInstance" in the manifest
+            // to keep multiple copies of this activity from getting created if the user has
+            // already manually launched the app.
+            //this.startActivity(intent);
+            haveDetectedBeaconsSinceBoot = true;
+        } else { }
+    }
+
+    @Override
+    public void didExitRegion(Region region) {
+        logToDisplay("I no longer see a beacon.");
+    }
+
+    @Override
+    public void didDetermineStateForRegion(int state, Region region) {
+        logToDisplay("Current region state is: " + (state == 1 ? "INSIDE" : "OUTSIDE ("+state+")"));
+    }
+    private void logToDisplay(String line) {
+        cumulativeLog += (line + "\n");
+        Log.d(TAG,line);
+    }
+    public String getLog() { return cumulativeLog; }
+
+    //-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        beaconManager.unbind(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        beaconManager.bind(this);
+    }
+
+    @Override
+    public void onBeaconServiceConnect() {
+
+        RangeNotifier rangeNotifier = new RangeNotifier() {
+            @Override
+            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+                if(getRegisternof()) { //도어락 등록 때 지문인증 난입 방지
+                    if (beacons.size() > 0) {
+                        Log.d(TAG, "didRangeBeaconsInRegion called with beacon count:  " + beacons.size());
+                        Beacon firstBeacon = beacons.iterator().next();
+                        logToDisplay("The first beacon " + firstBeacon.toString() + " is about " + firstBeacon.getDistance() + " meters away.");//d
+                        Log.d("발견된 비콘/", firstBeacon.getBluetoothAddress()); //d
+
+                        for (int i = 0; i < beaconId.length; i++) {
+                            if (beaconId[i].equals(firstBeacon.getBluetoothAddress())) {//도어락의 비콘address = 발견된 도어락의 address 이면
+                                scanDeviceAddress = firstBeacon.getBluetoothAddress();
+
+                                if (scanComplete == false) { //스캔이 처음이면
+                                    scanComplete = true;
+
+                                    if (fingerComplete == false) { //지문인증 안했으면 + 중복 지문 인증 방지
+                                        Intent intent = new Intent(getApplicationContext(), TrueMainActivity.class);
+                                        startActivity(intent);// 백그라운드에서 실행 시, 지문 인증 이후에 main출력
+                                    }
+
+                                    beaconfinThread(); //beaconSig.jsp를 부른다. (+ 지문인증화면 띄워주기)
+                                } else { }
+                            } else {
+                                Log.d("scan", "Undetectable");
+                            }
+                        }
+                        //-------------------
+                    }
+                }//
+            }
+
+        };
+        try {
+            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
+            beaconManager.addRangeNotifier(rangeNotifier);
+            beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
+            beaconManager.addRangeNotifier(rangeNotifier);
+        } catch (RemoteException e) {   }
+    }
+
+    //foreground-------------------------
+//비콘 리스트-------------
+    public void beaconidlist(){ //*-*
+        try {
+            resultBeaconIds = new TrueMainBeaconidActivity().execute(Dglobal.getLoginID()).get();//
+            Log.d("값b", "resultBeaconIds :" + resultBeaconIds);
+
+            try {//가져와서, split, 배열에 넣기
+                beaconId = resultBeaconIds.split(",");
+            } catch (NullPointerException e){
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+//----
+
+    public static Boolean getRegisternof() { return registernof; }
+
+    public static void setRegisternof(Boolean registernof) { TrueMainActivity.registernof = registernof; }
+
+    @Override
+    public void onBackPressed(){
+        //super.onBackPressed();
+        if(pressedTime ==0 ){
+            Toast.makeText(TrueMainActivity.this,"한번 더 누르면 종료합니다. ", Toast.LENGTH_LONG).show();
+            pressedTime = System.currentTimeMillis();
+        }else{
+            int seconds = (int)(System.currentTimeMillis() - pressedTime);
+            if(seconds > 2000){
+                pressedTime = 0;
+            }else{
+                finish();
+                setRegisternof(true);
+
+            }
+        }
+    }
+
 
 }

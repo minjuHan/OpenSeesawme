@@ -61,9 +61,9 @@
                 android:text="새로운 외출 설정 추가"
                 android:textSize="20dp"
                 android:textColor="#fff"
-                android:background="#2196F3"
-                android:layout_width="350dp"
-                android:layout_height="wrap_content"    />
+                android:background="@drawable/button_radius"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

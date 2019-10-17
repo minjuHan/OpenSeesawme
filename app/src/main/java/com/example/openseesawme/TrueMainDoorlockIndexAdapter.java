@@ -33,6 +33,8 @@ public class TrueMainDoorlockIndexAdapter extends PagerAdapter {
     ImageView centerimg;
     Button btnfp;
 
+    TrueMainActivity TMainActivity;
+
     public TrueMainDoorlockIndexAdapter(List<TData> doorlocks, Context context) {
         this.doorlocks = doorlocks;
         this.context = context;

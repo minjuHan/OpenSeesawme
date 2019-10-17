@@ -72,8 +72,11 @@ public class RegisterDoorlock4 extends AppCompatActivity {
     String doorName="우리집";
     String imgName;
 
-    String doorNum="d3";    //s_info_num (일단 2번 도어락에 등록)
-    String userId="cc";     //s_user_id (일단 bb로 지정)
+    String doorNum;    //s_info_num
+    String userId;     //s_user_id
+
+    TrueMainActivity TMainActivity;
+    RegisterDoorlock2 RegisterDoorlock2;
 
     //여기부터 권한설정
     String[] permission_list = {
@@ -188,6 +191,9 @@ public class RegisterDoorlock4 extends AppCompatActivity {
             }
         });
 
+        userId=Dglobal.getLoginID();
+        doorNum=RegisterDoorlock2.getDnum();
+
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -213,6 +219,7 @@ public class RegisterDoorlock4 extends AppCompatActivity {
                 }
                 Intent intent = new Intent(getApplicationContext(),TrueMainActivity.class);
                 startActivity(intent);
+                TMainActivity.setRegisternof(true); //스캔으로 지문인증 띄우기 가능
             }
         });
     }

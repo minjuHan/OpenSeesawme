@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -76,6 +77,7 @@ public class Outdoorset extends AppCompatActivity {
 
         try {
             result = new OutDoorListActivity().execute(d_user_index).get();
+            Log.d("result값",result);
             row = result.split("spl");
             for(int i=0;i<row.length;i++){
                 detailrow=row[i].split(",");

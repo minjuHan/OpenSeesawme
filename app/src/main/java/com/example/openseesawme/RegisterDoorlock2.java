@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -44,6 +45,9 @@ public class RegisterDoorlock2 extends AppCompatActivity {
     List<BluetoothDevice> bluetoothDevices;
     int selectDevice;
 
+    //s_info_num 받아옴
+    String scanresult;
+    static String dnum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +58,12 @@ public class RegisterDoorlock2 extends AppCompatActivity {
         btnNext=findViewById(R.id.btnNext);
         btnSearch=findViewById(R.id.btnSearch);
 
+        btnNext.setEnabled(false); //다음 버튼 비활성화
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),RegisterDoorlock1.class);
-                startActivity(intent);
+                finish();
             }
         });
         btnNext.setOnClickListener(new View.OnClickListener() {
@@ -149,7 +154,26 @@ public class RegisterDoorlock2 extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectDevice=position;
                 String mac=bluetoothDevices.get(position).getAddress();
-                Toast.makeText(RegisterDoorlock2.this, mac, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(RegisterDoorlock2.this, mac, Toast.LENGTH_SHORT).show();
+
+                //mac이 db에 있는지 jsp에서 확인
+                try{
+                scanresult = new RegisterDoorlockUsersActivity2().execute(mac).get();
+                    Log.d("scanresult(s_info_num)값",scanresult);
+                    if(scanresult.equals("fail")){
+                    Toast.makeText(getApplicationContext(),"등록되지 않은 기기입니다. ",Toast.LENGTH_SHORT).show();
+                }else if(!scanresult.equals(null)){
+                    setDnum(scanresult); //dnum -> doorNum(=s_info_num)
+                    Toast.makeText(getApplicationContext(),"등록된 도어락을 발견했습니다. 다음으로 넘어가세요. ",Toast.LENGTH_SHORT).show();
+                    btnNext.setEnabled(true);
+                }else{
+                    Toast.makeText(getApplicationContext(),"오류 발생. 잠시 후 시도해 주세요.",Toast.LENGTH_SHORT).show();
+                }
+                }
+                catch (Exception e){
+                   //Toast.makeText(getApplicationContext(),"기기가 존재하지 않습니다. ",Toast.LENGTH_SHORT).show();
+                }
+
                 /*//페어링 하는 부분
                 BluetoothDevice device = bluetoothDevices.get(position);
                 try {
@@ -243,4 +267,11 @@ public class RegisterDoorlock2 extends AppCompatActivity {
         unregisterReceiver(mBluetoothSearchReceiver);
         super.onDestroy();
     }
+
+    //doorNum---
+    public static String getDnum() { return dnum; }
+
+    public static void setDnum(String dnum) { RegisterDoorlock2.dnum = dnum; }
+    //----
+
 }

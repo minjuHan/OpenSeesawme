@@ -11,18 +11,16 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class OutAdd_people extends AsyncTask<String, Void, String> {
+public class TrueMainBeaconidActivity extends AsyncTask<String, Void, String> {
     String sendMsg, receiveMsg;
-
     @Override
     protected String doInBackground(String... strings) {
-
         try {
-            Log.i("test", "OutAdd_people");
+            Log.i("test", "TrueMainActivity");
             String str;
 
             // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
-            URL url = new URL("http://192.168.35.6:9090/doorlock/androidOutsetDB_people.jsp");
+            URL url = new URL("http://128.134.114.250:8080/doorlock/androidDBeacon.jsp");
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -31,9 +29,9 @@ public class OutAdd_people extends AsyncTask<String, Void, String> {
 
             // 전송할 데이터. GET 방식으로 작성
             //sendMsg = "user_name=" + strings[0];
+            sendMsg = "user_id=" + strings[0];
+            osw.write(sendMsg);
 
-
-            //osw.write(sendMsg);
             osw.flush();
 
             //jsp와 통신 성공 시 수행
@@ -47,7 +45,6 @@ public class OutAdd_people extends AsyncTask<String, Void, String> {
                     buffer.append(str);
                 }
                 receiveMsg = buffer.toString();
-                Log.i("test",receiveMsg);
             } else {
                 Log.i("test", "failfail");
             }
@@ -59,4 +56,7 @@ public class OutAdd_people extends AsyncTask<String, Void, String> {
         }
         return receiveMsg;
     }
+
+
+
 }
