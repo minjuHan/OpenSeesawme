@@ -41,7 +41,7 @@ public class Fingerprint extends AppCompatActivity {
     private LinearLayout linearLayout;
     Button btn_fpclose;
     TextView tv_pin;
-
+    String scanDeviceAddress;
 
     private static final String KEY_NAME = "example_key";
     private FingerprintManager fingerprintManager;
@@ -66,8 +66,9 @@ public class Fingerprint extends AppCompatActivity {
         tv_pin = findViewById(R.id.tv_pin);
 
         //없어도 되나?
-        //Intent inIntent = getIntent();
-        //final boolean done=inIntent.getBooleanExtra("done",true);
+        Intent inIntent = getIntent();
+//        final boolean done=inIntent.getBooleanExtra("done",true);
+        scanDeviceAddress = inIntent.getStringExtra("bea_id");
 
         //pin번호 입력 눌렀을 때
         tv_pin.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +129,9 @@ public class Fingerprint extends AppCompatActivity {
                 setResult(RESULT_OK, outIntent);
 
                 //jsp로 보내는 코드★★★★★가있었던 자리 -=========================
+                try{
+                    String result2 = new FingerActivity().execute(scanDeviceAddress).get();
+                }catch (Exception e){}
                 //============================================
                 finish();
                 //startActivity(outIntent);

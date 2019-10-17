@@ -43,17 +43,23 @@ import java.util.UUID;
 
 public class RegisterDoorlock1 extends AppCompatActivity {
     Button btnBack,btnNext;
+
+    TrueMainActivity TMainActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_doorlock1);
+
+        TMainActivity.setRegisternof(false);
 
         btnBack=findViewById(R.id.btnBack);
         btnNext=findViewById(R.id.btnNext);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                TMainActivity.setRegisternof(true);
+                finish();
             }
         });
         btnNext.setOnClickListener(new View.OnClickListener() {

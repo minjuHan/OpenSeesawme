@@ -82,7 +82,9 @@
             android:layout_height="match_parent">
             <Button
                 android:layout_alignParentBottom="true"
-                android:background="#3865da"
+                android:background="@color/btnGrayColor"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:textColor="#ffffff"
                 android:id="@+id/btn_fpclose"
                 android:text="지문인증 완료하여 닫기"

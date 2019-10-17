@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.openseesawme">
 
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
@@ -14,6 +15,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -23,15 +27,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AccessHistoryUser">
-        </activity>
+        <activity android:name=".Outsetitem"></activity>
+        <activity android:name=".AccessHistoryUser"></activity>
         <activity android:name=".TestSec" />
         <activity android:name=".AccessHistory" />
         <activity android:name=".Setting" />
         <activity android:name=".Userlist" />
         <activity android:name=".UserMypage" />
-        <activity android:name=".Outsetitem" />
-        <activity android:name=".OutdoorsetEnd" />
         <activity android:name=".OutdoorsetAdd" />
         <activity android:name=".Outdoorset" />
         <activity android:name=".Outdooritem" />
@@ -54,7 +56,8 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <activity android:name=".pin_enter"></activity>
+
+        <activity android:name=".pin_enter" />
         <activity android:name=".pin_register2" />
         <activity android:name=".pin_register1" />
         <activity android:name=".JoinAgree" />
@@ -66,7 +69,9 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".Main2Activity" />
         <activity android:name=".myguestkey" />
-        <activity android:name=".Fingerprint" />
+        <activity
+            android:name=".Fingerprint"
+            android:launchMode="singleInstance" />
         <activity android:name=".SetList" />
         <activity android:name=".SmsTest">
             <intent-filter>
@@ -79,10 +84,20 @@
         <activity android:name=".OtherMemo1" />
         <activity android:name=".OtherMemo2" />
         <activity android:name=".OtherGuestkeyEnd" />
-        <activity android:name=".join"></activity>
+        <activity android:name=".join" />
         <activity android:name=".Login" />
         <activity android:name=".SendGuestKey" />
-        <activity android:name=".TrueMainActivity" />
+        <activity
+            android:name=".TrueMainActivity"
+            android:launchMode="singleInstance" />
+
+        <service
+            android:name="org.altbeacon.beacon.service.BeaconService"
+            tools:node="replace">
+            <meta-data
+                android:name="longScanForcingEnabled"
+                android:value="true" />
+        </service>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

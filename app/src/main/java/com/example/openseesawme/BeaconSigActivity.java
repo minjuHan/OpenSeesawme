@@ -11,7 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class FingerActivity extends AsyncTask<String, Void, String> {
+public class BeaconSigActivity extends AsyncTask<String, Void, String> {
     String sendMsg, receiveMsg;
     @Override
     protected String doInBackground(String... strings) {
@@ -20,7 +20,8 @@ public class FingerActivity extends AsyncTask<String, Void, String> {
             String str;
 
             // 접속할 서버 주소 (이클립스에서 android.jsp 실행시 웹브라우저 주소)
-            URL url = new URL("http://128.134.114.250:8080/doorlock/testfinger.jsp");
+            //URL url = new URL("http://128.134.114.250:8080/doorlock/testfinger.jsp");
+            URL url = new URL("http://128.134.114.250:8080/doorlock/beaconSig.jsp");
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -28,9 +29,8 @@ public class FingerActivity extends AsyncTask<String, Void, String> {
             OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
 
             // 전송할 데이터. GET 방식으로 작성
-            sendMsg = "s_id=" + Dglobal.getLoginID();
-            //sendMsg = "s_id=" + Dglobal.getLoginID() + "&b_id=" + strings[0];
-            //Log.i("openopen======strg",strings[0]);
+            sendMsg = "s_id=" + strings[0] + "&b_id=" + strings[1]; //macAddress변수 jsp에있는걸로바꾸기
+            Log.i("openopen======strg",strings[0]);
             osw.write(sendMsg);
             osw.flush();
 
