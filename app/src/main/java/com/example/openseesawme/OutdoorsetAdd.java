@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 public class OutdoorsetAdd extends AppCompatActivity {
@@ -39,6 +40,10 @@ public class OutdoorsetAdd extends AppCompatActivity {
     String[] img = new String[10000];
     Boolean m;
     String d_useres="";
+
+    private int pyear; //pick year
+    private int pmonth;
+    private int pday;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -108,6 +113,7 @@ public class OutdoorsetAdd extends AppCompatActivity {
 
                         Intent intent = new Intent(getApplicationContext(), Outdoorset.class);
                         startActivity(intent);
+                        finish();
                     }
 
 
@@ -146,13 +152,25 @@ public class OutdoorsetAdd extends AppCompatActivity {
             {
                 startdate.setText(year + "-" + (monthOfYear+1) + "-" + dayOfMonth);
 
+                pyear = year;
+                pmonth = monthOfYear;
+                pday = dayOfMonth;
+
             }
         };
+
     }
 
     public void OnClickHandler(View view)
     {
-        DatePickerDialog dialog = new DatePickerDialog(this, callbackMethod, 2019, 7, 26);
+        Calendar cal1 = Calendar.getInstance();
+        int cyear = cal1.get(Calendar.YEAR); //current year
+        int cmonth = cal1.get(Calendar.MONTH);
+        int cday = cal1.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog dialog = new DatePickerDialog(this, callbackMethod, cyear, cmonth, cday);
+
+        dialog.getDatePicker().setMinDate(cal1.getTimeInMillis());
 
         dialog.show();
     }
@@ -178,7 +196,11 @@ public class OutdoorsetAdd extends AppCompatActivity {
 
     public void OnClickHandler2(View view)
     {
-        DatePickerDialog dialog = new DatePickerDialog(this, callbackMethod2, 2019, 7, 26);
+        Calendar cal2 = Calendar.getInstance();
+        cal2.set(pyear, pmonth, pday);
+
+        DatePickerDialog dialog = new DatePickerDialog(this, callbackMethod2, pyear, pmonth, pday);
+        dialog.getDatePicker().setMinDate(cal2.getTimeInMillis());
 
         dialog.show();
     }
@@ -229,6 +251,14 @@ public class OutdoorsetAdd extends AppCompatActivity {
                 Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), Outdoorset.class);
+        startActivity(intent);
+        finish();
     }
 
 }

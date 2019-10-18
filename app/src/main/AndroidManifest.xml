@@ -34,7 +34,8 @@
         <activity android:name=".Setting" />
         <activity android:name=".Userlist" />
         <activity android:name=".UserMypage" />
-        <activity android:name=".OutdoorsetAdd" />
+        <activity android:name=".OutdoorsetAdd"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".Outdoorset" />
         <activity android:name=".Outdooritem" />
         <activity android:name=".DoorlockList" />
