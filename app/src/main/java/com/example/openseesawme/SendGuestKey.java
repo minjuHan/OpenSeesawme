@@ -83,6 +83,8 @@ public class SendGuestKey extends AppCompatActivity {
         ckbSelectSun=findViewById(R.id.ckbSelectSun);
         activity = this;
 
+        Toast.makeText(getApplicationContext(),user_index,Toast.LENGTH_LONG).show();
+
 
         btnRepeat.setOnClickListener(new View.OnClickListener() {
             @Override

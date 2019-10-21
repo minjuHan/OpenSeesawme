@@ -117,7 +117,7 @@ public class TrueMainActivity extends AppCompatActivity implements BootstrapNoti
         // communicate to users that your app is using resources in the background.
         //
         Notification.Builder builder = new Notification.Builder(this);
-        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setSmallIcon(R.mipmap.ic_launcher_new);
         builder.setContentTitle("Open Seesawme - Scanning for Beacons");
         Intent fintent = new Intent(this, TrueMainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(
@@ -455,6 +455,7 @@ public class TrueMainActivity extends AppCompatActivity implements BootstrapNoti
                                     }
 
                                     beaconfinThread(); //beaconSig.jsp를 부른다. (+ 지문인증화면 띄워주기)
+                                    Toast.makeText(getApplicationContext(), "도어락 잠금이 해제되었습니다.", Toast.LENGTH_SHORT).show();
                                 } else { }
                             } else {
                                 Log.d("scan", "Undetectable");
