@@ -262,6 +262,7 @@ public class TrueMainActivity extends AppCompatActivity implements BootstrapNoti
             case R.id.action_settings3 :
                 Intent intent3 = new Intent(getApplicationContext(), UserMypage.class);
                 startActivity(intent3);
+                finish();
                 return true;
             case R.id.action_settings4 :
                 Intent intent4 = new Intent(getApplicationContext(), Setting.class);
@@ -298,11 +299,11 @@ public class TrueMainActivity extends AppCompatActivity implements BootstrapNoti
             btnfp.setVisibility(Button.INVISIBLE);
 
             //지문성공시
-            try {
+            //try {
                 //jsp로 보내는 코드------------------
-                String result2 = new FingerActivity().execute().get();
+                //String result2 = new FingerActivity().execute().get();
                 fingerComplete = true;
-            }catch (Exception e){ }
+            //}catch (Exception e){ }
         }
     }
 
@@ -314,18 +315,16 @@ public class TrueMainActivity extends AppCompatActivity implements BootstrapNoti
                 String result2 = new BeaconSigActivity().execute(s_id, scanDeviceAddress).get();
 
 
-                //비콘신호를 받으면 beaconSig.jsp를 부른다.
-//                String result4 = new BeaconActivity().execute(scanDeviceAddress).get();
-
-                if (fingerComplete==false) { //지문->비콘 을 위해서 추가, 지문 안했으면
-                    Intent intent = new Intent(getApplicationContext(), Fingerprint.class); //지문인증화면
-                    //intent.putExtra("bea_id", scanDeviceAddress);
-                    startActivityForResult(intent, 0);
+                if(result2.equals("true")) {
+                    if (fingerComplete == false) { //지문->비콘 을 위해서 추가, 지문 안했으면
+                        Intent intent = new Intent(getApplicationContext(), Fingerprint.class); //지문인증화면
+                        //intent.putExtra("bea_id", scanDeviceAddress);
+                        startActivityForResult(intent, 0);
+                    }
                 }
 
             }catch (Exception e){}
             //----------------------
-        //}
     }
 
     //도어락리스트 불러와서 배열에 저장-------------------------
@@ -437,14 +436,18 @@ public class TrueMainActivity extends AppCompatActivity implements BootstrapNoti
                         Log.d(TAG, "didRangeBeaconsInRegion called with beacon count:  " + beacons.size());
                         Beacon firstBeacon = beacons.iterator().next();
                         logToDisplay("The first beacon " + firstBeacon.toString() + " is about " + firstBeacon.getDistance() + " meters away.");//d
-                        Log.d("발견된 비콘/", firstBeacon.getBluetoothAddress()); //d
+                        //Log.d("발견된 비콘/addr", firstBeacon.getBluetoothAddress()); //d
 
                         for (int i = 0; i < beaconId.length; i++) {
-                            if (beaconId[i].equals(firstBeacon.getBluetoothAddress())) {//도어락의 비콘address = 발견된 도어락의 address 이면
+                            //if (beaconId[i].equals(firstBeacon.getBluetoothAddress()) && firstBeacon.getDistance()<5 ) {
+                            if (beaconId[i].equals(firstBeacon.getBluetoothAddress()) ) {//도어락의 비콘address = 발견된 도어락의 address 이면
+                                Log.d("발견된 비콘/addr", firstBeacon.getBluetoothAddress()); //d
+                                Log.d("발견된 비콘/distance", String.valueOf(firstBeacon.getDistance())); //d
                                 scanDeviceAddress = firstBeacon.getBluetoothAddress();
 
                                 if (scanComplete == false) { //스캔이 처음이면
                                     scanComplete = true;
+                                    Log.d(TAG, "scanComplete값값  " + scanComplete);
 
                                     if (fingerComplete == false) { //지문인증 안했으면 + 중복 지문 인증 방지
                                         Intent intent = new Intent(getApplicationContext(), TrueMainActivity.class);

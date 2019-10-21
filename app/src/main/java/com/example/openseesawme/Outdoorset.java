@@ -41,6 +41,7 @@ public class Outdoorset extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),OutdoorsetAdd.class);
                 startActivity(intent);
+                finish();
             }
         });
 

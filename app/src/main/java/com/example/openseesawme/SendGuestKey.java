@@ -202,6 +202,7 @@ public class SendGuestKey extends AppCompatActivity {
                                 intent.putExtra("guest_ro","no");
                                 Log.i("result", "2343423424");
                                 startActivity(intent);
+                                finish();
                             }
 
                         } catch (Exception e) {
@@ -405,4 +406,13 @@ public class SendGuestKey extends AppCompatActivity {
         SmsManager mSmsManager = SmsManager.getDefault();
         mSmsManager.sendTextMessage(smsNumber, null, smsText, sentIntent, deliveredIntent);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), OtherGuestkey.class);
+        startActivity(intent);
+        finish();
+    }
+
 }

@@ -92,6 +92,7 @@ public class OtherGuestkey extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),SendGuestKey.class);
                 startActivity(intent);
+                finish();
             }
         });
 
