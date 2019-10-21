@@ -119,14 +119,18 @@ public class OtherMemo1 extends AppCompatActivity {
                 alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Log.i("othermemoothermemo",gData2.substring(0,2));
+
                         //DB에서 삭제할 Activity 호출하는 코드
                         try{
                             String result;
                             String g_index = gData0;
-                            if(gData2.substring(0,2).equals("010")){
+                            if(gData2.substring(0,2).equals("01")){
+                                Log.i("othermemoothermemo","임시");
                                 result  = new GetOthertempguestDeleteActivity().execute(g_index).get();
                             }
                             else {
+                                Log.i("othermemoothermemo","게스트");
                                 result  = new GetOtherguestDeleteActivity().execute(g_index).get();
                             }
 
