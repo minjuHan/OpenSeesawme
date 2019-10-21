@@ -25,8 +25,7 @@ public class RegisterDoorlock3_2 extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),RegisterDoorlock3.class);
-                startActivity(intent);
+                finish();
             }
         });
         btnNext.setOnClickListener(new View.OnClickListener() {

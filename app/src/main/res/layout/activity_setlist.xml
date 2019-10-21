@@ -40,49 +40,20 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp">
             <ImageView
-                android:id="@+id/door_img_id"
+                android:id="@+id/doorimg"
                 android:src="@drawable/home"
                 android:layout_width="80dp"
                 android:layout_height="80dp" />
             <TextView
-                android:id="@+id/door_name"
+                android:id="@+id/tvDoorName"
                 android:text="우리집"
                 android:textSize="30dp"
                 android:textColor="#333333"
-                android:layout_toRightOf="@+id/door_img_id"
+                android:layout_toRightOf="@+id/doorimg"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-
-
-            <TextView
-                android:id="@+id/remain_battery_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:layout_marginRight="8dp"
-                android:layout_toLeftOf="@+id/remain_battery_img"
-                android:text="80%"
-                android:textColor="#333333"
-                android:textSize="20dp" />
-            <TextView
-                android:text="배터리"
-                android:textColor="#333333"
-                android:textSize="14dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_toLeftOf="@+id/remain_battery_img"
-                android:layout_below="@+id/remain_battery_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <ImageView
-                android:id="@+id/remain_battery_img"
-                android:layout_width="40dp"
-                android:layout_height="80dp"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/ic_battery_80_black_24dp" />
         </RelativeLayout>
 
 

@@ -1,21 +1,57 @@
 package com.example.openseesawme;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.File;
 
 public class SetList extends AppCompatActivity {
     Button btnset_user,btnbangbum,btnset_doorlock;
+    ImageView doorimg;
+    TextView tvDoorName;
+    String d_user_index = Dglobal.getDoorID();
     Toolbar myToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setlist);
 
+        doorimg = findViewById(R.id.doorimg);
+        tvDoorName = findViewById(R.id.tvDoorName);
+        try {
+            String result = new DoorlockInfoActivity().execute(d_user_index).get();
+            String[] detailrow=result.split(",");
+            String img=detailrow[0];
+            String name=detailrow[1];
+            String dnum=detailrow[2];
+            String date=detailrow[3];
+
+            Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
+
+            tvDoorName.setText(name);
+            doorimg.setImageBitmap(getBitmap(img));
+            doorimg.setBackground(new ShapeDrawable(new OvalShape()));
+            if(Build.VERSION.SDK_INT >= 21) {
+                doorimg.setClipToOutline(true);
+            }
+
+        } catch (
+                Exception e) {
+            e.printStackTrace();
+        }
 
         btnbangbum = findViewById(R.id.btnbangbum);
         btnbangbum.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +99,23 @@ public class SetList extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         //여기까지 툴바
     }
+
+    //나중에 파일 가져올 때
+    private Bitmap getBitmap(String result){
+        Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
+        //result=Environment.getExternalStorageDirectory()+"/"+result;
+        //result= Environment.getExternalStorageDirectory()+"/d3dd.jpg"; //
+        File file= new File(result);
+
+        if(file.exists()){
+            Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            return myBitmap;
+        }
+        else{
+            return null;
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){

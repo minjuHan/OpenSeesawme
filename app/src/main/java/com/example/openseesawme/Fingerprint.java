@@ -124,14 +124,15 @@ public class Fingerprint extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent outIntent = new Intent(getApplicationContext(), TrueMainActivity.class);
-                //outIntent.putExtra("done",true);
-                setResult(RESULT_OK, outIntent);
-
                 //jsp로 보내는 코드★★★★★가있었던 자리 -=========================
                 try{
                     String result2 = new FingerActivity().execute(scanDeviceAddress).get();
                 }catch (Exception e){}
+
+                Intent outIntent = new Intent(getApplicationContext(), TrueMainActivity.class);
+                //outIntent.putExtra("done",true);
+                setResult(RESULT_OK, outIntent);
+
                 //============================================
                 finish();
                 //startActivity(outIntent);

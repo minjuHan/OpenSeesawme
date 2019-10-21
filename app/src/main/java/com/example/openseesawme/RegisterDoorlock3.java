@@ -24,13 +24,13 @@ public class RegisterDoorlock3 extends AppCompatActivity {
 
         btnBack=findViewById(R.id.btnBack);
         btnNext=findViewById(R.id.btnNext);
-//        btnBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(getApplicationContext(),RegisterDoorlock2.class);
-//                startActivity(intent);
-//            }
-//        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

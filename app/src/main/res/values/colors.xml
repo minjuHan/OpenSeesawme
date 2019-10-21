@@ -8,4 +8,16 @@
     <color name="color2">#FF9800</color>
     <color name="color3">#8BC34A</color>
     <color name="colorlast">@android:color/holo_red_light</color>
+
+
+    <color name="btnBlueColor">#2196F3</color>
+    <color name="btnGreenColor">#0BC904</color>
+    <color name="btnGrayColor">#bbbbbb</color>  <!--#91000000-->
+    <color name="btnRedColor">#F44336</color>
+    <color name="btnLightGrayColor">#DAD9D9</color>
+    <color name="listBgColor">#4DFFFFFF</color>
+
+    <!--text색 , 선색-->
+
+
 </resources>

@@ -47,7 +47,7 @@ public class SendGuestKey extends AppCompatActivity {
     String sendData="repeat";
     String result="-";
     String user_tel,user_select="";
-    String user_index="1";  //임의
+    String user_index=Dglobal.getDoorID();  //임의
     String myID = Dglobal.getLoginID();
 
     String[] permission_list = {
@@ -82,6 +82,8 @@ public class SendGuestKey extends AppCompatActivity {
         ckbSelectSat=findViewById(R.id.ckbSelectSat);
         ckbSelectSun=findViewById(R.id.ckbSelectSun);
         activity = this;
+
+        Toast.makeText(getApplicationContext(),user_index,Toast.LENGTH_LONG).show();
 
 
         btnRepeat.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +162,8 @@ public class SendGuestKey extends AppCompatActivity {
                         try {
 
                             result = new SendGuestKeyActivity().execute(user_index, user_tel, user_select).get();
+                            Toast.makeText(getApplicationContext(),"인덱스:"+user_index,Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"결과"+result,Toast.LENGTH_LONG).show();
                             Log.i("SendGuestKeysss","계정있는지 결과"+ result);////
                             if (result.equals("fail")) {
                             } else if (result.equals("가입된 사용자")) {
@@ -200,6 +204,7 @@ public class SendGuestKey extends AppCompatActivity {
                                 intent.putExtra("guest_ro","no");
                                 Log.i("result", "2343423424");
                                 startActivity(intent);
+                                finish();
                             }
 
                         } catch (Exception e) {
@@ -403,4 +408,13 @@ public class SendGuestKey extends AppCompatActivity {
         SmsManager mSmsManager = SmsManager.getDefault();
         mSmsManager.sendTextMessage(smsNumber, null, smsText, sentIntent, deliveredIntent);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), OtherGuestkey.class);
+        startActivity(intent);
+        finish();
+    }
+
 }
