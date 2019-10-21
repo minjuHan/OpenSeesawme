@@ -52,6 +52,7 @@ TextView txt_gkday, txt_gkname, txt_gkwhat, txt_gkwhen;
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),SendGuestKey.class);
                 startActivity(intent);
+                finish();
             }
         });
         // 추가된 소스, Toolbar를 생성한다.
@@ -164,11 +165,21 @@ TextView txt_gkday, txt_gkname, txt_gkwhat, txt_gkwhen;
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                Intent intent = new Intent(getApplicationContext(), OtherGuestkey.class);
+                startActivity(intent); //
                 finish();
                 return true;
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), OtherGuestkey.class);
+        startActivity(intent);
+        finish();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.openseesawme;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -95,6 +96,9 @@ public class TrueMainDoorlockIndexAdapter extends PagerAdapter {
                     public void onClick(View view) {
                         Intent intent = new Intent(context, RegisterDoorlock1.class);
                         context.startActivity(intent);
+                        ((Activity)context).finish();
+
+
                     }
                 });
 

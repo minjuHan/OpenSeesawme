@@ -46,6 +46,8 @@ public class RegisterDoorlock1 extends AppCompatActivity {
 
     TrueMainActivity TMainActivity;
 
+    Boolean fromDoorlocklist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,13 +55,24 @@ public class RegisterDoorlock1 extends AppCompatActivity {
 
         TMainActivity.setRegisternof(false);
 
+        Intent dlistIntent = getIntent();
+        fromDoorlocklist = dlistIntent.getBooleanExtra("fromDoorlocklist",false);
+        TMainActivity.setRegisternof(true);
+
         btnBack=findViewById(R.id.btnBack);
         btnNext=findViewById(R.id.btnNext);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TMainActivity.setRegisternof(true);
-                finish();
+                if (fromDoorlocklist){
+                    Intent intent = new Intent(getApplicationContext(),DoorlockList.class);
+                    startActivity(intent);
+                    finish();
+                }else {
+                    Intent intent = new Intent(getApplicationContext(), TrueMainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
         btnNext.setOnClickListener(new View.OnClickListener() {
@@ -89,4 +102,22 @@ public class RegisterDoorlock1 extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"블루투스 비활성화 :<",Toast.LENGTH_LONG).show();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        TMainActivity.setRegisternof(true);
+
+        if (fromDoorlocklist){
+            Intent intent = new Intent(getApplicationContext(),DoorlockList.class);
+            startActivity(intent);
+            finish();
+        }else {
+            Intent intent = new Intent(getApplicationContext(), TrueMainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+    }
+
 }

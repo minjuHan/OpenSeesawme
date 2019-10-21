@@ -262,6 +262,7 @@ public class TrueMainActivity extends AppCompatActivity implements BootstrapNoti
             case R.id.action_settings3 :
                 Intent intent3 = new Intent(getApplicationContext(), UserMypage.class);
                 startActivity(intent3);
+                finish();
                 return true;
             case R.id.action_settings4 :
                 Intent intent4 = new Intent(getApplicationContext(), Setting.class);
@@ -438,8 +439,8 @@ public class TrueMainActivity extends AppCompatActivity implements BootstrapNoti
                         //Log.d("발견된 비콘/addr", firstBeacon.getBluetoothAddress()); //d
 
                         for (int i = 0; i < beaconId.length; i++) {
-                            if (beaconId[i].equals(firstBeacon.getBluetoothAddress()) && firstBeacon.getDistance()<3 ) {
-                            //if (beaconId[i].equals(firstBeacon.getBluetoothAddress()) ) {//도어락의 비콘address = 발견된 도어락의 address 이면
+                            //if (beaconId[i].equals(firstBeacon.getBluetoothAddress()) && firstBeacon.getDistance()<5 ) {
+                            if (beaconId[i].equals(firstBeacon.getBluetoothAddress()) ) {//도어락의 비콘address = 발견된 도어락의 address 이면
                                 Log.d("발견된 비콘/addr", firstBeacon.getBluetoothAddress()); //d
                                 Log.d("발견된 비콘/distance", String.valueOf(firstBeacon.getDistance())); //d
                                 scanDeviceAddress = firstBeacon.getBluetoothAddress();
