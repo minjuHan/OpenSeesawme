@@ -219,6 +219,7 @@ public class RegisterDoorlock4 extends AppCompatActivity {
                 }
                 Intent intent = new Intent(getApplicationContext(),TrueMainActivity.class);
                 startActivity(intent);
+                finish();
                 TMainActivity.setRegisternof(true); //스캔으로 지문인증 띄우기 가능
             }
         });
