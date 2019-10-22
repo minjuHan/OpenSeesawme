@@ -155,7 +155,7 @@ public class DoorlockInfo extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String d_user_name = et.getText().toString();
-                        Toast.makeText(getApplicationContext(),d_user_name,Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(),d_user_name,Toast.LENGTH_LONG).show();
                         try {
                             String result2=new DoorlockNameModify().execute(d_user_index,d_user_name).get();
                             Toast.makeText(getApplicationContext(),result2,Toast.LENGTH_LONG).show();
@@ -203,13 +203,13 @@ public class DoorlockInfo extends AppCompatActivity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Toast.makeText(getBaseContext(), "resultCode : " + data, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getBaseContext(), "resultCode : " + data, Toast.LENGTH_SHORT).show();
 
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 try {
                     Uri uri = data.getData();
-                    Toast.makeText(getBaseContext(), "img_path : " + uri, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getBaseContext(), "img_path : " + uri, Toast.LENGTH_SHORT).show();
                     //이미지를 비트맵형식으로 반환
                     Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
                     int reWidth = (int) (getWindowManager().getDefaultDisplay().getWidth());
@@ -251,7 +251,7 @@ public class DoorlockInfo extends AppCompatActivity {
             outStream.flush();
             outStream.close();
 
-            Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -300,7 +300,7 @@ public class DoorlockInfo extends AppCompatActivity {
 
     //나중에 파일 가져올 때
     private Bitmap getBitmap(String result){
-        Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
         //result=Environment.getExternalStorageDirectory()+"/"+result;
         //result= Environment.getExternalStorageDirectory()+"/d3dd.jpg"; //
         File file= new File(result);

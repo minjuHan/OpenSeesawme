@@ -83,6 +83,7 @@ public class RegisterDoorlock2 extends AppCompatActivity {
                 //mBluetoothAdapter.cancelDiscovery() : 블루투스 검색 취소
                 if(mBluetoothAdapter.isDiscovering()){
                     mBluetoothAdapter.cancelDiscovery();
+                    mBluetoothAdapter.cancelDiscovery();
                 }
                 //mBluetoothAdapter.startDiscovery() : 블루투스 검색 시작
                 mBluetoothAdapter.startDiscovery();
@@ -164,7 +165,7 @@ public class RegisterDoorlock2 extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"등록되지 않은 기기입니다. ",Toast.LENGTH_SHORT).show();
                 }else if(!scanresult.equals(null)){
                     setDnum(scanresult); //dnum -> doorNum(=s_info_num)
-                    Toast.makeText(getApplicationContext(),"등록된 도어락을 발견했습니다. 다음으로 넘어가세요. ",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"등록된 도어락을 발견했습니다. \n다음으로 넘어가세요. ",Toast.LENGTH_SHORT).show();
                     btnNext.setEnabled(true);
                 }else{
                     Toast.makeText(getApplicationContext(),"오류 발생. 잠시 후 시도해 주세요.",Toast.LENGTH_SHORT).show();

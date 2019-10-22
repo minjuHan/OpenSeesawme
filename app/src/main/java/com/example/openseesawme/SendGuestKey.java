@@ -83,7 +83,7 @@ public class SendGuestKey extends AppCompatActivity {
         ckbSelectSun=findViewById(R.id.ckbSelectSun);
         activity = this;
 
-        Toast.makeText(getApplicationContext(),user_index,Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),user_index,Toast.LENGTH_LONG).show();
 
 
         btnRepeat.setOnClickListener(new View.OnClickListener() {
@@ -340,6 +340,9 @@ public class SendGuestKey extends AppCompatActivity {
             String receiveTel;
             receiveTel = cursor.getString(1);
             cursor.close();
+            if(receiveTel.contains("-")){
+                receiveTel=receiveTel.replace("-","");
+            }
             edtUserName.setText(receiveName);
             edtUserTel.setText(receiveTel);
         }

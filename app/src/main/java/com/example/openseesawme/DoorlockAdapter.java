@@ -79,7 +79,7 @@ public class DoorlockAdapter extends RecyclerView.Adapter<DoorlockAdapter.ItemVi
 
     //DB에서 지워주는 부분
     public void deleteUserDB(int position){
-        Toast.makeText(mContext,Integer.toString(listData.get(position).getIndex()),Toast.LENGTH_LONG).show();
+        //Toast.makeText(mContext,Integer.toString(listData.get(position).getIndex()),Toast.LENGTH_LONG).show();
         try {
             String sendIndex=Integer.toString(listData.get(position).getIndex());
 
@@ -124,7 +124,7 @@ public class DoorlockAdapter extends RecyclerView.Adapter<DoorlockAdapter.ItemVi
 
         void onBind(Data data) {
             String result=data.getImg();
-            Toast.makeText(mContext,result,Toast.LENGTH_LONG).show();
+            //Toast.makeText(mContext,result,Toast.LENGTH_LONG).show();
             doorimg.setImageBitmap(getBitmap(result));
             doorimg.setBackground(new ShapeDrawable(new OvalShape()));
             if(Build.VERSION.SDK_INT >= 21) {

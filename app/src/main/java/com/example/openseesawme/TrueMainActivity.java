@@ -171,7 +171,7 @@ public class TrueMainActivity extends AppCompatActivity implements BootstrapNoti
         Intent intent = getIntent();
         Boolean keeplogin = intent.getBooleanExtra("keeplog",false);
         String user_id = intent.getStringExtra("userID");
-        Toast.makeText(getApplicationContext(),keeplogin + "   " + user_id, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),keeplogin + "   " + user_id, Toast.LENGTH_LONG).show();
 
         //user_id가 null이 아닌 경우 SharedPreferences 설정
         if(user_id != null){
@@ -198,7 +198,7 @@ public class TrueMainActivity extends AppCompatActivity implements BootstrapNoti
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         //여기까지 툴바
 
-        beaconidlist(); //도어락의 beacon_info 가져오기
+        //beaconidlist(); //도어락의 beacon_info 가져오기
 
         //지문인식 intent -------------
         btnfp = findViewById(R.id.btnfp); //지문버튼
@@ -313,6 +313,7 @@ public class TrueMainActivity extends AppCompatActivity implements BootstrapNoti
                 ///////////////////////////////////////////////////////
                 String s_id = Dglobal.getLoginID();
                 String result2 = new BeaconSigActivity().execute(s_id, scanDeviceAddress).get();
+                Log.d("값", "scanDeviceAddress :" + scanDeviceAddress);
 
 
                 if(result2.equals("true")) {
@@ -438,9 +439,9 @@ public class TrueMainActivity extends AppCompatActivity implements BootstrapNoti
                         logToDisplay("The first beacon " + firstBeacon.toString() + " is about " + firstBeacon.getDistance() + " meters away.");//d
                         //Log.d("발견된 비콘/addr", firstBeacon.getBluetoothAddress()); //d
 
-                        for (int i = 0; i < beaconId.length; i++) {
-                            //if (beaconId[i].equals(firstBeacon.getBluetoothAddress()) && firstBeacon.getDistance()<5 ) {
-                            if (beaconId[i].equals(firstBeacon.getBluetoothAddress()) ) {//도어락의 비콘address = 발견된 도어락의 address 이면
+                        //for (int i = 0; i < beaconId.length; i++) {
+                            if (firstBeacon.getDistance()>0 ) {
+                            //if (beaconId[i].equals(firstBeacon.getBluetoothAddress()) ) {//도어락의 비콘address = 발견된 도어락의 address 이면
                                 Log.d("발견된 비콘/addr", firstBeacon.getBluetoothAddress()); //d
                                 Log.d("발견된 비콘/distance", String.valueOf(firstBeacon.getDistance())); //d
                                 scanDeviceAddress = firstBeacon.getBluetoothAddress();
@@ -450,22 +451,21 @@ public class TrueMainActivity extends AppCompatActivity implements BootstrapNoti
                                     Log.d(TAG, "scanComplete값값  " + scanComplete);
 
                                     if (fingerComplete == false) { //지문인증 안했으면 + 중복 지문 인증 방지
-                                        Intent intent = new Intent(getApplicationContext(), TrueMainActivity.class);
+                                        Intent intent = new Intent(getApplicationContext(), TrueMainActivity.class );
                                         startActivity(intent);// 백그라운드에서 실행 시, 지문 인증 이후에 main출력
                                     }
 
                                     beaconfinThread(); //beaconSig.jsp를 부른다. (+ 지문인증화면 띄워주기)
-                                    Toast.makeText(getApplicationContext(), "도어락 잠금이 해제되었습니다.", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getApplicationContext(), "도어락 잠금이 해제되었습니다.", Toast.LENGTH_SHORT).show();
                                 } else { }
                             } else {
                                 Log.d("scan", "Undetectable");
                             }
-                        }
+                       // }
                         //-------------------
                     }
                 }//
             }
-
         };
         try {
             beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
@@ -497,23 +497,23 @@ public class TrueMainActivity extends AppCompatActivity implements BootstrapNoti
 
     public static void setRegisternof(Boolean registernof) { TrueMainActivity.registernof = registernof; }
 
-    @Override
-    public void onBackPressed(){
-        //super.onBackPressed();
-        if(pressedTime ==0 ){
-            Toast.makeText(TrueMainActivity.this,"한번 더 누르면 종료합니다. ", Toast.LENGTH_LONG).show();
-            pressedTime = System.currentTimeMillis();
-        }else{
-            int seconds = (int)(System.currentTimeMillis() - pressedTime);
-            if(seconds > 2000){
-                pressedTime = 0;
-            }else{
-                finish();
-                setRegisternof(true);
-
-            }
-        }
-    }
+//    @Override
+//    public void onBackPressed(){
+//        //super.onBackPressed();
+//        if(pressedTime ==0 ){
+//            Toast.makeText(TrueMainActivity.this,"한번 더 누르면 종료합니다. ", Toast.LENGTH_LONG).show();
+//            pressedTime = System.currentTimeMillis();
+//        }else{
+//            int seconds = (int)(System.currentTimeMillis() - pressedTime);
+//            if(seconds > 2000){
+//                pressedTime = 0;
+//            }else{
+//                finish();
+//                setRegisternof(true);
+//
+//            }
+//        }
+//    }
 
 
 }

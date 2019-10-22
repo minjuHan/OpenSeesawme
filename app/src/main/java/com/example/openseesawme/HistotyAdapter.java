@@ -99,7 +99,7 @@ public class HistotyAdapter extends RecyclerView.Adapter<HistotyAdapter.ItemView
                 Date to = transFormat.parse(from);
                 io_time.setText(to.toString());
             }catch (Exception e){ }*/
-            io_time.setText(data.getTime());
+            io_time.setText(data.getTime().substring(0,16));
             if(data.getOx().equals("1")){
                 io_color.setBackgroundColor(Color.rgb(33,150,243));
             }

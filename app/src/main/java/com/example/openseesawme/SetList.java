@@ -39,7 +39,7 @@ public class SetList extends AppCompatActivity {
             String dnum=detailrow[2];
             String date=detailrow[3];
 
-            Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
 
             tvDoorName.setText(name);
             doorimg.setImageBitmap(getBitmap(img));
@@ -102,7 +102,7 @@ public class SetList extends AppCompatActivity {
 
     //나중에 파일 가져올 때
     private Bitmap getBitmap(String result){
-        Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),result,Toast.LENGTH_LONG).show();
         //result=Environment.getExternalStorageDirectory()+"/"+result;
         //result= Environment.getExternalStorageDirectory()+"/d3dd.jpg"; //
         File file= new File(result);
