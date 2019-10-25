@@ -7,31 +7,36 @@
     android:orientation="vertical"
     android:background="#fff"
     tools:context=".MainActivity">
+
     <LinearLayout
-        android:gravity="center"
-        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="30dp"
         android:background="#fff"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:gravity="center"
+        android:orientation="vertical">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:gravity="center">
+                <!--android:src="@mipmap/logo"-->
                 <ImageView
-                    android:src="@mipmap/logo"
-                    android:layout_width="300dp"
-                    android:layout_height="60dp" />
+                    android:src="@drawable/openssm2"
+                    android:layout_width="350dp"
+                    android:layout_height="70dp"/>
             </LinearLayout>
+
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <EditText
                     android:id="@+id/edtId"
@@ -44,93 +49,105 @@
                     android:hint="아이디"
                     android:padding="10dp"
                     android:textSize="18dp" />
+
                 <EditText
                     android:id="@+id/edtPw"
-                    android:hint="비밀번호"
-                    android:textSize="18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/login_input"
+                    android:hint="비밀번호"
                     android:padding="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:textSize="18dp" />
             </LinearLayout>
+
             <LinearLayout
-                android:gravity="right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:gravity="right"
+                android:orientation="horizontal">
+
                 <CheckBox
                     android:id="@+id/chk_keeplogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="로그인유지"
                     android:textColor="#7f7f7f"
-                    android:textSize="16dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textSize="16dp" />
             </LinearLayout>
+
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_marginBottom="10dp">
+
                 <Button
                     android:id="@+id/btnLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/login_button"
                     android:text="로그인"
                     android:textColor="#fff"
-                    android:textSize="18dp"
-                    android:background="@drawable/login_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:textSize="18dp" />
             </LinearLayout>
+
             <LinearLayout
-                android:gravity="center"
-                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:gravity="center"
+                android:orientation="horizontal">
+
                 <TextView
-                    android:text="아이디 찾기"
-                    android:textSize="14dp"
-                    android:linksClickable="true"
-                    android:textColorLink="@color/colorPrimary"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:autoLink="all"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:text=" | "
-                    android:textSize="14dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:text="비밀번호 찾기"
-                    android:textSize="14dp"
                     android:linksClickable="true"
+                    android:text="아이디 찾기"
                     android:textColorLink="@color/colorPrimary"
-                    android:layout_width="wrap_content"
-                    android:autoLink="none"
-                    android:layout_height="wrap_content" />
+                    android:textSize="14dp" />
+
                 <TextView
-                    android:text=" | "
-                    android:textSize="14dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text=" | "
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoLink="none"
+                    android:linksClickable="true"
+                    android:text="비밀번호 찾기"
+                    android:textColorLink="@color/colorPrimary"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" | "
+                    android:textSize="14dp" />
+
                 <TextView
                     android:id="@+id/txtJoin"
-                    android:text="회원가입"
-                    android:textSize="14dp"
-                    android:linksClickable="true"
-                    android:textColorLink="@color/colorPrimary"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:autoLink="none"
-                    android:layout_height="wrap_content" />
+                    android:linksClickable="true"
+                    android:text="회원가입"
+                    android:textColorLink="@color/colorPrimary"
+                    android:textSize="14dp" />
                 <!-- 자바에서 Linkify를 이용해 링크 넘기기 또는 패턴 추출해내기-->
             </LinearLayout>
         </LinearLayout>

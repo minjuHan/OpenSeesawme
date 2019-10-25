@@ -4,10 +4,10 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="color1">#8de4ff</color>
-    <color name="color2">#FF9800</color>
-    <color name="color3">#8BC34A</color>
-    <color name="colorlast">@android:color/holo_red_light</color>
+    <color name="color1">#E6F3FC</color>
+    <color name="color2">#FEE9C5</color>
+    <color name="color3">#FBD8BB</color>
+    <color name="colorlast">#E2E6EA</color>
 
 
     <color name="btnBlueColor">#2196F3</color>

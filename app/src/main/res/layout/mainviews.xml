@@ -38,7 +38,7 @@
                     android:layout_height="160dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="25dp"
-                    android:src="@drawable/closelock" />
+                    android:src="@drawable/closelock2" />
 
                 <TextView
                     android:id="@+id/tvdoorlockName"
@@ -47,7 +47,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="30dp"
                     android:text="doorlockname"
-                    android:textColor="@android:color/background_light"
+                    android:textColor="#555555"
                     android:textSize="30sp"
                     android:textStyle="bold" />
 
@@ -69,11 +69,12 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="54dp"
-                            android:layout_height="54dp"
-                            android:layout_marginTop="4dp"
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginBottom="6dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_list" />
+                            android:src="@drawable/ic_list3" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -98,9 +99,10 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="54dp"
-                            android:layout_height="54dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_key" />
 
@@ -127,9 +129,10 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="54dp"
-                            android:layout_height="54dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_settings" />
 
