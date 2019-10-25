@@ -309,7 +309,7 @@ public class TrueMainActivity extends AppCompatActivity implements BootstrapNoti
 
     private void beaconfinThread() {//비콘을 스캔하면
             try {
-                Toast.makeText(getApplicationContext(), "비콘이 스캔되었습니다.", Toast.LENGTH_SHORT).show();
+
                 ///////////////////////////////////////////////////////
                 String s_id = Dglobal.getLoginID();
                 String result2 = new BeaconSigActivity().execute(s_id, scanDeviceAddress).get();
@@ -317,6 +317,7 @@ public class TrueMainActivity extends AppCompatActivity implements BootstrapNoti
 
 
                 if(result2.equals("true")) {
+                    Toast.makeText(getApplicationContext(), "비콘이 스캔되었습니다.", Toast.LENGTH_SHORT).show();
                     if (fingerComplete == false) { //지문->비콘 을 위해서 추가, 지문 안했으면
                         Intent intent = new Intent(getApplicationContext(), Fingerprint.class); //지문인증화면
                         //intent.putExtra("bea_id", scanDeviceAddress);
@@ -439,11 +440,14 @@ public class TrueMainActivity extends AppCompatActivity implements BootstrapNoti
                         logToDisplay("The first beacon " + firstBeacon.toString() + " is about " + firstBeacon.getDistance() + " meters away.");//d
                         //Log.d("발견된 비콘/addr", firstBeacon.getBluetoothAddress()); //d
 
+                        Log.d("발견된 비콘/addr", firstBeacon.getBluetoothAddress()); //d
+                        Log.d("발견된 비콘/distance", String.valueOf(firstBeacon.getDistance())); //d
+
                         //for (int i = 0; i < beaconId.length; i++) {
-                            if (firstBeacon.getDistance()>0 ) {
+                            if (firstBeacon.getDistance()<16) { //(firstBeacon.getDistance()<7) {
                             //if (beaconId[i].equals(firstBeacon.getBluetoothAddress()) ) {//도어락의 비콘address = 발견된 도어락의 address 이면
                                 Log.d("발견된 비콘/addr", firstBeacon.getBluetoothAddress()); //d
-                                Log.d("발견된 비콘/distance", String.valueOf(firstBeacon.getDistance())); //d
+                                Log.d("발견된 비콘/distance--------", String.valueOf(firstBeacon.getDistance())); //d
                                 scanDeviceAddress = firstBeacon.getBluetoothAddress();
 
                                 if (scanComplete == false) { //스캔이 처음이면

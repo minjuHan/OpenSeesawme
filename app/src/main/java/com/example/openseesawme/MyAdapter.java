@@ -110,6 +110,7 @@ public class MyAdapter extends BaseAdapter {
             linear_black.setVisibility(View.INVISIBLE);
         }else if(gData4[position].equals("b")){
             linear_black.setVisibility(View.VISIBLE);
+            txt_dday.setText("사용완료");
         }
 
 
@@ -134,7 +135,7 @@ public class MyAdapter extends BaseAdapter {
 
             txt_dday.setText(d_day + "일 남음");
             if(d_day == 0){
-                txt_dday.setText("사용 가능");
+                txt_dday.setText("D-Day");
             }
             else if( d_day > 0){
                 txt_dday.setText(d_day + "일 남음");
@@ -173,4 +174,3 @@ public class MyAdapter extends BaseAdapter {
         return convertView;
     }//getView() end
 }
-

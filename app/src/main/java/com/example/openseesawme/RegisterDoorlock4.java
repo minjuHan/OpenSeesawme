@@ -199,19 +199,19 @@ public class RegisterDoorlock4 extends AppCompatActivity {
             public void onClick(View view) {
                 if(selectImage.equals("non")){
                     Bitmap home = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.house);
-                    Toast.makeText(getApplicationContext(),home.toString(),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),home.toString(),Toast.LENGTH_LONG).show();
                     saveToExternalStorage(home,"home");
                 }
                 else if(selectImage.equals("home")){
                     //String imageUri = getResources().getDrawable(R.drawable.ic_home).toString();
                     Bitmap home = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.house);
-                    Toast.makeText(getApplicationContext(),home.toString(),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),home.toString(),Toast.LENGTH_LONG).show();
                     saveToExternalStorage(home,"home");
                 }
                 else if(selectImage.equals("cor")){
                     //String imageUri = getResources().getDrawable(R.drawable.ic_home).toString();
                     Bitmap cor = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.company);
-                    Toast.makeText(getApplicationContext(),cor.toString(),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),cor.toString(),Toast.LENGTH_LONG).show();
                     saveToExternalStorage(cor,"cor");
                 }
                 else if(selectImage.equals("gallery")){
@@ -226,13 +226,13 @@ public class RegisterDoorlock4 extends AppCompatActivity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Toast.makeText(getBaseContext(), "resultCode : " + data, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getBaseContext(), "resultCode : " + data, Toast.LENGTH_SHORT).show();
 
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 try {
                     Uri uri = data.getData();
-                    Toast.makeText(getBaseContext(), "img_path : " + uri, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getBaseContext(), "img_path : " + uri, Toast.LENGTH_SHORT).show();
                     //이미지를 비트맵형식으로 반환
                     Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
                     int reWidth = (int) (getWindowManager().getDefaultDisplay().getWidth());
@@ -295,7 +295,7 @@ public class RegisterDoorlock4 extends AppCompatActivity {
             outStream.flush();
             outStream.close();
 
-            Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

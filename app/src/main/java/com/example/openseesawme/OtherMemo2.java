@@ -116,7 +116,7 @@ public class OtherMemo2 extends AppCompatActivity {
                 try{
                     String result  = new GuestAllowActivity().execute(gData0).get();
                     Log.i("myguestkeydfffffff","result :   " + result);
-                    if(result=="완료"){
+                    if(result.equals("완료")){
                         Toast.makeText(getApplicationContext(),"게스트키를 사용할 수 있습니다.", Toast.LENGTH_LONG).show();
                         Acceptbtn.setVisibility(View.INVISIBLE);
                         Intent intent = new Intent(getApplicationContext(),myguestkey.class);

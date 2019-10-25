@@ -191,7 +191,8 @@ public class SendGuestKey extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "가입 유도 문자를 보냅니다.", Toast.LENGTH_LONG).show();
                                 //Intent intent = new Intent(getApplicationContext(),OtherGuestkeyEnd.class);
                                 //startActivity(intent);
-                                String smsText = "OpenSeeSawMe에서 게스트키가 도착했습니다. 가입을 통해 게스트키를 이용해보세요!";
+                                String smsText = "OpenSeeSawMe에서 게스트키가 도착했습니다. 다음의 링크를 통해 게스트키를 이용해보세요!\n\n" +
+                                        "https://drive.google.com/open?id=1nxbqmv3VazqvZGJ_apIUOy1J8EzDD7JJ";
                                 if (user_tel.length()>0){
                                     sendSMS(user_tel, smsText);
                                 }else{
