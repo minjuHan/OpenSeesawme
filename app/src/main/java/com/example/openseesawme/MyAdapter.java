@@ -142,7 +142,7 @@ public class MyAdapter extends BaseAdapter {
             }else if( d_day > 0 && gData4[position].equals("b")){
                 txt_dday.setText("출입 완료");
             }else{
-                txt_dday.setText("기한지남..?");
+                txt_dday.setText("사용 완료");
             }
 
         }catch (Exception e){
