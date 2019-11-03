@@ -138,6 +138,7 @@ public class MyAdapter extends BaseAdapter {
                 Log.i("dday는????", Long.toString(d_day));
 
                 txt_dday.setText(d_day + "일 남음");
+
                 if (d_day == 0) {
                     txt_dday.setText("D-Day");
                 } else if (d_day > 0) {
@@ -147,6 +148,7 @@ public class MyAdapter extends BaseAdapter {
                 } else {
                     txt_dday.setText("사용 완료");
                 }
+
             }
         }catch (Exception e){
             e.printStackTrace();
