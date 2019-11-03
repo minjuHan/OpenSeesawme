@@ -10,12 +10,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,8 +24,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -451,8 +446,8 @@ public class TrueMainActivity extends AppCompatActivity implements BootstrapNoti
                                 scanDeviceAddress = firstBeacon.getBluetoothAddress();
 
                                 if (scanComplete == false) { //스캔이 처음이면
-                                    scanComplete = true;
-                                    Log.d(TAG, "scanComplete값값  " + scanComplete);
+                                        scanComplete = true;
+                                        Log.d(TAG, "scanComplete값값  " + scanComplete);
 
                                     if (fingerComplete == false) { //지문인증 안했으면 + 중복 지문 인증 방지
                                         Intent intent = new Intent(getApplicationContext(), TrueMainActivity.class );

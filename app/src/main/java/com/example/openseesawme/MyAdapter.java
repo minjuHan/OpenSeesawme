@@ -74,7 +74,7 @@ public class MyAdapter extends BaseAdapter {
         TextView txt_dday = convertView.findViewById(R.id.txt_dday);
         LinearLayout linear_black = convertView.findViewById(R.id.linear_black);
         LinearLayout sentgkey = convertView.findViewById(R.id.sentgkey);
-
+        String yoil = gData1_yo[position].substring(0,gData1_yo[position].length()-1);
         //게스트 이미지
         if(gData6[position].equals("basicUser")){
             img_guest.setImageResource(R.drawable.person1);
@@ -95,7 +95,7 @@ public class MyAdapter extends BaseAdapter {
 
         //출입날짜 or 출입 요일
         if("null".equals(gData1[position])){
-            txt_valdate.setText("출입 가능 요일 : " + gData1_yo[position]);
+            txt_valdate.setText("출입 가능 요일 : " + yoil);
             Log.i("myguestkeydfffffff", "날짜 null :  ");
         }else if("null".equals(gData1_yo[position])){
             txt_valdate.setText("출입 날짜 : " + gData1[position]);
@@ -110,7 +110,7 @@ public class MyAdapter extends BaseAdapter {
             linear_black.setVisibility(View.INVISIBLE);
         }else if(gData4[position].equals("b")){
             linear_black.setVisibility(View.VISIBLE);
-            txt_dday.setText("사용완료");
+            txt_dday.setText("사용 완료");
         }
 
 
@@ -118,33 +118,36 @@ public class MyAdapter extends BaseAdapter {
         try {
             java.util.Calendar cal = java.util.Calendar.getInstance(); //일단 Calendar 객체
             String[] mdday;
-            mdday =  gData1[position].split("-");
-            int year = Integer.parseInt(mdday[0]);
-            int month = Integer.parseInt(mdday[1]);
-            int date = Integer.parseInt(mdday[2]);
+
+            if("null".equals(gData1[position])){
+                txt_dday.setText(yoil);
+            }else {
+                mdday = gData1[position].split("-");
+                int year = Integer.parseInt(mdday[0]);
+                int month = Integer.parseInt(mdday[1]);
+                int date = Integer.parseInt(mdday[2]);
 
 
-            long now_day = cal.getTimeInMillis(); //현재 시간
+                long now_day = cal.getTimeInMillis(); //현재 시간
 
-            cal.set(year, month-1, date); //목표일을 cal에 set
+                cal.set(year, month - 1, date); //목표일을 cal에 set
 
-            long event_day = cal.getTimeInMillis(); //목표일에 대한 시간
-            long d_day = (event_day - now_day) / (60*60*24*1000);
+                long event_day = cal.getTimeInMillis(); //목표일에 대한 시간
+                long d_day = (event_day - now_day) / (60 * 60 * 24 * 1000);
 
-            Log.i("dday는????", Long.toString(d_day));
+                Log.i("dday는????", Long.toString(d_day));
 
-            txt_dday.setText(d_day + "일 남음");
-            if(d_day == 0){
-                txt_dday.setText("D-Day");
-            }
-            else if( d_day > 0){
                 txt_dday.setText(d_day + "일 남음");
-            }else if( d_day > 0 && gData4[position].equals("b")){
-                txt_dday.setText("출입 완료");
-            }else{
-                txt_dday.setText("기한지남..?");
+                if (d_day == 0) {
+                    txt_dday.setText("D-Day");
+                } else if (d_day > 0) {
+                    txt_dday.setText(d_day + "일 남음");
+                } else if (d_day > 0 && gData4[position].equals("b")) {
+                    txt_dday.setText("출입 완료");
+                } else {
+                    txt_dday.setText("사용 완료");
+                }
             }
-
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -153,17 +156,18 @@ public class MyAdapter extends BaseAdapter {
         sentgkey.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, OtherMemo1.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            String yoil = gData1_yo[position].substring(0,gData1_yo[position].length()-1);
+            Intent intent = new Intent(context, OtherMemo1.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                intent.putExtra("result", result);
 //                intent.putExtra("position", position);
-                intent.putExtra("gData0",gData0[position]);
-                intent.putExtra("gData1",gData1[position]);
-                intent.putExtra("gData1_yo",gData1_yo[position]);
-                intent.putExtra("gData2",gData2[position]);
-                intent.putExtra("gData3",gData3[position]);
-                intent.putExtra("gData4",gData4[position]);
-                intent.putExtra("gData5",gData5[position]);
-                intent.putExtra("otherJun",otherJun[position]);
+            intent.putExtra("gData0",gData0[position]);
+            intent.putExtra("gData1",gData1[position]);
+            intent.putExtra("gData1_yo",yoil);
+            intent.putExtra("gData2",gData2[position]);
+            intent.putExtra("gData3",gData3[position]);
+            intent.putExtra("gData4",gData4[position]);
+            intent.putExtra("gData5",gData5[position]);
+            intent.putExtra("otherJun",otherJun[position]);
 
                 context.startActivity(intent);
             }
