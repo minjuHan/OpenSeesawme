@@ -2,6 +2,9 @@ package com.example.openseesawme;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 public class MyAdapter1 extends BaseAdapter {
     Context context;
@@ -64,7 +69,7 @@ public class MyAdapter1 extends BaseAdapter {
             convertView = inf.inflate(layout, null);
 
         //guest.xml 변수들
-        ImageView iv = (ImageView)convertView.findViewById(R.id.img_guest);
+        ImageView img_guest = (ImageView)convertView.findViewById(R.id.img_guest);
         TextView txt_gname = convertView.findViewById(R.id.txt_gname);
         TextView txt_valdate = convertView.findViewById(R.id.txt_valdate);
         TextView txt_keyfrom = convertView.findViewById(R.id.txt_keyfrom);
@@ -73,6 +78,24 @@ public class MyAdapter1 extends BaseAdapter {
         LinearLayout sentgkey = convertView.findViewById(R.id.sentgkey);
 
 //        iv.setImageResource(img[position]);
+
+        //게스트 이미지
+        if(gData6[position].equals("basicUser")){
+            img_guest.setImageResource(R.drawable.person1);
+        }
+        else{
+            //변수 : gData6[position]
+            Picasso.with(context)
+                    .load("http://128.134.114.250:8080/doorlock/uImages/"+gData6[position])
+                    .placeholder(R.drawable.person1)//이미지가 존재하지 않을 경우   경우 대체 이미지
+                    /*.resize(2000, 2000) // 이미지 크기를 재조정하고 싶을 경우*/
+                    .into(img_guest);
+        }
+        img_guest.setBackground(new ShapeDrawable(new OvalShape()));
+        if(Build.VERSION.SDK_INT >= 21) {
+            img_guest.setClipToOutline(true);
+        }
+
         //게스트 이름
         txt_gname.setText(gData3[position]);
 
