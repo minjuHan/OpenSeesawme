@@ -71,6 +71,7 @@ public class RegisterDoorlock2 extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),RegisterDoorlock3.class);
                 startActivity(intent);
+                finish();
             }
         });
 

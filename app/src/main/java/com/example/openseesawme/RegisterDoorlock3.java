@@ -40,6 +40,7 @@ public class RegisterDoorlock3 extends AppCompatActivity {
                 if("인증 완료".equals(results)){
                     Intent intent = new Intent(getApplicationContext(),RegisterDoorlock4.class);
                     startActivity(intent);
+                    finish();
                 }
                 else{
                     Toast.makeText(getApplicationContext(),"인증번호가 일치하지 않습니다. 다시 입력해주세요", Toast.LENGTH_LONG).show();

@@ -90,6 +90,7 @@ public class OtherMemo1 extends AppCompatActivity {
         from.setSpan(new ForegroundColorSpan(Color.parseColor("#444444")), 0, 9, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvfrom.setText(from);
 
+
         txt_guest_date.setText(gData3 + "에 전송됨");
 
         if(gData4.equals("a") && gData5.equals("a")){
