@@ -26,6 +26,7 @@ public class myguestkey extends AppCompatActivity {
     String[] gData5;    //게스트키 사용 여부
     String[] gData6;    //게스트키 수락 여부
     String[] gData7;  //게스트키 준 사람 이름
+    String[] gData8;    //게스트 이미지
 
     String result = "";
     @Override
@@ -50,13 +51,14 @@ public class myguestkey extends AppCompatActivity {
             gData5 = g_info[5].split("!");
             gData6 = g_info[6].split("!");
             gData7 = g_info[7].split("!");
+            gData8 = g_info[8].split("!");
 
         }catch (Exception e){}
 
         if(gData0!=null){
             //어댑터!!
             MyAdapter1 adapter = new MyAdapter1(
-                    getApplicationContext(), R.layout.guests, result, gData0, gData1, gData2, gData3, gData4, gData5, gData6, gData7
+                    getApplicationContext(), R.layout.guests, result, gData0, gData1, gData2, gData3, gData4, gData5, gData6, gData7, gData8
             );
             gridView.setAdapter(adapter);
         }

@@ -32,6 +32,7 @@ public class MyAdapter1 extends BaseAdapter {
     String[] gData5;    //게스트키 사용 여부
     String[] gData6;    //게스트키 수락 여부
     String[] gData7;  //게스트키 준 사람 이름
+    String[] gData8;    //게스트 이미지
 
 
 
@@ -48,6 +49,7 @@ public class MyAdapter1 extends BaseAdapter {
         this.gData5 = gData[5];
         this.gData6 = gData[6];
         this.gData7 = gData[7];
+        this.gData8 = gData[8];
 
         inf = (LayoutInflater) context.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
@@ -80,13 +82,13 @@ public class MyAdapter1 extends BaseAdapter {
 //        iv.setImageResource(img[position]);
 
         //게스트 이미지
-        if(gData6[position].equals("basicUser")){
+        if(gData8[position].equals("basicUser")){
             img_guest.setImageResource(R.drawable.person1);
         }
         else{
             //변수 : gData6[position]
             Picasso.with(context)
-                    .load("http://128.134.114.250:8080/doorlock/uImages/"+gData6[position])
+                    .load("http://128.134.114.250:8080/doorlock/uImages/"+gData8[position])
                     .placeholder(R.drawable.person1)//이미지가 존재하지 않을 경우   경우 대체 이미지
                     /*.resize(2000, 2000) // 이미지 크기를 재조정하고 싶을 경우*/
                     .into(img_guest);
