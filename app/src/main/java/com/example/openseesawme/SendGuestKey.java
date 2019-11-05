@@ -162,8 +162,8 @@ public class SendGuestKey extends AppCompatActivity {
                         try {
 
                             result = new SendGuestKeyActivity().execute(user_index, user_tel, user_select).get();
-                            Toast.makeText(getApplicationContext(),"인덱스:"+user_index,Toast.LENGTH_LONG).show();
-                            Toast.makeText(getApplicationContext(),"결과"+result,Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(),"인덱스:"+user_index,Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(),"결과"+result,Toast.LENGTH_LONG).show();
                             Log.i("SendGuestKeysss","계정있는지 결과"+ result);////
                             if (result.equals("fail")) {
                             } else if (result.equals("가입된 사용자")) {

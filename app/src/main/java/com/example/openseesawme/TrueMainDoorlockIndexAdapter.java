@@ -85,7 +85,7 @@ public class TrueMainDoorlockIndexAdapter extends PagerAdapter {
             default: //case "last":
                 v1.setBackgroundColor(colors[3]);
                 cardBottomTab.setVisibility(View.INVISIBLE);
-                centerimg.setImageResource(R.drawable.ic_add2);
+                centerimg.setImageResource(R.drawable.ic_add);
                 centerimg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

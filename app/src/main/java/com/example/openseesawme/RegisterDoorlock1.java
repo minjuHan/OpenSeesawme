@@ -24,7 +24,7 @@ public class RegisterDoorlock1 extends AppCompatActivity {
 
         Intent dlistIntent = getIntent();
         fromDoorlocklist = dlistIntent.getBooleanExtra("fromDoorlocklist",false);
-        TMainActivity.setRegisternof(true);
+        //TMainActivity.setRegisternof(true);
 
         btnBack=findViewById(R.id.btnBack);
         btnNext=findViewById(R.id.btnNext);
